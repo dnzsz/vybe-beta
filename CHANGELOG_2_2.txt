@@ -57,3 +57,9 @@ VYBE 2.2
 - Startbilder für alle iPhone-Größen, bereinigtes App-Manifest.
 - Installierte App: kein Markieren von Text, kein Zoomen.
 - Service-Worker-Cache: vybe-pwa-v51
+
+VYBE 2.2.1
+- Typografie beruhigt: Schriftstärken höchstens 700 für große Titel, sonst 400 bis 600.
+- Schriftgrößen, Abstände und Rundungen auf ein einheitliches Raster gebracht.
+- Titel und Ergebnis-Texte ohne Ausrufezeichen und Schlusspunkt.
+- Service-Worker-Cache: vybe-pwa-v52
