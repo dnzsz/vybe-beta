@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" class="theme-light">
+<html lang="de" class="theme-dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -12,12 +12,12 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   document.querySelector('meta[name="viewport"]').setAttribute("content","width=device-width,height=device-height,initial-scale=1,viewport-fit=cover");
 }
 </script>
-<meta id="themeColorMeta" name="theme-color" content="#ff2d78">
-<meta name="color-scheme" content="only light">
+<meta id="themeColorMeta" name="theme-color" content="#161513">
+<meta name="color-scheme" content="only dark">
 <meta name="darkreader-lock">
-<title>VYBE 2.2.1</title>
-<style>html{background:#5a1fd1}</style>
-<link rel="stylesheet" href="./design.css?v=2.2.1">
+<title>VYBE 3.0</title>
+<style>html{background:#161513}</style>
+<link rel="stylesheet" href="./design.css?v=3.0">
 
   <meta name="apple-mobile-web-app-title" content="VYBE">
   <meta name="application-name" content="VYBE">
@@ -48,7 +48,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="splash-inner">
     <div class="splash-logo">V</div>
     <div class="splash-name">VYBE</div>
-    <div class="splash-sub">PARTY GAMES</div>
+    <div class="splash-sub">Party games</div>
   </div>
 </div>
 
@@ -68,13 +68,13 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
       <button class="game-card imp pressable" type="button" data-game-id="impostor" data-open="impSetup" data-room="imp">
         <span class="game-art">🕵️</span>
         <span class="game-name">Impostor</span>
-        <span class="game-tag">Einer blufft. Findet ihn.</span>
+        <span class="game-tag">Einer blufft – findet ihn</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card would pressable" type="button" data-game-id="would" data-open="wouldSetup" data-room="would">
         <span class="game-art">👉</span>
         <span class="game-name">Wer würde eher?</span>
-        <span class="game-tag">Zeigt aufeinander.</span>
+        <span class="game-tag">Zeigt aufeinander</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card ball pressable" type="button" data-game-id="ball" data-open="ballSetup" data-room="ball">
@@ -86,7 +86,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
       <button class="game-card taboo pressable" type="button" data-game-id="taboo" data-open="tabooSetup" data-room="taboo">
         <span class="game-art">🤐</span>
         <span class="game-name">Tabu</span>
-        <span class="game-tag">Erklären, ohne es zu sagen.</span>
+        <span class="game-tag">Erklären, ohne es zu sagen</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card truth pressable" type="button" data-game-id="truth" data-open="truthSetup" data-room="truth">
@@ -98,25 +98,25 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
       <button class="game-card who pressable" type="button" data-game-id="who" data-open="whoSetup" data-room="who">
         <span class="game-art">🤔</span>
         <span class="game-name">Wer bin ich?</span>
-        <span class="game-tag">Errate, wer du bist.</span>
+        <span class="game-tag">Errate, wer du bist</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card knowledge pressable" type="button" data-game-id="knowledge" data-open="knowledgeSetup" data-room="knowledge">
         <span class="game-art">🧠</span>
         <span class="game-name">Allgemeinwissen</span>
-        <span class="game-tag">Das große Quiz.</span>
+        <span class="game-tag">Das große Quiz</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card teamer pressable" type="button" data-game-id="teamer" data-open="teamSetup" data-room="teamer">
         <span class="game-art">🎲</span>
         <span class="game-name">Team-Ausloser</span>
-        <span class="game-tag">Karte für Karte zum Team.</span>
+        <span class="game-tag">Karte für Karte zum Team</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card werewolf pressable" type="button" data-game-id="werewolf" data-open="wwSetup" data-room="werewolf">
         <span class="game-art">🐺</span>
         <span class="game-name">Werwolf</span>
-        <span class="game-tag">Das Dorf schläft ein.</span>
+        <span class="game-tag">Das Dorf schläft ein</span>
         <span class="game-play">Spielen</span>
       </button>
   </div>
@@ -162,7 +162,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     <div class="favorite-sheet-game">
       <div id="favoriteSheetEmoji" class="favorite-sheet-emoji">🎮</div>
       <div>
-        <div class="favorite-sheet-kicker">SPIEL</div>
+        <div class="favorite-sheet-kicker">Spiel</div>
         <div id="favoriteSheetTitle" class="favorite-sheet-title">Spiel</div>
       </div>
     </div>
@@ -213,8 +213,8 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     <div class="result-emoji">⏱️</div>
     <h2 id="tabooRoundPlayer">Runde beendet</h2>
     <div class="taboo-round-stats">
-      <div class="taboo-stat correct"><span>RICHTIG</span><strong id="tabooRoundCorrect">0</strong></div>
-      <div class="taboo-stat skipped"><span>ÜBERSPRUNGEN</span><strong id="tabooRoundSkipped">0</strong></div>
+      <div class="taboo-stat correct"><span>Richtig</span><strong id="tabooRoundCorrect">0</strong></div>
+      <div class="taboo-stat skipped"><span>Übersprungen</span><strong id="tabooRoundSkipped">0</strong></div>
     </div>
     <p id="tabooRoundComment">Starke Runde</p>
     <button id="tabooNextRound" class="primary full-primary">Nächster Spieler</button>
@@ -286,7 +286,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
       <div class="row">
         <div class="row-icon">📖</div>
         <div class="row-copy"><div class="row-title">Geführter Erzähler-Modus</div><div class="row-sub">Texte, Aktionen und Abstimmungen Schritt für Schritt</div></div>
-        <div class="ww-ready-badge">AKTIV</div>
+        <div class="ww-ready-badge">Aktiv</div>
       </div>
     </div>
     <div class="panel ww-info-panel">
@@ -310,7 +310,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <section id="wwRoles" class="screen">
   <div class="top"><button class="back" data-open="wwSetup" aria-label="Zurück"></button><div class="page-title">Rollen</div><span style="width:43px"></span></div>
   <div class="settings-scroll">
-    <div class="section-label">WERWÖLFE</div>
+    <div class="section-label">Werwölfe</div>
     <div class="panel">
       <div class="row">
         <div class="row-icon">🐺</div>
@@ -323,7 +323,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
         </div>
       </div>
     </div>
-    <div class="section-label">SPEZIALROLLEN</div>
+    <div class="section-label">Spezialrollen</div>
     <div id="wwSpecialRoles" class="panel"></div>
     <div class="panel ww-role-balance">
       <div><span>Aktive Spieler</span><strong id="wwActiveCount">7</strong></div>
@@ -348,7 +348,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="top"><button class="back direct-game-exit" data-exit-game="werewolf" aria-label="Spiel verlassen"></button><div class="page-title">Deine Rolle</div><span style="width:43px"></span></div>
   <div class="content ww-reveal-content">
     <div id="wwRevealEmoji" class="ww-role-emoji">🐺</div>
-    <div id="wwRevealName" class="ww-role-name">WERWOLF</div>
+    <div id="wwRevealName" class="ww-role-name">Werwolf</div>
     <p id="wwRevealDescription"></p>
     <div id="wwRevealTeam" class="ww-team-note"></div>
     <button id="wwHideRole" class="primary ww-primary full-primary">Rolle verstanden</button>
@@ -370,7 +370,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="top"><button class="back direct-game-exit" data-exit-game="werewolf" aria-label="Spiel verlassen"></button><div id="wwPhaseHeader" class="page-title">Nacht 1</div><button class="icon-btn" data-menu="werewolf" aria-label="Menü"></button></div>
   <div class="content ww-phase-content">
     <div id="wwPhaseEmoji" class="ww-phase-emoji">🌙</div>
-    <div id="wwPhaseKicker" class="ww-phase-kicker">VORLESEN</div>
+    <div id="wwPhaseKicker" class="ww-phase-kicker">Vorlesen</div>
     <h2 id="wwPhaseTitle">Das Dorf schläft ein</h2>
     <div id="wwPhaseText" class="ww-script-text"></div>
     <button id="wwPhaseContinue" class="primary ww-primary full-primary">Weiter</button>
@@ -413,7 +413,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="top"><button class="back direct-game-exit" data-exit-game="werewolf" aria-label="Spiel verlassen"></button><div id="wwMorningHeader" class="page-title">Morgen</div><button class="icon-btn" data-menu="werewolf" aria-label="Menü"></button></div>
   <div class="content ww-phase-content">
     <div class="ww-phase-emoji">☀️</div>
-    <div class="ww-phase-kicker">VORLESEN</div>
+    <div class="ww-phase-kicker">Vorlesen</div>
     <h2>Das Dorf erwacht</h2>
     <div id="wwMorningText" class="ww-script-text"></div>
     <div id="wwAliveSummary" class="ww-alive-summary"></div>
@@ -425,7 +425,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="top"><button class="back direct-game-exit" data-exit-game="werewolf" aria-label="Spiel verlassen"></button><div id="wwDayHeader" class="page-title">Tag 1</div><button class="icon-btn" data-menu="werewolf" aria-label="Menü"></button></div>
   <div class="content ww-phase-content">
     <div class="ww-phase-emoji">🏘️</div>
-    <div class="ww-phase-kicker">VORLESEN</div>
+    <div class="ww-phase-kicker">Vorlesen</div>
     <h2>Das Dorf berät sich</h2>
     <div class="ww-script-text">„Ihr dürft jetzt diskutieren. Wer verhält sich verdächtig? Findet die Werwölfe, bevor sie das ganze Dorf übernehmen.“</div>
     <div id="wwDayAlive" class="ww-alive-summary"></div>
@@ -465,7 +465,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="team73-hero">
     <div class="team73-hero-icon">🎲</div>
     <div>
-      <div class="team73-kicker">ZUFÄLLIGE TEAMS</div>
+      <div class="team73-kicker">Zufällige teams</div>
       <h1>Team-<br>Ausloser</h1>
       <p>Namen eintragen, Teams wählen und Karte für Karte auslosen.</p>
     </div>
@@ -473,7 +473,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 
   <div class="team73-setup-scroll">
     <div class="team73-section-head">
-      <span>TEILNEHMER</span>
+      <span>Teilnehmer</span>
       <strong id="teamPlayerCounter">6 / 20</strong>
     </div>
 
@@ -481,12 +481,12 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
       <div id="teamPlayerList" class="team73-player-list"></div>
       <div class="team73-add-row">
         <input id="newTeamPlayer" placeholder="Name hinzufügen" maxlength="20">
-        <button id="addTeamPlayer" type="button">HINZUFÜGEN</button>
+        <button id="addTeamPlayer" type="button">Hinzufügen</button>
       </div>
     </div>
 
     <div class="team73-section-head">
-      <span>TEAMANZAHL</span>
+      <span>Teamanzahl</span>
     </div>
 
     <div class="team73-panel">
@@ -535,7 +535,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
         <div class="team73-card-inner">
           <div class="team73-card-face team73-card-front">
             <div class="team73-card-logo">VYBE</div>
-            <span>NÄCHSTES LOS</span>
+            <span>Nächstes los</span>
             <strong id="teamCandidateName">?</strong>
             <small id="teamCandidateHint">Tippe unten zum Ziehen</small>
           </div>
@@ -566,7 +566,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     <div class="team73-result-hero">
       <div class="team73-result-icon">✨</div>
       <div>
-        <div class="team73-kicker">AUSLOSUNG BEENDET</div>
+        <div class="team73-kicker">Auslosung beendet</div>
         <h2>Die Teams stehen fest</h2>
       </div>
     </div>
@@ -729,18 +729,18 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   </div>
   <div class="content stats-scroll">
     <div class="stats-hero">
-      <div class="stats-hero-label">GESAMTE SPIELZEIT</div>
+      <div class="stats-hero-label">Gesamte spielzeit</div>
       <div class="stats-hero-value" id="statsMinutes">0</div>
       <div class="stats-hero-sub">Minuten Partyzeit auf diesem Gerät</div>
     </div>
     <div class="stats-grid">
-      <div class="stat-tile"><div class="stat-icon">🎮</div><div class="stat-number" id="statsGames">0</div><div class="stat-name">SPIELE</div></div>
-      <div class="stat-tile"><div class="stat-icon">⚡️</div><div class="stat-number" id="statsRounds">0</div><div class="stat-name">RUNDEN</div></div>
-      <div class="stat-tile"><div class="stat-icon">🕵️</div><div class="stat-number" id="statsImpostor">0</div><div class="stat-name">IMPOSTOR</div></div>
-      <div class="stat-tile"><div class="stat-icon">⚽️</div><div class="stat-number" id="statsBall">0</div><div class="stat-name">BALL KNOWLEDGE</div></div>
+      <div class="stat-tile"><div class="stat-icon">🎮</div><div class="stat-number" id="statsGames">0</div><div class="stat-name">Spiele</div></div>
+      <div class="stat-tile"><div class="stat-icon">⚡️</div><div class="stat-number" id="statsRounds">0</div><div class="stat-name">Runden</div></div>
+      <div class="stat-tile"><div class="stat-icon">🕵️</div><div class="stat-number" id="statsImpostor">0</div><div class="stat-name">Impostor</div></div>
+      <div class="stat-tile"><div class="stat-icon">⚽️</div><div class="stat-number" id="statsBall">0</div><div class="stat-name">Ball knowledge</div></div>
     </div>
     <div class="favorite-card">
-      <div><span>LIEBLINGSSPIEL</span><strong id="statsFavorite">Noch keins</strong></div>
+      <div><span>Lieblingsspiel</span><strong id="statsFavorite">Noch keins</strong></div>
       <div class="favorite-emoji" id="statsFavoriteEmoji">✨</div>
     </div>
   </div>
@@ -749,9 +749,9 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <section id="settings" class="screen">
   <div class="top"><button class="back" data-open="home" aria-label="Zurück"></button><div class="page-title">Einstellungen</div><span style="width:43px"></span></div>
   <div class="settings-scroll settings-page settings74-page">
-    <div class="settings74-hero"><div class="settings74-logo">⚙️</div><div><div class="settings74-kicker">VYBE ANPASSEN</div><h2>Deine App, deine Regeln</h2><p>Darstellung, Gameplay und lokale Daten an einem Ort.</p></div></div>
+    <div class="settings74-hero"><div class="settings74-logo">⚙️</div><div><div class="settings74-kicker">VYBE anpassen</div><h2>Deine App, deine Regeln</h2><p>Darstellung, Gameplay und lokale Daten an einem Ort.</p></div></div>
 
-    <div class="section-label">GAMEPLAY</div>
+    <div class="section-label">Gameplay</div>
     <div class="panel settings74-panel">
       <div class="row"><div class="row-icon">🔀</div><div class="row-copy"><div class="row-title">Inhalte automatisch mischen</div><div class="row-sub">Neue Reihenfolge bei jeder Runde</div></div><input id="settingAutoShuffle" class="switch" type="checkbox" checked></div>
       <div class="row"><div class="row-icon">🧠</div><div class="row-copy"><div class="row-title">Letzte Auswahl merken</div><div class="row-sub">Kategorien und Rundeneinstellungen behalten</div></div><input id="settingRemember" class="switch" type="checkbox" checked></div>
@@ -759,13 +759,13 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
       <div class="row"><div class="row-icon">🔒</div><div class="row-copy"><div class="row-title">Bildschirm wach halten</div><div class="row-sub">Während aktiver Spiele möglichst nicht abdunkeln</div></div><input id="settingWakeLock" class="switch" type="checkbox"></div>
     </div>
 
-    <div class="section-label">TIMER & FEEDBACK</div>
+    <div class="section-label">Timer & Feedback</div>
     <div class="panel settings74-panel">
       <div class="row"><div class="row-icon">⏱️</div><div class="row-copy"><div class="row-title">Timer-Töne</div><div class="row-sub">Kurzes Signal beim Countdown und Zeitablauf</div></div><input id="settingTimerSounds" class="switch" type="checkbox"></div>
       <div class="row"><div class="row-icon">📳</div><div class="row-copy"><div class="row-title">Haptisches Feedback</div><div id="hapticSupportText" class="row-sub">Unterstützung wird geprüft</div></div><input id="settingVibration" class="switch" type="checkbox" checked></div>
     </div>
 
-    <div class="section-label">DATEN & APP</div>
+    <div class="section-label">Daten & App</div>
     <div class="panel settings74-panel settings74-actions-panel">
       <button id="resetContentHistory" class="row settings74-action" type="button"><div class="row-icon">🃏</div><div class="row-copy"><div class="row-title">Kartenverlauf zurücksetzen</div><div class="row-sub">Bereits gespielte Inhalte wieder freigeben</div></div><div class="chev">›</div></button>
       <button id="resetStatistics" class="row settings74-action" type="button"><div class="row-icon">📊</div><div class="row-copy"><div class="row-title">Statistiken zurücksetzen</div><div class="row-sub">Spielzeit, Runden und Quizwerte löschen</div></div><div class="chev">›</div></button>
@@ -774,8 +774,8 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
       <button class="row settings74-action" data-open="dataInfo" type="button"><div class="row-icon">🔐</div><div class="row-copy"><div class="row-title">Lokale Datenspeicherung</div><div class="row-sub">Welche Daten auf deinem Gerät bleiben</div></div><div class="chev">›</div></button>
     </div>
 
-    <div class="section-label">ÜBER VYBE</div>
-    <div class="panel settings74-panel"><div class="row"><div class="row-icon">ℹ️</div><div class="row-copy"><div class="row-title">Version</div></div><div class="row-value">2.2.1</div></div></div>
+    <div class="section-label">Über VYBE</div>
+    <div class="panel settings74-panel"><div class="row"><div class="row-icon">ℹ️</div><div class="row-copy"><div class="row-title">Version</div></div><div class="row-value">3.0</div></div></div>
     <div class="made-by">Made by <span id="denizEasterEggTrigger">Deniz</span></div>
   </div>
 </section>
@@ -783,15 +783,16 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <section id="releaseNotes" class="screen">
   <div class="top"><button class="back" data-open="settings" aria-label="Zurück"></button><div class="page-title">Was ist neu?</div><span style="width:43px"></span></div>
   <div class="settings-scroll settings74-detail-page">
-    <div class="settings74-release-hero"><span>🚀</span><div><div class="settings74-kicker">Version 2.2.1</div><h2>Was sich in VYBE verbessert hat</h2></div></div>
-    <div class="settings74-note-card"><strong>🎨 Ruhigerer Feinschliff</strong><p>Einheitliche Schriftstärken, Größen, Abstände und Rundungen in allen Spielen.</p></div>
-    <div class="settings74-note-card"><strong>📱 Wie eine echte App</strong><p>Eigener Startbildschirm und App-Verhalten, wenn VYBE auf dem Home-Bildschirm liegt.</p></div>
-    <div class="settings74-note-card"><strong>✅ Inhalte geprüft</strong><p>Fragen korrigiert, Dubletten entfernt und aktuelle Weltmeister, Meister und Titel ergänzt.</p></div>
-    <div class="settings74-note-card"><strong>✨ Komplett neue App</strong><p>Wische durch die Spiele, wähle im Dock und tauche in die Farbe jedes Spiels ein.</p></div>
-    <div class="settings74-note-card"><strong>📚 Mehr Inhalte</strong><p>Neue Fächer, Fragen, Kategorien, Personen, Begriffe und Fußball-Fragetypen.</p></div>
-    <div class="settings74-note-card"><strong>🎯 Überarbeitete Spiele</strong><p>Neuer Wahrheit-oder-Pflicht-Ablauf, größerer Tabu-Timer und Abbruchstatistiken.</p></div>
-    <div class="settings74-note-card"><strong>🎟️ Neuer Team-Ausloser</strong><p>Kontrollierte Loskarten statt des alten Glücksrads – Karte für Karte.</p></div>
-    <div class="settings74-note-card"><strong>⚙️ Aufgeräumte Einstellungen</strong><p>Nur noch das Wichtige: Inhaltsfilter, Bildschirm wach halten, Timer-Töne und Datenverwaltung.</p></div>
+    <div class="settings74-release-hero"><span>🚀</span><div><div class="settings74-kicker">Version 3.0</div><h2>Was sich in VYBE verbessert hat</h2></div></div>
+    <div class="settings74-note-card"><strong>Neuer Look: der Spieltisch</strong><p>Jedes Spiel ist jetzt ein Kartendeck in seiner eigenen Farbe. Drumherum bleibt alles ruhig, damit die Karte im Mittelpunkt steht.</p></div>
+    <div class="settings74-note-card"><strong>Ruhigerer Feinschliff</strong><p>Einheitliche Schriftstärken, Größen, Abstände und Rundungen in allen Spielen.</p></div>
+    <div class="settings74-note-card"><strong>Wie eine echte App</strong><p>Eigener Startbildschirm und App-Verhalten, wenn VYBE auf dem Home-Bildschirm liegt.</p></div>
+    <div class="settings74-note-card"><strong>Inhalte geprüft</strong><p>Fragen korrigiert, Dubletten entfernt und aktuelle Weltmeister, Meister und Titel ergänzt.</p></div>
+    <div class="settings74-note-card"><strong>Komplett neue App</strong><p>Wische durch die Spiele, wähle im Dock und tauche in die Farbe jedes Spiels ein.</p></div>
+    <div class="settings74-note-card"><strong>Mehr Inhalte</strong><p>Neue Fächer, Fragen, Kategorien, Personen, Begriffe und Fußball-Fragetypen.</p></div>
+    <div class="settings74-note-card"><strong>Überarbeitete Spiele</strong><p>Neuer Wahrheit-oder-Pflicht-Ablauf, größerer Tabu-Timer und Abbruchstatistiken.</p></div>
+    <div class="settings74-note-card"><strong>Neuer Team-Ausloser</strong><p>Kontrollierte Loskarten statt des alten Glücksrads – Karte für Karte.</p></div>
+    <div class="settings74-note-card"><strong>Aufgeräumte Einstellungen</strong><p>Nur noch das Wichtige: Inhaltsfilter, Bildschirm wach halten, Timer-Töne und Datenverwaltung.</p></div>
   </div>
 </section>
 
@@ -838,7 +839,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 
 <section id="impCount" class="screen">
   <div class="top"><button class="back" data-open="impSetup" aria-label="Zurück"></button><div class="page-title">Impostor</div><span style="width:43px"></span></div>
-  <div class="section-label">ANZAHL AUSWÄHLEN</div>
+  <div class="section-label">Anzahl auswählen</div>
   <div id="impCountChoices" class="choice-list"></div>
   <div class="panel" style="margin-top:12px">
     <div class="row"><div class="row-icon">🎲</div><div class="row-copy"><div class="row-title">Zufällige Anzahl</div><div class="row-sub">Wird beim Start ausgewürfelt</div></div><input id="randomImpToggle" class="switch" type="checkbox"></div>
@@ -914,7 +915,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="top"><button class="back" data-open="home" aria-label="Zurück"></button><div class="page-title">Auflösung</div><span style="width:43px"></span></div>
   <div class="content">
     <div style="padding:14px 0 2px;color:var(--pink);font-size:12px;font-weight:600;letter-spacing:0">Impostor</div>
-    <h1 style="margin:0 0 10px;font-size:36px">Erwischt 🕵️</h1>
+    <h1 style="margin:0 0 10px;font-size:36px">Erwischt</h1>
     <div id="impResultList" class="result-list"></div>
     <div class="panel imp-final-panel" style="padding:20px;text-align:center;margin-top:12px">
       <div style="color:var(--muted)">Der Impostor war</div>
@@ -941,7 +942,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
         <div id="wouldQuestionText" class="would-question-text"></div>
       </div>
       <div id="wouldChoiceFace" class="would-face would-back">
-        <div class="would-category">EURE ENTSCHEIDUNG</div>
+        <div class="would-category">Eure entscheidung</div>
         <div class="would-back-title">Auf wen trifft es am ehesten zu?</div>
         <div id="wouldPlayerChoices" class="would-player-choices"></div>
         <div class="would-back-hint">Tippt auf die Person, auf die ihr euch am Tisch geeinigt habt.</div>
@@ -962,7 +963,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     <h1 style="margin:20px 0 4px;font-size:36px">Das war eindeutig</h1>
     <p id="wouldEndReason">Das Spiel ist beendet. Hier seht ihr, wer insgesamt wie oft ausgewählt wurde.</p><div id="wouldRoundCount" class="would-round-count"></div>
     <div class="would75-summary-head">
-      <div><span>AUSWERTUNG</span><strong id="wouldWinnerText">Rundenfavorit</strong></div>
+      <div><span>Auswertung</span><strong id="wouldWinnerText">Rundenfavorit</strong></div>
       <div id="wouldTotalVotes" class="would75-total">0 Stimmen</div>
     </div>
     <div id="wouldSummary" class="would75-results"></div>
@@ -979,11 +980,11 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="top"><button class="back" data-open="home" aria-label="Zurück"></button><div></div><button class="icon-btn" type="button">?</button></div>
   <div class="game-hero"><div class="game-icon">🧠</div><h1 class="knowledge-gradient-title">Allgemein-<br>wissen</h1></div>
   <div class="settings-scroll">
-    <div class="section-label">SCHWIERIGKEIT</div>
+    <div class="section-label">Schwierigkeit</div>
     <div id="knowledgeDifficultyOptions" class="ball-options"></div>
-    <div class="section-label">FÄCHER</div>
+    <div class="section-label">Fächer</div>
     <div id="knowledgeCategoryOptions" class="knowledge-subject-grid"></div>
-    <div class="section-label">RUNDE</div>
+    <div class="section-label">Runde</div>
     <div class="panel">
       <div class="row">
         <div class="row-icon">🃏</div>
@@ -1039,10 +1040,10 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   </div>
   <div id="knowledgeRating" class="quiz-rating" hidden>
     <button id="knowledgeWrong" class="quiz-rate-btn quiz-rate-wrong" type="button">
-      <span class="quiz-rate-icon">✕</span><span>FALSCH</span>
+      <span class="quiz-rate-icon">✕</span><span>Falsch</span>
     </button>
     <button id="knowledgeCorrect" class="quiz-rate-btn quiz-rate-correct" type="button">
-      <span class="quiz-rate-icon">✓</span><span>RICHTIG</span>
+      <span class="quiz-rate-icon">✓</span><span>Richtig</span>
     </button>
   </div>
   <div id="knowledgeSwipeHint" class="quiz-auto-note" hidden>Oder wische nach links / rechts</div>
@@ -1060,9 +1061,9 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     <p id="knowledgeEndText" class="quiz-result-message"></p>
     <div class="quiz-percent-ring knowledge-ring"><span id="knowledgeResultPercent">0%</span></div>
     <div class="quiz-result-grid">
-      <div class="quiz-result-stat"><span>FRAGEN</span><strong id="knowledgePlayedCount">0</strong></div>
-      <div class="quiz-result-stat correct"><span>RICHTIG</span><strong id="knowledgeResultCorrect">0</strong></div>
-      <div class="quiz-result-stat wrong"><span>FALSCH</span><strong id="knowledgeResultWrong">0</strong></div>
+      <div class="quiz-result-stat"><span>Fragen</span><strong id="knowledgePlayedCount">0</strong></div>
+      <div class="quiz-result-stat correct"><span>Richtig</span><strong id="knowledgeResultCorrect">0</strong></div>
+      <div class="quiz-result-stat wrong"><span>Falsch</span><strong id="knowledgeResultWrong">0</strong></div>
     </div>
     <div class="panel quiz-best-panel">
       <div class="result-head"><span>Beste Quote</span><span id="knowledgeBestPercent">0%</span></div>
@@ -1077,9 +1078,9 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="top"><button class="back" data-open="home" aria-label="Zurück"></button><div></div><button class="icon-btn" type="button">?</button></div>
   <div class="game-hero"><div class="game-icon">⚽️</div><h1 style="background:linear-gradient(90deg,var(--mint),#8df0be);-webkit-background-clip:text;color:transparent">Ball<br>Knowledge</h1></div>
   <div class="settings-scroll">
-    <div class="section-label">SCHWIERIGKEIT</div>
+    <div class="section-label">Schwierigkeit</div>
     <div id="ballDifficultyOptions" class="ball-options"></div>
-    <div class="section-label">EINSTELLUNGEN</div>
+    <div class="section-label">Einstellungen</div>
     <div class="panel">
       <button class="row" data-open-categories="ball">
         <div class="row-icon">🏷️</div>
@@ -1092,7 +1093,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
       </button>
     </div>
 
-    <div class="section-label">RUNDE</div>
+    <div class="section-label">Runde</div>
     <div class="panel">
       <div class="row">
         <div class="row-icon">🃏</div>
@@ -1148,10 +1149,10 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   </div>
   <div id="ballRating" class="quiz-rating" hidden>
     <button id="ballWrong" class="quiz-rate-btn quiz-rate-wrong" type="button">
-      <span class="quiz-rate-icon">✕</span><span>FALSCH</span>
+      <span class="quiz-rate-icon">✕</span><span>Falsch</span>
     </button>
     <button id="ballCorrect" class="quiz-rate-btn quiz-rate-correct" type="button">
-      <span class="quiz-rate-icon">✓</span><span>RICHTIG</span>
+      <span class="quiz-rate-icon">✓</span><span>Richtig</span>
     </button>
   </div>
   <div id="ballSwipeHint" class="quiz-auto-note" hidden>Oder wische nach links / rechts</div>
@@ -1169,9 +1170,9 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     <p id="ballEndText" class="quiz-result-message"></p>
     <div class="quiz-percent-ring"><span id="ballResultPercent">0%</span></div>
     <div class="quiz-result-grid">
-      <div class="quiz-result-stat"><span>FRAGEN</span><strong id="ballPlayedCount">0</strong></div>
-      <div class="quiz-result-stat correct"><span>RICHTIG</span><strong id="ballResultCorrect">0</strong></div>
-      <div class="quiz-result-stat wrong"><span>FALSCH</span><strong id="ballResultWrong">0</strong></div>
+      <div class="quiz-result-stat"><span>Fragen</span><strong id="ballPlayedCount">0</strong></div>
+      <div class="quiz-result-stat correct"><span>Richtig</span><strong id="ballResultCorrect">0</strong></div>
+      <div class="quiz-result-stat wrong"><span>Falsch</span><strong id="ballResultWrong">0</strong></div>
     </div>
     <div class="panel quiz-best-panel">
       <div class="result-head"><span>Beste Quote</span><span id="ballBestPercent">0%</span></div>
@@ -1184,7 +1185,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 
 <div id="gameMenu" class="menu">
   <button id="menuResume">▶ Weiterspielen</button>
-  <button id="menuSettings">⚙ Einstellungen</button>
+  <button id="menuSettings">Einstellungen</button>
   <button data-open="home">⌂ Hauptmenü</button>
 </div>
 
@@ -1864,7 +1865,7 @@ function roomFor(id){
   const key=Object.keys(roomPrefixes).find(prefix=>id.startsWith(prefix));
   return key?roomPrefixes[key]:null;
 }
-const roomTop={imp:"#ff2d78",would:"#ffb300",ball:"#34d865",taboo:"#c95cf5",truth:"#ff9f0a",who:"#4fd8f5",knowledge:"#40c4fa",teamer:"#ffb800",werewolf:"#8f7bff"};
+const roomTop={imp:"#161513",would:"#161513",ball:"#161513",taboo:"#161513",truth:"#161513",who:"#161513",knowledge:"#161513",teamer:"#161513",werewolf:"#161513"};
 function setRoom(id){
   if(id==="categories"||id==="newCategories")return;
   const root=document.documentElement,room=roomFor(id)||pagerRoom()||"imp";
@@ -2284,7 +2285,7 @@ document.getElementById("showImpResult").addEventListener("click",()=>{
 
   const concept=document.createElement("div");
   concept.className="panel imp-result-concept";
-  concept.innerHTML=`<span>BEGRIFF</span><strong>${impItem.word}</strong>`;
+  concept.innerHTML=`<span>Begriff</span><strong>${impItem.word}</strong>`;
   list.appendChild(concept);
 
   document.getElementById("impFinalImpostor").textContent=impostorNames.join(" & ");
@@ -2318,7 +2319,7 @@ function showWouldQuestion(){
 
   document.getElementById("wouldFlip").classList.remove("on");
   document.getElementById("wouldFlipArea").setAttribute("aria-expanded","false");
-  document.getElementById("wouldCategoryLabel").textContent=wouldQuestion.category.toUpperCase();
+  document.getElementById("wouldCategoryLabel").textContent=wouldQuestion.category;
   document.getElementById("wouldQuestionEmoji").textContent=wouldQuestion.emoji||"👉";
   document.getElementById("wouldQuestionText").textContent=wouldQuestion.text;
   document.getElementById("wouldCounter").textContent=`Karte ${wouldRoundIndex+1} von ${wouldQuestions.length}`;
@@ -3228,7 +3229,7 @@ function nextTruth(countRound=true){
 function finishTruth(){
   document.getElementById("truthFinalRounds").textContent=truthIndex;
   document.getElementById("truthFinalBreakdown").innerHTML=
-    `<div class="truth-final-stat"><span>WAHRHEIT</span><strong>${truthTruthCount}</strong></div><div class="truth-final-stat"><span>PFLICHT</span><strong>${truthDareCount}</strong></div>`;
+    `<div class="truth-final-stat"><span>Wahrheit</span><strong>${truthTruthCount}</strong></div><div class="truth-final-stat"><span>Pflicht</span><strong>${truthDareCount}</strong></div>`;
   recordGameOnce("truth",Math.max(1,truthIndex));
   go("truthEnd");
 }
@@ -3631,7 +3632,7 @@ function wwShowRole(){
   const roleKey=wwRoleMap[player];
   const role=WW_ROLES[roleKey];
   document.getElementById("wwRevealEmoji").textContent=role.emoji;
-  document.getElementById("wwRevealName").textContent=role.name.toUpperCase();
+  document.getElementById("wwRevealName").textContent=role.name;
   document.getElementById("wwRevealDescription").textContent=role.description;
   let teamText=role.team==="wolf"?"Du gehörst zum Rudel.":"Du gehörst zum Dorf.";
   if(roleKey==="werewolf"){
@@ -4915,6 +4916,18 @@ if ("serviceWorker" in navigator) {
 })();
 </script>
 
-<script src="./gravity.js?v=2.2.1"></script>
+<script>
+/* VYBE 3: Labels auf Karten und in Listen zeigen keine Emojis */
+(function(){
+  const sel=".card-meta-badge,.would-category,.cat-title,.ball-option-title,.chip,.category-chip,.player-pill,.ww-phase-kicker,.taboo-caption,.team73-live-title>strong,.team73-result-number,.ww-narrator-role,.ww-alive-chip,.ww-result-role,.would75-result-top strong";
+  const lead=/^(?:[\p{Extended_Pictographic}\p{Regional_Indicator}\u200d\ufe0f\u20e3]+\s*)+/u;
+  const clean=el=>{const t=el.textContent;const c=t.replace(lead,"");if(c!==t&&el.children.length===0)el.textContent=c;};
+  const run=root=>{if(root.matches&&root.matches(sel))clean(root);root.querySelectorAll&&root.querySelectorAll(sel).forEach(clean);};
+  new MutationObserver(list=>{for(const m of list){const t=m.target.nodeType===1?m.target:m.target.parentElement;if(t)run(t.closest(sel)||t);m.addedNodes.forEach(n=>n.nodeType===1&&run(n));}})
+    .observe(document.body,{subtree:true,childList:true,characterData:true});
+  run(document.body);
+})();
+</script>
+<script src="./gravity.js?v=3.0"></script>
 </body>
 </html>

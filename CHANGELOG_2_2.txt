@@ -63,3 +63,15 @@ VYBE 2.2.1
 - Schriftgrößen, Abstände und Rundungen auf ein einheitliches Raster gebracht.
 - Titel und Ergebnis-Texte ohne Ausrufezeichen und Schlusspunkt.
 - Service-Worker-Cache: vybe-pwa-v52
+
+VYBE 3.0 – Neuer Look „Spieltisch“
+- Ruhiges, warmes Dunkel statt Farbverläufen und Glas.
+- Jedes Spiel ist ein Kartendeck in seiner eigenen Druckfarbe, mit Rahmen und Eckindex.
+- Spielsymbole statt Emojis auf Startseite, Spielleiste, Einstieg und Favoriten.
+- Aufgedeckte Karten auf hellem Kartenkarton, Rahmen in der Farbe des Spiels.
+- Abgerundete Systemschrift für Titel, Zähler in Monospace.
+- Labels in normaler Schreibweise statt Großbuchstaben.
+- Teams mit Farbpunkt statt Emoji-Kreis.
+- Behoben: Aktionsknöpfe bei Wahrheit oder Pflicht wurden unten ausgeblendet.
+- Startbilder und App-Farbe passend zum neuen Look.
+- Service-Worker-Cache: vybe-pwa-v53

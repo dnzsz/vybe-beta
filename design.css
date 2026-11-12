@@ -1,8 +1,10 @@
 /* ==========================================================
-   VYBE 2.2 – Designsystem
-   Idee: leuchtende Farbwelten wie iPhone-Wallpaper, darauf echtes Glas.
-   Alle Ansichten liegen in einer Farbwelt und teilen dieselben Glasflächen.
-   setzt die Farbwelt --c1 bis --c3.
+   VYBE 3 – Designsystem „Spieltisch“
+   Idee: ein Spieleabend am Tisch. Ruhiges, warmes Dunkel als Tisch,
+   jedes Spiel ist ein Kartendeck in seiner eigenen Druckfarbe.
+   Farbe gibt es nur auf den Karten und als Akzent des aktiven Spiels.
+   Signatur: der Eckindex, das Spielsymbol klein in den Kartenecken.
+   Unslopped mit unslop von Damir Sokolovsky (@heydamir), CC BY 4.0.
    ========================================================== */
 
 @property --b1{syntax:"<color>";inherits:true;initial-value:#000}
@@ -11,41 +13,53 @@
 
 /* ---------- Tokens ---------- */
 :root{
-  --b1:#ff2d78;--b2:#c13ce0;--b3:#5a1fd1;
-  --deep:var(--c3);
-  --ink:#111114;
-  --accent:#fff;
-  --on-accent:#111114;
+  /* Tisch: warme Neutraltöne */
+  --bg:#161513;
+  --deep:#12110f;
+  --surface:#211f1c;
+  --raised:#2b2824;
+  --hair:rgba(239,233,222,.09);
+  --fill:rgba(239,233,222,.07);
+  --fill-2:rgba(239,233,222,.12);
+  --text:#efe9de;
+  --muted:#aaa398;
+  --faint:#8a847a;
+  --ink:#1a1714;
+  --paper:#f4efe6;
 
-  --text:#fff;
-  --muted:rgba(255,255,255,.84);
-  --faint:rgba(255,255,255,.62);
-  --hair:rgba(255,255,255,.24);
-  --fill:rgba(255,255,255,.18);
-  --fill-2:rgba(255,255,255,.28);
-  --surface:rgba(255,255,255,.17);
+  /* Karte und Akzent des aktiven Spiels (je Spiel überschrieben) */
+  --card:#d63a3e;
+  --on-card:#fff;
+  --accent:#ff6b6b;
+  --on-accent:#1a1714;
 
-  --glass:rgba(255,255,255,.2);
-  --glass-edge:rgba(255,255,255,.5);
-  --scrim:rgba(0,0,0,.26);
-  --lg:inset 0 1px 0 rgba(255,255,255,.42),inset 0 0 0 .5px rgba(255,255,255,.2),0 10px 28px rgba(0,0,0,.16);
+  /* Semantik, gedämpft */
+  --positive:#3fae6a;
+  --negative:#d9474b;
+
+  --glass:var(--raised);
+  --glass-edge:var(--hair);
+  --scrim:rgba(8,7,6,.62);
+  --lg:inset 0 0 0 1px var(--hair);
+  --float:0 20px 48px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);
 
   --gutter:20px;
-  --r-s:14px;
-  --r-m:20px;
-  --r-l:28px;
-  --r-xl:34px;
+  --r-s:12px;
+  --r-m:16px;
+  --r-l:24px;
+  --r-xl:24px;
 
   --safe-t:env(safe-area-inset-top,0px);
   --safe-b:max(0px,calc(env(safe-area-inset-bottom,0px) - var(--viewport-gap,0px)));
   --pad-b:max(14px,calc(var(--safe-b) + 10px));
 
   --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --display:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 
   --ease:cubic-bezier(.22,1,.36,1);
   --spring:cubic-bezier(.22,1,.36,1);
-  --spring-t:.36s;
+  --spring-t:.32s;
 
   /* Symbole: für alle Spiele aus einem Guss */
   --g-imp:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill-rule='evenodd' d='M2 50C19 22 33 13 50 13s31 9 48 37C81 78 67 87 50 87S19 78 2 50zm48 21a21 21 0 1 0 0-42 21 21 0 0 0 0 42z'/%3E%3Ccircle cx='50' cy='50' r='10'/%3E%3C/svg%3E");
@@ -68,40 +82,28 @@
   --i-chart:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='4' y='12' width='4' height='8' rx='1.4'/%3E%3Crect x='10' y='7' width='4' height='13' rx='1.4'/%3E%3Crect x='16' y='3.5' width='4' height='16.5' rx='1.4'/%3E%3C/svg%3E");
   --i-check:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
 }
-@supports (transition-timing-function:linear(0,1)){
-  :root{
-    --spring:linear(0,.006,.025 2.8%,.101 6.1%,.539 18.9%,.721 25.3%,.849 31.5%,.937 38.1%,.968 41.8%,.991 45.7%,1.006 50.1%,1.015 55%,1.017 63.9%,1.001 85.9%,1);
-    --spring-t:.5s;
-  }
-}
 
-/* Farbwelten: --b sind die Grundfarben, Dunkel vertieft sie nur */
-html{--c1:var(--b1);--c2:var(--b2);--c3:var(--b3);color-scheme:only light}
-html[data-room="imp"]{--b1:#ff2d78;--b2:#c13ce0;--b3:#5a1fd1}
-html[data-room="would"]{--b1:#ffb300;--b2:#ff6a00;--b3:#e8213f}
-html[data-room="ball"]{--b1:#34d865;--b2:#00b894;--b3:#0070d9}
-html[data-room="taboo"]{--b1:#c95cf5;--b2:#6a5cf0;--b3:#2a33cc}
-html[data-room="truth"]{--b1:#ff9f0a;--b2:#ff375f;--b3:#c4176b}
-html[data-room="who"]{--b1:#4fd8f5;--b2:#00aee0;--b3:#0a63e0}
-html[data-room="knowledge"]{--b1:#40c4fa;--b2:#0a84ff;--b3:#3a36d6}
-html[data-room="teamer"]{--b1:#ffb800;--b2:#ff8000;--b3:#ea4522}
-html[data-room="werewolf"]{--b1:#8f7bff;--b2:#4a44c9;--b3:#17164a}
-html:has(#truthPlay.truth-is-truth.active){--b1:#40c4fa;--b2:#0a84ff;--b3:#123fc0}
+/* Kartendecks: Druckfarbe, Text auf der Karte, Akzent auf dem Tisch */
+html{color-scheme:only dark}
+html[data-room="imp"],.game-card.imp{--card:#d63a3e;--on-card:#fff;--accent:#ff6b6b}
+html[data-room="would"],.game-card.would{--card:#f2a33a;--on-card:#1a1714;--accent:#f5b14c}
+html[data-room="ball"],.game-card.ball{--card:#22874c;--on-card:#fff;--accent:#4cc38a}
+html[data-room="taboo"],.game-card.taboo{--card:#6d4fe0;--on-card:#fff;--accent:#a191ff}
+html[data-room="truth"],.game-card.truth{--card:#e0457b;--on-card:#fff;--accent:#ff7aa5}
+html[data-room="who"],.game-card.who{--card:#2bb3c9;--on-card:#1a1714;--accent:#4fc8dc}
+html[data-room="knowledge"],.game-card.knowledge{--card:#2f62d6;--on-card:#fff;--accent:#79a0ff}
+html[data-room="teamer"],.game-card.teamer{--card:#f0c53e;--on-card:#1a1714;--accent:#f0c53e}
+html[data-room="werewolf"],.game-card.werewolf{--card:#2e2a6e;--on-card:#efe9de;--accent:#a39cff}
+html:has(#truthPlay.truth-is-truth.active){--card:#2f62d6;--on-card:#fff;--accent:#79a0ff}
 
 /* ---------- Grundlagen ---------- */
 *,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden],.hidden{display:none!important}
 html{
   height:100%;
-  background-color:var(--c3);
-  background-image:
-    radial-gradient(90% 40% at 100% 44%,color-mix(in srgb,var(--c2) 72%,#fff),transparent 72%),
-    radial-gradient(80% 34% at 0 26%,var(--c1),transparent 74%),
-    linear-gradient(var(--c1),var(--c2) 56%,var(--c3));
-  background-repeat:no-repeat;
+  background:var(--bg);
   -webkit-text-size-adjust:100%;
   overscroll-behavior:none;
-  transition:--b1 .55s var(--ease),--b2 .55s var(--ease),--b3 .55s var(--ease);
 }
 body{
   margin:0;height:100%;overflow:hidden;overscroll-behavior:none;
@@ -808,16 +810,6 @@ input::placeholder{color:var(--faint)}
 .pass>*{flex:none}
 
 
-/* ---------- Liquid Glass auf Tasten und Listen in den Farbwelten ---------- */
-.back,.icon-btn{box-shadow:var(--lg)}
-.panel,.ball-option,.category-card,.team73-panel,.knowledge-subject{
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.38),inset 0 0 0 .5px rgba(255,255,255,.2);
-  -webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);
-}
-.primary{background:#fff!important;color:#111114!important;box-shadow:0 12px 26px rgba(0,0,0,.18)}
-.secondary{box-shadow:var(--lg)}
-.game-hero h1{text-shadow:0 2px 14px rgba(0,0,0,.12)}
-
 /* ---------- Neutrale Bildschirme: wie iOS-Einstellungen ---------- */
 :is(#settings,#favorites,#stats,#releaseNotes,#dataInfo){padding-left:16px;padding-right:16px;--gutter:16px}
 :is(#settings,#favorites,#stats,#releaseNotes,#dataInfo) .panel{border-radius:24px}
@@ -836,53 +828,9 @@ input::placeholder{color:var(--faint)}
 .knowledge-subject{min-width:0;overflow-wrap:anywhere}
 
 
-/* ---------- Spielleiste: dunkles Glas wie Apple Music ---------- */
-.dock{
-  position:relative;flex:none;height:72px;margin:6px 12px max(6px,var(--safe-b));border-radius:36px;
-  background:rgba(18,18,22,.56);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 .5px rgba(255,255,255,.14),0 14px 34px rgba(0,0,0,.26);
-  -webkit-backdrop-filter:blur(30px) saturate(190%);backdrop-filter:blur(30px) saturate(190%);
-  touch-action:none;user-select:none;-webkit-user-select:none;
-}
-.dock-clip{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
-.dock-track{position:relative;display:flex;gap:0;width:max-content;height:100%;padding:0 4px;will-change:transform}
-.dock-item{
-  position:relative;z-index:1;flex:none;width:82px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
-  pointer-events:none;color:rgba(255,255,255,.92);
-}
-.dock-emoji{font-size:28px;line-height:1.12;transition:transform var(--spring-t) var(--spring)}
-.dock-label{font-size:12px;font-weight:600;letter-spacing:0;white-space:nowrap;transition:color .2s var(--ease)}
-.dock-item.active .dock-label{color:color-mix(in srgb,var(--b1) 55%,#fff)}
-.dock-item.active .dock-emoji{transform:scale(1.08)}
-.dock-lens{
-  position:absolute;z-index:3;left:0;top:4px;bottom:4px;width:82px;border-radius:32px;pointer-events:none;
-  background:rgba(255,255,255,.14);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.26),inset 0 0 0 .5px rgba(255,255,255,.14);
-  will-change:transform;transition:background .2s var(--ease),box-shadow .2s var(--ease);
-}
-.dock.dragging .dock-lens{
-  background:linear-gradient(150deg,rgba(255,255,255,.3),rgba(255,255,255,.06) 55%,rgba(255,255,255,.18));
-  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.85),inset 0 -1.5px 0 rgba(255,255,255,.34),inset 0 0 0 .75px rgba(255,255,255,.55),inset 0 0 18px rgba(255,255,255,.14),0 14px 30px rgba(0,0,0,.34);
-  -webkit-backdrop-filter:blur(1.5px) saturate(200%) brightness(1.2);backdrop-filter:blur(1.5px) saturate(200%) brightness(1.2);
-}
-.dock.dragging .dock-item.active .dock-emoji{transform:scale(1.2)}
-
 .game-pager.free{scroll-snap-type:none}
 .game-pager .game-card.current .game-art{animation:art-in .5s var(--spring) both}
 @keyframes art-in{from{transform:scale(.84);opacity:.6}to{transform:none;opacity:1}}
-
-/* ---------- 10.1: Karten sind überall Glas ---------- */
-.backface,.backface.imp,.ball-back,.would-back,.who-play-card,.truth-v72-card,.team73-card-front,.team73-card-back{
-  --ink:#fff;color:#fff;
-  background:linear-gradient(150deg,rgba(255,255,255,.42),rgba(255,255,255,.14));
-  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.72),inset 0 0 0 .5px rgba(255,255,255,.42),0 20px 46px rgba(0,0,0,.18);
-}
-#impFlipArea .backface,#wouldFlip .would-back,.who-play-card,.truth-v72-card{-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%)}
-.backface .card-meta-badge,.truth-v72-card .card-meta-badge,.who-play-card .card-meta-badge,.would-back .would-category{background:rgba(255,255,255,.22);color:#fff}
-.would-person{background:rgba(255,255,255,.2);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 0 0 .5px rgba(255,255,255,.22)}
-.would-person.selected,.would-person.active{background:#fff;color:#111114}
-.would-back-hint,.who-hint{color:rgba(255,255,255,.84)}
-.team73-card-face{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.72),inset 0 0 0 .5px rgba(255,255,255,.42),0 20px 46px rgba(0,0,0,.2)}
 
 /* ---------- 10.1: Einheitliche Bewegung ---------- */
 @keyframes enter-forward{from{opacity:0;transform:translate3d(18px,0,0) scale(.975)}to{opacity:1;transform:none}}
@@ -898,28 +846,9 @@ button:active,.category-card:active,.ball-option:active{transition-duration:.1s,
   .panel,.face,.play-card,.ball-option,.category-card,.game-pager .game-card.current .game-art{animation:none}
 }
 
-.game-hero .game-icon{
-  position:absolute;right:0;top:12px;width:84px;height:84px;display:grid;place-items:center;border-radius:24px;font-size:46px;line-height:1;
-  -webkit-mask:none;mask:none;
-  background:linear-gradient(145deg,rgba(255,255,255,.42),rgba(255,255,255,.12));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 0 0 .5px rgba(255,255,255,.45),0 14px 30px rgba(0,0,0,.16);
-}
-.team73-hero-icon{background:#fff}
-
 /* Hintergrund läuft über die ganze Displayhöhe */
-html{background-size:100% var(--full-h,100%)}
-.team73-hero-icon{
-  right:0;top:8px;width:84px;height:84px;display:grid;place-items:center;border-radius:24px;font-size:46px;line-height:1;
-  -webkit-mask:none;mask:none;
-  background:linear-gradient(145deg,rgba(255,255,255,.42),rgba(255,255,255,.12));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 0 0 .5px rgba(255,255,255,.45),0 14px 30px rgba(0,0,0,.16);
-}
-.favorites-grid .game-art{width:auto;height:auto;font-size:30px;line-height:1;background:none;-webkit-mask:none;mask:none}
 
 
-.switch:not(:checked){background:rgba(255,255,255,.28)}
-.switch:checked{background:#34c759}
-.switch::before{background:#fff}
 
 /* ---------- Schwerkraft-Modus ---------- */
 html.gravity,html.gravity *{touch-action:none;animation:none!important}
@@ -968,3 +897,257 @@ html.gravity .row{max-width:188px}
 body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input,textarea,[contenteditable]{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
 img{-webkit-user-drag:none}
+
+/* ==========================================================
+   VYBE 3 – Spieltisch
+   Ruhige Fläche, eine Karte pro Screen trägt Farbe und Material.
+   ========================================================== */
+
+/* ---------- Schrift ---------- */
+h1,h2{font-weight:600;letter-spacing:-.02em}
+.game-pager .game-name,.word,.would-question-text,.ball-question,.truth-prompt,.ball-answer,.quiz-result-title,
+.result-center h1,.result-center h2,.result-head h1,.result-head h2,.big-result-number,.quiz-percent-ring span,.pass-name,
+.truth-v72-player,.truth-choice-card strong,.taboo-word,.who-character,.team73-card-face>strong,.ww-role-name,
+.ww-inspected-player,.stats-hero-value,.stat-number,.player-summary strong,.game-hero h1,.ww-title,.team73-hero h1,
+.settings-page::before,.splash-name,.wordmark,.favorite-sheet-title,.exit-sheet-title,.taboo-timer-number{font-weight:600;letter-spacing:-.02em}
+.ball-counter,.would-round-count,.quiz-live-score,.player-number,.team73-player-index,.team73-progress-badge,
+.would75-rank,.would75-votes,.taboo-round-stats,.who-card-top,.truth-v72-topline,.choice-num,.taboo-timer-number{font-variant-numeric:tabular-nums}
+.ball-counter,.would-round-count,.team73-progress-badge,.would75-rank,.player-number,.team73-player-index{font-family:var(--mono);font-size:13px;font-weight:400}
+:is(#settings,#favorites,#stats,#releaseNotes,#dataInfo) .section-label{text-transform:none;letter-spacing:0;margin:24px 16px 8px}
+.section-label{color:var(--faint)}
+
+/* ---------- Kopfzeile und runde Tasten ---------- */
+.back,.icon-btn{background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair);-webkit-backdrop-filter:none;backdrop-filter:none;color:var(--text)}
+.back:active,.icon-btn:active{transform:scale(.94);background:var(--raised)}
+.wordmark{font-family:var(--display);font-size:24px;color:var(--text)}
+
+/* ---------- Flächen ---------- */
+.panel,.ball-option,.category-card,.team73-panel,.knowledge-subject,.stat-tile,.quiz-result-stat,.quiz-best-panel,
+.result-row,.taboo-player-result,.would75-result,.truth-final-stat,.team73-live-card,.team73-result-card,
+.settings74-note-card,.ww-role-balance,.ww-script-text,.favorites-empty,.player-row,.team73-player-row,.ww-player-row,
+.ww-name-option,.choice{
+  background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair);-webkit-backdrop-filter:none;backdrop-filter:none;
+}
+.panel{border-radius:var(--r-m)}
+:is(#settings,#favorites,#stats,#releaseNotes,#dataInfo) .panel{border-radius:var(--r-m)}
+:is(#settings,#favorites,#stats,#releaseNotes,#dataInfo) .row-icon{display:none}
+:is(#settings,#favorites,#stats,#releaseNotes,#dataInfo) .row+.row::before{left:16px}
+.row+.row::before{background:var(--hair)}
+button.row:active,.ball-option:active,.category-card:active{background:var(--raised)}
+.add-player,.team73-add-row{background:var(--fill)}
+.add-player button,.team73-add-row button{background:var(--text);color:var(--ink);border-radius:8px}
+.cat-icon,.ww-role-icon,.ww-role-emoji{display:none}
+.ww-script-text{color:var(--text)}
+.ball-option.active,.category-card.active,.knowledge-subject.active{box-shadow:inset 0 0 0 1.5px var(--accent)}
+
+/* ---------- Aktionen ---------- */
+.primary{background:var(--text)!important;color:var(--ink)!important;box-shadow:none}
+.secondary{background:var(--surface)!important;color:var(--text)!important;box-shadow:inset 0 0 0 1px var(--hair)}
+.primary:active{background:#ddd6c9!important}
+.secondary:active{background:var(--raised)!important}
+.switch:not(:checked){background:var(--fill-2)}
+.switch:checked{background:var(--accent)}
+.switch::before{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.choice-num[class*="selected-"],.choice-num[style*="gradient"],.choice.on,.chip.on,.chip.selected,.category-chip.active,
+.team73-count.selected-team,.team73-count.active,.team73-count.on,.ww-narrator-button.active,.ww-narrator-button.selected,
+.ww-narrator-button.on,.ww-name-option.selected,.ww-name-option.active,.ww-name-option.on{background:var(--accent)!important;color:var(--on-accent)!important}
+.quiz-rate-wrong,.quiz-swipe-left,.quiz-answer-flash.wrong span,.ww-witch-poison{background:var(--negative)}
+.quiz-rate-correct,.quiz-swipe-right,.quiz-answer-flash.correct span,.ww-witch-heal{background:var(--positive)}
+.quiz-correct-mini{color:var(--positive)}.quiz-wrong-mini{color:var(--negative)}
+.danger-soft{color:#ff8a80!important}
+
+/* ---------- Die Spielkarte ---------- */
+/* Vorderseite: Druckfarbe mit Rahmenlinie, Eckindex in den Ecken */
+.game-pager .game-art,.face,.would-face,.ball-face,.play-card,.who-play-card,.taboo-play-card,.truth-v72-card,
+.team73-card-front,.truth-choice-card{
+  --text:var(--on-card);
+  --muted:color-mix(in srgb,var(--on-card) 74%,transparent);
+  --faint:color-mix(in srgb,var(--on-card) 56%,transparent);
+  --fill:color-mix(in srgb,var(--on-card) 12%,transparent);
+  --fill-2:color-mix(in srgb,var(--on-card) 20%,transparent);
+  color:var(--on-card);
+  background:linear-gradient(165deg,color-mix(in srgb,var(--card) 90%,#fff),var(--card) 46%);
+  box-shadow:
+    inset 0 0 0 12px var(--card),
+    inset 0 0 0 13px color-mix(in srgb,var(--on-card) 26%,transparent),
+    inset 0 1px 0 rgba(255,255,255,.22),
+    0 18px 40px rgba(0,0,0,.42),0 2px 4px rgba(0,0,0,.3);
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+}
+/* Rückseite: aufgedeckt auf Kartenkarton, Rahmen in der Druckfarbe */
+.backface,.backface.imp,.ball-back,.would-back,.team73-card-back{
+  --text:var(--ink);--on-card:var(--ink);
+  --muted:rgba(26,23,20,.64);--faint:rgba(26,23,20,.46);
+  --fill:rgba(26,23,20,.07);--fill-2:rgba(26,23,20,.12);
+  color:var(--ink);
+  background:var(--paper);
+  box-shadow:
+    inset 0 0 0 12px var(--paper),
+    inset 0 0 0 13px color-mix(in srgb,var(--card) 70%,transparent),
+    0 18px 40px rgba(0,0,0,.42),0 2px 4px rgba(0,0,0,.3);
+}
+.backface *,.ball-back *{color:inherit}
+.face,.would-face,.ball-face,.play-card,.who-play-card,.taboo-play-card,.truth-v72-card{border-radius:var(--r-l)}
+.play-card,.who-play-card,.taboo-play-card,.truth-v72-card{position:relative}
+.would-back-title{color:var(--ink)}
+.would-back-hint,.who-hint{color:var(--muted)}
+.would-person{background:var(--fill);color:var(--ink);box-shadow:none}
+.would-person.selected,.would-person.active{background:var(--card);color:#fff}
+.card-meta-badge,.would-category,.player-pill,.badge,
+.backface .card-meta-badge,.truth-v72-card .card-meta-badge,.who-play-card .card-meta-badge,.would-back .would-category{background:var(--fill);color:inherit;font-weight:500}
+.taboo-caption{color:var(--muted)}
+.taboo-forbidden{color:var(--on-card)}
+.hint,.ball-detail,.ball-source,.role,.knowledge-answer-label{opacity:1;color:var(--muted)}
+.face.front>div:last-child{color:var(--muted)!important}
+
+/* Eckindex: das Spielsymbol oben links und unten rechts */
+.face::after,.would-face::after,.ball-face::after,.play-card::after,.who-play-card::after,.taboo-play-card::after,
+.truth-v72-card::after,.team73-card-face::after,.game-pager .game-art::after,.truth-choice-card::after{
+  content:"";position:absolute;inset:20px;pointer-events:none;background:currentColor;opacity:.9;
+  -webkit-mask:var(--g) left top/14px 14px no-repeat,var(--g) right bottom/14px 14px no-repeat;
+  mask:var(--g) left top/14px 14px no-repeat,var(--g) right bottom/14px 14px no-repeat;
+}
+.backface::after,.ball-back::after,.would-back::after,.team73-card-back::after{background:var(--card)}
+.play-card>.card-meta-badge,.ball-card-meta,.dual-meta,.would-category,.imp-category-badge{top:28px}
+
+/* Startseite: jedes Spiel ist eine große Karte */
+.game-card.imp{--g:var(--g-imp)}.game-card.would{--g:var(--g-would)}.game-card.ball{--g:var(--g-ball)}
+.game-card.taboo{--g:var(--g-taboo)}.game-card.truth{--g:var(--g-truth)}.game-card.who{--g:var(--g-who)}
+.game-card.knowledge{--g:var(--g-knowledge)}.game-card.teamer{--g:var(--g-teamer)}.game-card.werewolf{--g:var(--g-werewolf)}
+.game-pager .game-card{color:var(--text);padding:0 32px}
+.game-pager .game-art{
+  width:min(52vw,208px);height:auto;aspect-ratio:5/7;border-radius:20px;margin-bottom:32px;font-size:0;
+  transition:transform .3s var(--ease);
+}
+.game-pager .game-art::before{
+  content:"";position:absolute;left:26%;right:26%;top:30%;bottom:30%;background:currentColor;
+  -webkit-mask:var(--g) center/contain no-repeat;mask:var(--g) center/contain no-repeat;
+}
+.game-pager .game-card.current .game-art{animation:card-in .5s var(--ease) both}
+@keyframes card-in{from{transform:translate3d(0,12px,0) rotate(-3deg);opacity:.4}to{transform:none;opacity:1}}
+.game-pager .game-card:active .game-art,.game-pager .game-card.long-pressing .game-art{transform:scale(.97) rotate(-1deg)}
+.game-pager .game-name{font-size:clamp(34px,10vw,44px);text-shadow:none;color:var(--text)}
+.game-tag{margin-top:8px;font-size:17px;font-weight:400;color:var(--muted)}
+.game-play{height:52px;min-width:160px;margin-top:28px;padding:0 32px;background:var(--text);color:var(--ink);font-size:17px;font-weight:600;letter-spacing:0;box-shadow:none}
+.game-card.is-favorite .game-tag::after{content:" · Favorit";color:var(--faint)}
+
+/* Spiel-Einstieg: kleine Karte des Decks neben dem Titel */
+.game-hero .game-icon,.team73-hero-icon{
+  position:absolute;right:4px;top:16px;width:60px;height:84px;border-radius:10px;font-size:0;color:var(--on-card);
+  -webkit-mask:none;mask:none;transform:rotate(6deg);
+  background:linear-gradient(165deg,color-mix(in srgb,var(--card) 90%,#fff),var(--card) 46%);
+  box-shadow:inset 0 0 0 5px var(--card),inset 0 0 0 6px color-mix(in srgb,var(--on-card) 26%,transparent),0 12px 24px rgba(0,0,0,.4);
+}
+.game-hero .game-icon::before,.team73-hero-icon::before{
+  content:"";position:absolute;inset:26px 16px;background:currentColor;
+  -webkit-mask:var(--g) center/contain no-repeat;mask:var(--g) center/contain no-repeat;
+}
+.game-hero h1,.team73-hero h1{text-shadow:none}
+
+/* Favoriten: Zeilen mit kleiner Karte */
+.favorites-grid .game-card{background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair);color:var(--text);height:72px;border-radius:var(--r-m);gap:16px}
+.favorites-grid .game-art{
+  position:relative;flex:none;width:32px;height:44px;border-radius:6px;font-size:0;color:var(--on-card);
+  -webkit-mask:none;mask:none;background:var(--card);box-shadow:inset 0 0 0 3px var(--card),inset 0 0 0 4px color-mix(in srgb,var(--on-card) 26%,transparent);
+}
+.favorites-grid .game-art::before{content:"";position:absolute;inset:12px 8px;background:currentColor;-webkit-mask:var(--g) center/contain no-repeat;mask:var(--g) center/contain no-repeat}
+.favorites-grid .game-name{font-size:19px}
+
+/* Wahrheit oder Pflicht: zwei Karten zur Wahl */
+.truth-choice-card{position:relative;border-radius:var(--r-l);padding:28px 28px}
+#chooseTruth{--card:#2f62d6;--on-card:#fff;--g:var(--g-truth)}
+#chooseDare{--card:#e0457b;--on-card:#fff;--g:var(--g-truth)}
+.truth-choice-card small{opacity:1;color:var(--muted)}
+.truth-v72-player{color:var(--text)!important}
+
+/* Team-Ausloser: Kartenstapel */
+.team73-deck-card{background:var(--card);box-shadow:inset 0 0 0 5px var(--card),inset 0 0 0 6px color-mix(in srgb,var(--on-card) 26%,transparent),0 8px 18px rgba(0,0,0,.35)}
+.team73-card-face{border-radius:20px}
+.team73-live-slot{background:var(--fill)}
+.team73-live-slot.filled{background:var(--fill-2)}
+
+/* Ergebnisse */
+.big-result-number,.team73-result-number,.ww-role-name,.ww-inspected-player,.pass-name{color:var(--accent)}
+.quiz-percent-ring span{background:var(--bg)}
+.result-row.correct,.result-row.wrong{color:var(--text)}
+.imp-final-panel .word{color:var(--accent)!important}
+
+/* ---------- Spielleiste ---------- */
+.dock{
+  position:relative;flex:none;height:68px;margin:8px 16px max(8px,var(--safe-b));border-radius:20px;
+  background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair);
+  touch-action:none;user-select:none;-webkit-user-select:none;
+}
+.dock-clip{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
+.dock-track{position:relative;display:flex;gap:0;width:max-content;height:100%;padding:0 4px;will-change:transform}
+.dock-item{
+  position:relative;z-index:1;flex:none;width:82px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  pointer-events:none;color:var(--faint);
+}
+.dock-item[data-slide="0"]{--g:var(--g-imp);--accent:#ff6b6b}.dock-item[data-slide="1"]{--g:var(--g-would);--accent:#f5b14c}
+.dock-item[data-slide="2"]{--g:var(--g-ball);--accent:#4cc38a}.dock-item[data-slide="3"]{--g:var(--g-taboo);--accent:#a191ff}
+.dock-item[data-slide="4"]{--g:var(--g-truth);--accent:#ff7aa5}.dock-item[data-slide="5"]{--g:var(--g-who);--accent:#4fc8dc}
+.dock-item[data-slide="6"]{--g:var(--g-knowledge);--accent:#79a0ff}.dock-item[data-slide="7"]{--g:var(--g-teamer);--accent:#f0c53e}
+.dock-item[data-slide="8"]{--g:var(--g-werewolf);--accent:#a39cff}
+.dock-emoji{
+  width:20px;height:20px;font-size:0;background:currentColor;
+  -webkit-mask:var(--g) center/contain no-repeat;mask:var(--g) center/contain no-repeat;
+  transition:background-color .2s var(--ease);
+}
+.dock-label{font-size:12px;font-weight:500;letter-spacing:0;white-space:nowrap;transition:color .2s var(--ease)}
+.dock-item.active{color:var(--text)}
+.dock-item.active .dock-emoji{background:var(--accent)}
+.dock-lens{
+  position:absolute;z-index:0;left:0;top:6px;bottom:6px;width:82px;border-radius:14px;pointer-events:none;
+  background:var(--raised);box-shadow:inset 0 0 0 1px var(--hair);
+  will-change:transform;transition:background-color .2s var(--ease),box-shadow .2s var(--ease);
+}
+.dock.dragging .dock-lens{background:#34302b;box-shadow:inset 0 0 0 1px rgba(239,233,222,.16),0 8px 20px rgba(0,0,0,.4)}
+
+/* ---------- Schwebendes: Menü, Sheet, Hinweis ---------- */
+.menu,.favorite-sheet,.setting-toast,.egg-popup{
+  background:var(--raised);box-shadow:inset 0 0 0 1px var(--hair),var(--float);
+  -webkit-backdrop-filter:none;backdrop-filter:none;color:var(--text);
+}
+.menu button:active{background:var(--fill-2)}
+.favorite-sheet{border-radius:24px}
+.favorite-sheet-action{background:var(--text);color:var(--ink)}
+.favorite-sheet-action.remove{background:var(--negative);color:#fff}
+.favorite-sheet-cancel{background:var(--fill-2);color:var(--text)}
+.egg-popup{border-radius:24px}
+.egg-emoji{display:none}
+.splash{background:var(--bg)}
+.ww-phase-transition{background:var(--deep)}
+
+/* ---------- Bewegung: eine Kurve, kein Nachfedern ---------- */
+.screen.active{animation-duration:.32s;animation-timing-function:var(--ease)}
+@keyframes enter-forward{from{opacity:0;transform:translate3d(12px,0,0)}to{opacity:1;transform:none}}
+@keyframes enter-back{from{opacity:0;transform:translate3d(-12px,0,0)}to{opacity:1;transform:none}}
+@keyframes fade-up{from{opacity:0;transform:translate3d(0,8px,0)}to{opacity:1;transform:none}}
+@keyframes menu-in{from{opacity:0;transform:translate3d(0,-4px,0) scale(.98)}to{opacity:1;transform:none}}
+button,.category-card,.ball-option{transition:transform .16s var(--ease),opacity .16s var(--ease),background-color .16s var(--ease)}
+.panel,.face,.play-card,.ball-option,.category-card{animation-duration:.36s;animation-timing-function:var(--ease)}
+@media (prefers-reduced-motion:reduce){
+  .game-pager .game-card.current .game-art{animation:none}
+}
+
+/* ---------- Schwerkraft-Modus im neuen Look ---------- */
+html.gravity .dock-item{background:var(--surface)}
+html.gravity .row,html.gravity .section-label,html.gravity .made-by,html.gravity .page-title,html.gravity .wordmark{background:var(--surface)}
+html.gravity .section-label,html.gravity .made-by{color:var(--text)}
+
+/* Spielbühnen scrollen nicht: kein Ausblend-Verlauf über den Aktionen */
+.truth-v72-play,.content.game-stage{-webkit-mask-image:none;mask-image:none}
+.truth-v72-actions{grid-template-columns:1fr 1.2fr}
+
+/* Teams: Farbpunkt statt Emoji-Kreis, gleiche Reihenfolge wie zuvor */
+.team73-live-card:nth-child(6n+1),.team73-result-card:nth-child(6n+1){--team:#79a0ff}
+.team73-live-card:nth-child(6n+2),.team73-result-card:nth-child(6n+2){--team:#a191ff}
+.team73-live-card:nth-child(6n+3),.team73-result-card:nth-child(6n+3){--team:#4cc38a}
+.team73-live-card:nth-child(6n+4),.team73-result-card:nth-child(6n+4){--team:#f5b14c}
+.team73-live-card:nth-child(6n+5),.team73-result-card:nth-child(6n+5){--team:#ff6b6b}
+.team73-live-card:nth-child(6n+6),.team73-result-card:nth-child(6n+6){--team:#f0c53e}
+.team73-live-title>strong::before,.team73-result-number::before{
+  content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:var(--team,var(--accent));vertical-align:1px;
+}
+.team73-result-number{color:var(--text)}
