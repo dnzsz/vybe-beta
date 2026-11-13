@@ -509,9 +509,18 @@ input::placeholder{color:var(--faint)}
 .would75-votes{margin-left:auto;color:var(--muted);font-weight:500}
 .would75-bar{height:4px;margin-top:8px;border-radius:99px;background:var(--fill);overflow:hidden}
 .would75-bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
-.imp-final-panel{padding:20px!important;text-align:center}
-.imp-final-panel .word{color:var(--accent)!important;font-size:38px!important}
-.imp-result-concept{padding:14px 16px;margin-bottom:6px}
+/* Impostor-Auflösung: der Begriff auf der Karte, der Impostor groß darunter */
+.imp-result{display:flex;flex-direction:column;gap:20px;padding-top:8px;-webkit-mask-image:none;mask-image:none}
+.imp-result-card{
+  position:relative;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  min-height:44vh;padding:40px 28px;border-radius:var(--r-l);text-align:center;
+}
+.imp-result-kicker{font-size:14px;font-weight:500;color:var(--muted)}
+.imp-result-word{font-family:var(--display);font-size:clamp(40px,12.5vw,58px);font-weight:600;letter-spacing:-.025em;line-height:1;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:anywhere;text-wrap:balance}
+.imp-result-category{position:static;transform:none;margin-top:4px}
+.imp-result-who{display:flex;flex-direction:column;gap:4px;padding:0 4px;text-align:center}
+.imp-result-who span{font-size:15px;color:var(--muted)}
+.imp-result-who strong{font-family:var(--display);font-size:clamp(36px,11vw,50px);font-weight:600;letter-spacing:-.025em;line-height:1.05;color:var(--accent);overflow-wrap:anywhere}
 
 /* Weitergeben */
 .pass,.pass-screen{flex:1;min-height:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;text-align:left}
@@ -987,25 +996,28 @@ button.row:active,.ball-option:active,.category-card:active{background:var(--rai
     0 18px 40px rgba(0,0,0,.42),0 2px 4px rgba(0,0,0,.3);
   -webkit-backdrop-filter:none;backdrop-filter:none;
 }
-/* Rückseite: aufgedeckt auf Kartenkarton, Rahmen in der Druckfarbe */
-.backface,.backface.imp,.ball-back,.would-back,.team73-card-back{
-  --text:var(--ink);--on-card:var(--ink);
-  --muted:rgba(26,23,20,.64);--faint:rgba(26,23,20,.46);
-  --fill:rgba(26,23,20,.07);--fill-2:rgba(26,23,20,.12);
-  color:var(--ink);
-  background:var(--paper);
+/* Rückseite: aufgedeckt in derselben Druckfarbe wie die Vorderseite */
+.backface,.backface.imp,.ball-back,.would-back,.team73-card-back,.imp-result-card{
+  --text:var(--on-card);
+  --muted:color-mix(in srgb,var(--on-card) 74%,transparent);
+  --faint:color-mix(in srgb,var(--on-card) 56%,transparent);
+  --fill:color-mix(in srgb,var(--on-card) 12%,transparent);
+  --fill-2:color-mix(in srgb,var(--on-card) 20%,transparent);
+  color:var(--on-card);
+  background:linear-gradient(165deg,color-mix(in srgb,var(--card) 90%,#fff),var(--card) 46%);
   box-shadow:
-    inset 0 0 0 12px var(--paper),
-    inset 0 0 0 13px color-mix(in srgb,var(--card) 70%,transparent),
+    inset 0 0 0 12px var(--card),
+    inset 0 0 0 13px color-mix(in srgb,var(--on-card) 26%,transparent),
+    inset 0 1px 0 rgba(255,255,255,.22),
     0 18px 40px rgba(0,0,0,.42),0 2px 4px rgba(0,0,0,.3);
 }
 .backface *,.ball-back *{color:inherit}
 .face,.would-face,.ball-face,.play-card,.who-play-card,.taboo-play-card,.truth-v72-card{border-radius:var(--r-l)}
 .play-card,.who-play-card,.taboo-play-card,.truth-v72-card{position:relative}
-.would-back-title{color:var(--ink)}
+.would-back-title{color:var(--on-card)}
 .would-back-hint,.who-hint{color:var(--muted)}
-.would-person{background:var(--fill);color:var(--ink);box-shadow:none}
-.would-person.selected,.would-person.active{background:var(--card);color:#fff}
+.would-person{background:var(--fill-2);color:var(--on-card);box-shadow:none}
+.would-person.selected,.would-person.active{background:var(--on-card);color:var(--card)}
 .card-meta-badge,.would-category,.player-pill,.badge,
 .backface .card-meta-badge,.truth-v72-card .card-meta-badge,.who-play-card .card-meta-badge,.would-back .would-category{background:var(--fill);color:inherit;font-weight:500}
 .taboo-caption{color:var(--muted)}
@@ -1020,7 +1032,11 @@ button.row:active,.ball-option:active,.category-card:active{background:var(--rai
   -webkit-mask:var(--g) left top/14px 14px no-repeat,var(--g) right bottom/14px 14px no-repeat;
   mask:var(--g) left top/14px 14px no-repeat,var(--g) right bottom/14px 14px no-repeat;
 }
-.backface::after,.ball-back::after,.would-back::after,.team73-card-back::after{background:var(--card)}
+.imp-result-card::after{
+  content:"";position:absolute;inset:20px;pointer-events:none;background:currentColor;opacity:.9;
+  -webkit-mask:var(--g) left top/14px 14px no-repeat,var(--g) right bottom/14px 14px no-repeat;
+  mask:var(--g) left top/14px 14px no-repeat,var(--g) right bottom/14px 14px no-repeat;
+}
 .play-card>.card-meta-badge,.ball-card-meta,.dual-meta,.would-category,.imp-category-badge{top:28px}
 
 /* Startseite: jedes Spiel ist eine große Karte */

@@ -938,13 +938,15 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 
 <section id="impResult" class="screen">
   <div class="top"><button class="back" data-open="home" aria-label="Zurück"></button><div class="page-title">Auflösung</div><span style="width:43px"></span></div>
-  <div class="content">
-    <div class="section-label" style="margin:14px 2px 2px">Impostor</div>
-    <h1 style="margin:0 0 10px;font-size:36px">Erwischt</h1>
-    <div id="impResultList" class="result-list"></div>
-    <div class="panel imp-final-panel" style="padding:20px;text-align:center;margin-top:12px">
-      <div id="impFinalLabel" style="color:var(--muted)">Der Impostor war</div>
-      <div id="impFinalImpostor" class="word" style="font-size:36px"></div>
+  <div class="content imp-result">
+    <div class="imp-result-card">
+      <span class="imp-result-kicker">Der Begriff war</span>
+      <div id="impResultWord" class="imp-result-word">Begriff</div>
+      <span id="impResultCategory" class="card-meta-badge imp-result-category"></span>
+    </div>
+    <div class="imp-result-who">
+      <span id="impFinalLabel">Der Impostor war</span>
+      <strong id="impFinalImpostor">Name</strong>
     </div>
   </div>
   <div class="two"><button class="secondary" data-open="home">Zur Startseite</button><button id="restartImpostor" class="primary">Neue Runde</button></div>
@@ -2347,19 +2349,12 @@ document.getElementById("impNextBtn").addEventListener("click",()=>{
   if(impIndex<impPlayers.length)prepareImpPass();else go("impDiscussion");
 });
 document.getElementById("showImpResult").addEventListener("click",()=>{
-  const list=document.getElementById("impResultList");
-  list.innerHTML="";
   const impostorNames=[];
-
   impRoles.forEach((role,i)=>{
     if(role)impostorNames.push(impPlayers[i]);
   });
-
-  const concept=document.createElement("div");
-  concept.className="panel imp-result-concept";
-  concept.innerHTML=`<span>Begriff</span><strong>${impItem.word}</strong>`;
-  list.appendChild(concept);
-
+  document.getElementById("impResultWord").textContent=impItem.word;
+  document.getElementById("impResultCategory").textContent=impItem.categoryName||"";
   document.getElementById("impFinalImpostor").textContent=impostorNames.join(" & ");
   document.getElementById("impFinalLabel").textContent=impostorNames.length>1?"Die Impostor waren":"Der Impostor war";
   recordGameOnce("impostor",1);
