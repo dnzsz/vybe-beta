@@ -5080,6 +5080,69 @@ if ("serviceWorker" in navigator) {
 </script>
 
 <script>
+/* Wischen vom linken Rand: zurück wie in nativen Apps */
+(function(){
+  const EDGE=24;
+  let start=null,screen=null,back=null,dx=0,lastX=0,lastT=0,vx=0,dragging=false;
+  const blocked=()=>document.querySelector(".favorite-sheet-backdrop.show,.menu.open,.egg-stage");
+  const backButton=s=>{const b=s.querySelector(":scope>.top>.back");return b&&b.offsetParent!==null?b:null};
+  /* Ein abgebrochener Wisch lässt die Einblend-Animation nicht erneut laufen; der nächste Seitenwechsel räumt auf */
+  const originalGo=window.go;
+  window.go=function(){document.querySelectorAll(".screen.edge-held").forEach(s=>s.classList.remove("edge-held"));return originalGo.apply(this,arguments)};
+  function settle(s,keepHeld){
+    s.classList.remove("edge-swiping");
+    if(keepHeld)s.classList.add("edge-held");
+    s.style.transition="";s.style.transform="";
+  }
+  document.addEventListener("touchstart",event=>{
+    if(event.touches.length!==1||blocked())return;
+    const touch=event.touches[0];
+    if(touch.clientX>EDGE)return;
+    const s=document.querySelector(".screen.active");
+    if(!s||s.id==="home")return;
+    const b=backButton(s);if(!b)return;
+    start={x:touch.clientX,y:touch.clientY};screen=s;back=b;dx=0;vx=0;dragging=false;
+    lastX=touch.clientX;lastT=event.timeStamp;
+  },{passive:true});
+  document.addEventListener("touchmove",event=>{
+    if(!start)return;
+    const touch=event.touches[0],mx=touch.clientX-start.x,my=touch.clientY-start.y;
+    if(!dragging){
+      if(Math.abs(my)>10&&Math.abs(my)>Math.abs(mx)){start=null;return}
+      if(mx<8)return;
+      dragging=true;screen.classList.add("edge-swiping");
+    }
+    if(event.cancelable)event.preventDefault();
+    const dt=Math.max(1,event.timeStamp-lastT);
+    vx=(touch.clientX-lastX)/dt;lastX=touch.clientX;lastT=event.timeStamp;
+    dx=Math.max(0,mx);
+    screen.style.transform=`translate3d(${dx}px,0,0)`;
+  },{passive:false});
+  function release(cancelled){
+    if(!start)return;
+    const s=screen,b=back,wasDragging=dragging;
+    start=null;dragging=false;
+    if(!wasDragging)return;
+    const commit=!cancelled&&(dx>s.offsetWidth*.35||vx>.5);
+    const exitGame=b.classList.contains("direct-game-exit");
+    s.style.transition="transform .22s cubic-bezier(.22,1,.36,1)";
+    if(commit&&!exitGame){
+      s.style.transform="translate3d(100%,0,0)";
+      triggerHaptic("light");
+      setTimeout(()=>{settle(s,false);b.click()},200);
+      return;
+    }
+    s.style.transform="translate3d(0,0,0)";
+    setTimeout(()=>settle(s,true),230);
+    /* In laufenden Spielen fragt die App erst, ob die Runde wirklich beendet werden soll */
+    if(commit&&exitGame){triggerHaptic("light");b.click()}
+  }
+  document.addEventListener("touchend",()=>release(false),{passive:true});
+  document.addEventListener("touchcancel",()=>release(true),{passive:true});
+})();
+</script>
+
+<script>
 /* VYBE 3: Labels auf Karten und in Listen zeigen keine Emojis */
 (function(){
   const sel=".card-meta-badge,.would-category,.cat-title,.ball-option-title,.chip,.category-chip,.player-pill,.ww-phase-kicker,.taboo-caption,.team73-live-title>strong,.team73-result-number,.ww-narrator-role,.ww-alive-chip,.ww-result-role,.would75-result-top strong";

@@ -100,3 +100,7 @@ VYBE 3.2.1 – Feinschliff Auflösung, Einstellungen, Easter Egg
 - Haptik: echter iOS-Switch im Dokument (iOS 18+), Timer-Töne über einen freigeschalteten Audio-Kontext.
 - Sicherheitsabfrage vor Kartenverlauf, Statistiken und gespeicherten Auswahlen.
 - Neues Easter Egg: Geheime Karte mit Kartenregen statt Schwerkraft-Modus (gravity.js wird nicht mehr geladen).
+
+VYBE 3.2.2 – Wischen zum Zurückgehen
+- Vom linken Bildschirmrand nach rechts wischen führt zurück wie in nativen Apps; die Seite folgt dem Finger.
+- In laufenden Spielen öffnet die Geste die Abfrage „Spiel verlassen?“.

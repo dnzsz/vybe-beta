@@ -1215,3 +1215,7 @@ html.gravity .section-label,html.gravity .made-by{color:var(--text)}
 .egg-front strong{font-family:var(--display);font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.18;text-wrap:balance}
 .egg-front em{margin-top:6px;font-style:normal;font-size:12px;opacity:.6}
 @media (prefers-reduced-motion:reduce){.egg-chip{display:none}.egg-card{animation-duration:.01s}}
+
+/* Wischen vom linken Rand */
+.screen.edge-swiping{animation:none!important;background:var(--bg);box-shadow:-18px 0 36px rgba(0,0,0,.45);will-change:transform}
+.screen.edge-held{animation:none!important}
