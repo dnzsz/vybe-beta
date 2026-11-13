@@ -87,3 +87,9 @@ VYBE 3.1 – Jedes Spiel geprüft
 - Alte Farbvariablen entfernt (unsichtbare Balken und Tasten), tote Schalter entfernt.
 - Inhalte: 3 Dubletten, Grammatik in 150 Fußballkarten, 19 Tabu-Wörter, Impostor-Spicy-Kategorien repariert.
 - Fehlende Groß-/Kleinschreibung korrigiert, Emojis aus Rollen- und Teamlisten entfernt.
+
+VYBE 3.2 – Neues Icon und Startseite
+- Neues App-Icon im Spieltisch-Look: Kartenfächer in Rot, Bernstein und Petrol mit dem Impostor-Auge (alle Größen, inklusive Maskable und Favicons; Quelle: icons/icon.svg).
+- Startseite: jede Spielkarte zeigt Spielerzahl und ungefähre Dauer.
+- Eigener Start-Splash deutlich kürzer (0,3 s statt 1,4 s), da das Startbild der installierten App das Laden bereits abdeckt.
+- Hinweis: Das alte lila-pinke Bild beim Start stammt aus dem Icon und Startbild, die iOS beim Hinzufügen zum Home-Bildschirm gespeichert hat. Nach „Entfernen“ und erneutem „Zum Home-Bildschirm“ erscheinen Icon und dunkles Startbild der neuen Version.

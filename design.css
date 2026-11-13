@@ -1040,6 +1040,7 @@ button.row:active,.ball-option:active,.category-card:active{background:var(--rai
 .game-pager .game-card:active .game-art,.game-pager .game-card.long-pressing .game-art{transform:scale(.97) rotate(-1deg)}
 .game-pager .game-name{font-size:clamp(34px,10vw,44px);text-shadow:none;color:var(--text)}
 .game-tag{margin-top:8px;font-size:17px;font-weight:400;color:var(--muted)}
+.game-meta{margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:0}
 .game-play{height:52px;min-width:160px;margin-top:28px;padding:0 32px;background:var(--text);color:var(--ink);font-size:17px;font-weight:600;letter-spacing:0;box-shadow:none}
 .game-card.is-favorite .game-tag::after{content:" · Favorit";color:var(--faint)}
 

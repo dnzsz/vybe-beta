@@ -15,9 +15,9 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <meta id="themeColorMeta" name="theme-color" content="#161513">
 <meta name="color-scheme" content="only dark">
 <meta name="darkreader-lock">
-<title>VYBE 3.1</title>
+<title>VYBE 3.2</title>
 <style>html{background:#161513}</style>
-<link rel="stylesheet" href="./design.css?v=3.1">
+<link rel="stylesheet" href="./design.css?v=3.2">
 
   <meta name="apple-mobile-web-app-title" content="VYBE">
   <meta name="application-name" content="VYBE">
@@ -69,54 +69,63 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
         <span class="game-art">🕵️</span>
         <span class="game-name">Impostor</span>
         <span class="game-tag">Einer blufft – findet ihn</span>
+        <span class="game-meta">3–20 Spieler · ca. 10 Min</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card would pressable" type="button" data-game-id="would" data-open="wouldSetup" data-room="would">
         <span class="game-art">👉</span>
         <span class="game-name">Wer würde eher?</span>
         <span class="game-tag">Zeigt aufeinander</span>
+        <span class="game-meta">2–12 Spieler · ca. 15 Min</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card ball pressable" type="button" data-game-id="ball" data-open="ballSetup" data-room="ball">
         <span class="game-art">⚽️</span>
         <span class="game-name">Ball Knowledge</span>
         <span class="game-tag">Wie tief geht dein Fußballwissen?</span>
+        <span class="game-meta">1 Spieler oder Gruppe · ca. 10 Min</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card taboo pressable" type="button" data-game-id="taboo" data-open="tabooSetup" data-room="taboo">
         <span class="game-art">🤐</span>
         <span class="game-name">Tabu</span>
         <span class="game-tag">Erklären, ohne es zu sagen</span>
+        <span class="game-meta">2–12 Spieler · ca. 15 Min</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card truth pressable" type="button" data-game-id="truth" data-open="truthSetup" data-room="truth">
         <span class="game-art">😈</span>
         <span class="game-name">Wahrheit oder Pflicht</span>
         <span class="game-tag">Wie mutig seid ihr?</span>
+        <span class="game-meta">2–12 Spieler · ca. 20 Min</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card who pressable" type="button" data-game-id="who" data-open="whoSetup" data-room="who">
         <span class="game-art">🤔</span>
         <span class="game-name">Wer bin ich?</span>
         <span class="game-tag">Errate, wer du bist</span>
+        <span class="game-meta">2–12 Spieler · ca. 15 Min</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card knowledge pressable" type="button" data-game-id="knowledge" data-open="knowledgeSetup" data-room="knowledge">
         <span class="game-art">🧠</span>
         <span class="game-name">Allgemeinwissen</span>
         <span class="game-tag">Das große Quiz</span>
+        <span class="game-meta">1 Spieler oder Gruppe · ca. 10 Min</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card teamer pressable" type="button" data-game-id="teamer" data-open="teamSetup" data-room="teamer">
         <span class="game-art">🎲</span>
         <span class="game-name">Team-Ausloser</span>
         <span class="game-tag">Karte für Karte zum Team</span>
+        <span class="game-meta">2–20 Personen · 2 Min</span>
         <span class="game-play">Spielen</span>
       </button>
       <button class="game-card werewolf pressable" type="button" data-game-id="werewolf" data-open="wwSetup" data-room="werewolf">
         <span class="game-art">🐺</span>
         <span class="game-name">Werwolf</span>
         <span class="game-tag">Das Dorf schläft ein</span>
+        <span class="game-meta">6–18 Spieler · ca. 30 Min</span>
         <span class="game-play">Spielen</span>
       </button>
   </div>
@@ -788,7 +797,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     </div>
 
     <div class="section-label">Über VYBE</div>
-    <div class="panel settings74-panel"><div class="row"><div class="row-icon">ℹ️</div><div class="row-copy"><div class="row-title">Version</div></div><div class="row-value">3.1</div></div></div>
+    <div class="panel settings74-panel"><div class="row"><div class="row-icon">ℹ️</div><div class="row-copy"><div class="row-title">Version</div></div><div class="row-value">3.2</div></div></div>
     <div class="made-by">Made by <span id="denizEasterEggTrigger">Deniz</span></div>
   </div>
 </section>
@@ -796,7 +805,9 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <section id="releaseNotes" class="screen">
   <div class="top"><button class="back" data-open="settings" aria-label="Zurück"></button><div class="page-title">Was ist neu?</div><span style="width:43px"></span></div>
   <div class="settings-scroll settings74-detail-page">
-    <div class="settings74-release-hero"><span>🚀</span><div><div class="settings74-kicker">Version 3.1</div><h2>Was sich in VYBE verbessert hat</h2></div></div>
+    <div class="settings74-release-hero"><span>🚀</span><div><div class="settings74-kicker">Version 3.2</div><h2>Was sich in VYBE verbessert hat</h2></div></div>
+    <div class="settings74-note-card"><strong>Neues App-Icon</strong><p>Ein Kartenfächer in den Deckfarben, passend zum Spieltisch. Damit es auf dem Home-Bildschirm erscheint, VYBE einmal entfernen und neu hinzufügen.</p></div>
+    <div class="settings74-note-card"><strong>Spielerzahl und Dauer</strong><p>Jede Spielkarte auf der Startseite zeigt jetzt, für wie viele Personen das Spiel ist und wie lange eine Runde dauert.</p></div>
     <div class="settings74-note-card"><strong>Jedes Spiel geprüft</strong><p>Alle Abläufe durchgespielt und repariert: Hilfe zu jedem Spiel, Kartenlimit bei Tabu, Abstimmungsergebnis und Verliebte bei Werwolf, Inhaltsfilter für alle Spiele, gemerkte Einstellungen überall.</p></div>
     <div class="settings74-note-card"><strong>Neuer Look: der Spieltisch</strong><p>Jedes Spiel ist jetzt ein Kartendeck in seiner eigenen Farbe. Drumherum bleibt alles ruhig, damit die Karte im Mittelpunkt steht.</p></div>
     <div class="settings74-note-card"><strong>Ruhigerer Feinschliff</strong><p>Einheitliche Schriftstärken, Größen, Abstände und Rundungen in allen Spielen.</p></div>
@@ -1331,10 +1342,11 @@ function premiumTap(element){
 function hideSplash(){
   const splash=document.getElementById("splash");
   if(!splash)return;
+  /* Kurz: das Startbild der installierten App deckt das Laden bereits ab */
   setTimeout(()=>{
     splash.classList.add("hidden");
-    setTimeout(()=>splash.remove(),520);
-  },900);
+    setTimeout(()=>splash.remove(),320);
+  },280);
 }
 
 document.addEventListener("click",event=>{
@@ -5021,6 +5033,6 @@ if ("serviceWorker" in navigator) {
   run(document.body);
 })();
 </script>
-<script src="./gravity.js?v=3.1"></script>
+<script src="./gravity.js?v=3.2"></script>
 </body>
 </html>
