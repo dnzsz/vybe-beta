@@ -134,7 +134,7 @@ html[data-nav="back"] .screen.active{animation-name:enter-back}
 @keyframes enter-back{from{opacity:0;transform:translate3d(-24px,0,0)}to{opacity:1;transform:none}}
 @keyframes fade-up{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:none}}
 /* Alles, was nicht scrollt, hält Abstand zum Home-Balken */
-.screen>:last-child:not(.content):not(.settings-scroll):not(.stats-scroll){margin-bottom:var(--pad-b)}
+.screen>:last-child:not(.content):not(.settings-scroll):not(.stats-scroll):not(.dock){margin-bottom:var(--pad-b)}
 .content,.settings-scroll,.stats-scroll,.team73-setup-scroll,.team73-result-scroll{
   flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;
   margin:0 calc(var(--gutter) * -1);padding:4px var(--gutter) calc(var(--pad-b) + 12px);
@@ -185,7 +185,8 @@ html[data-nav="back"] .screen.active{animation-name:enter-back}
 
 /* ---------- Start: ein Spiel pro Bildschirm ---------- */
 #home{padding-left:0;padding-right:0}
-.home-bar{flex:none;display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 var(--gutter)}
+/* Kopfzeile direkt unter der Statusleiste, wie eine native Navigationsleiste */
+.home-bar{flex:none;display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 var(--gutter)}
 .wordmark{font-family:var(--display);font-size:26px;font-weight:700;letter-spacing:-.03em;color:#fff}
 .home-actions{display:flex;gap:8px}
 .game-pager{
@@ -1035,6 +1036,9 @@ button.row:active,.ball-option:active,.category-card:active{background:var(--rai
   content:"";position:absolute;left:26%;right:26%;top:30%;bottom:30%;background:currentColor;
   -webkit-mask:var(--g) center/contain no-repeat;mask:var(--g) center/contain no-repeat;
 }
+/* Hohe Displays: die Karte füllt die Bühne, statt in Luft zu schweben */
+html.vybe-tall .game-pager .game-art{width:min(60vw,250px);margin-bottom:28px}
+html.vybe-tall .game-play{margin-top:24px}
 .game-pager .game-card.current .game-art{animation:card-in .5s var(--ease) both}
 @keyframes card-in{from{transform:translate3d(0,12px,0) rotate(-3deg);opacity:.4}to{transform:none;opacity:1}}
 .game-pager .game-card:active .game-art,.game-pager .game-card.long-pressing .game-art{transform:scale(.97) rotate(-1deg)}
@@ -1087,7 +1091,7 @@ button.row:active,.ball-option:active,.category-card:active{background:var(--rai
 
 /* ---------- Spielleiste ---------- */
 .dock{
-  position:relative;flex:none;height:68px;margin:8px 16px max(8px,var(--safe-b));border-radius:20px;
+  position:relative;flex:none;height:68px;margin:8px 16px max(10px,var(--safe-b));border-radius:20px;
   background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair);
   touch-action:none;user-select:none;-webkit-user-select:none;
 }
