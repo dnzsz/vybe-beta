@@ -93,3 +93,10 @@ VYBE 3.2 – Neues Icon und Startseite
 - Startseite: jede Spielkarte zeigt Spielerzahl und ungefähre Dauer.
 - Eigener Start-Splash deutlich kürzer (0,3 s statt 1,4 s), da das Startbild der installierten App das Laden bereits abdeckt.
 - Hinweis: Das alte lila-pinke Bild beim Start stammt aus dem Icon und Startbild, die iOS beim Hinzufügen zum Home-Bildschirm gespeichert hat. Nach „Entfernen“ und erneutem „Zum Home-Bildschirm“ erscheinen Icon und dunkles Startbild der neuen Version.
+
+VYBE 3.2.1 – Feinschliff Auflösung, Einstellungen, Easter Egg
+- Impostor-Auflösung: Impostor groß auf der Karte, Begriff darunter.
+- Zahnrad-Icon für die Einstellungen.
+- Haptik: echter iOS-Switch im Dokument (iOS 18+), Timer-Töne über einen freigeschalteten Audio-Kontext.
+- Sicherheitsabfrage vor Kartenverlauf, Statistiken und gespeicherten Auswahlen.
+- Neues Easter Egg: Geheime Karte mit Kartenregen statt Schwerkraft-Modus (gravity.js wird nicht mehr geladen).

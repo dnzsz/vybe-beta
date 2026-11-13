@@ -197,6 +197,16 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   </div>
 </div>
 
+<div id="confirmSheetBackdrop" class="favorite-sheet-backdrop" aria-hidden="true">
+  <div id="confirmSheet" class="favorite-sheet" role="alertdialog" aria-modal="true" aria-labelledby="confirmSheetTitle">
+    <div class="favorite-sheet-handle"></div>
+    <div id="confirmSheetTitle" class="exit-sheet-title">Bist du sicher?</div>
+    <p id="confirmSheetText" class="exit-sheet-text"></p>
+    <button id="confirmSheetOk" class="favorite-sheet-action remove pressable" type="button">Löschen</button>
+    <button id="confirmSheetCancel" class="favorite-sheet-cancel pressable" type="button">Abbrechen</button>
+  </div>
+</div>
+
 
 <!-- ======================= TABU ======================= -->
 
@@ -940,13 +950,13 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="top"><button class="back" data-open="home" aria-label="Zurück"></button><div class="page-title">Auflösung</div><span style="width:43px"></span></div>
   <div class="content imp-result">
     <div class="imp-result-card">
-      <span class="imp-result-kicker">Der Begriff war</span>
-      <div id="impResultWord" class="imp-result-word">Begriff</div>
-      <span id="impResultCategory" class="card-meta-badge imp-result-category"></span>
+      <span id="impFinalLabel" class="imp-result-kicker">Der Impostor war</span>
+      <div id="impFinalImpostor" class="imp-result-word">Name</div>
     </div>
     <div class="imp-result-who">
-      <span id="impFinalLabel">Der Impostor war</span>
-      <strong id="impFinalImpostor">Name</strong>
+      <span>Der Begriff war</span>
+      <strong id="impResultWord">Begriff</strong>
+      <small id="impResultCategory"></small>
     </div>
   </div>
   <div class="two"><button class="secondary" data-open="home">Zur Startseite</button><button id="restartImpostor" class="primary">Neue Runde</button></div>
@@ -1419,14 +1429,25 @@ function showSettingToast(message){
   showSettingToast.timer=setTimeout(()=>toast.classList.remove("show"),1500);
 }
 
+let audioContext=null;
+function ensureAudio(){
+  try{
+    const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(!AudioContextClass)return null;
+    if(!audioContext)audioContext=new AudioContextClass();
+    if(audioContext.state==="suspended")audioContext.resume();
+    return audioContext;
+  }catch(error){return null}
+}
+/* iOS erlaubt Ton nur nach einer Berührung: beim ersten Tippen freischalten, danach bleibt der Kontext offen */
+document.addEventListener("pointerdown",()=>{if(appSettings.timerSounds)ensureAudio()},{passive:true,capture:true});
 function playTimerSignal(kind="tick"){
   if(!appSettings.timerSounds)return;
   try{
-    const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(!AudioContextClass)return;
-    const context=new AudioContextClass(),oscillator=context.createOscillator(),gain=context.createGain();
-    oscillator.type=kind==="end"?"square":"sine";oscillator.frequency.setValueAtTime(kind==="end"?760:560,context.currentTime);
-    gain.gain.setValueAtTime(kind==="end"?.07:.035,context.currentTime);gain.gain.exponentialRampToValueAtTime(.001,context.currentTime+(kind==="end"?.18:.055));
-    oscillator.connect(gain);gain.connect(context.destination);oscillator.start();oscillator.stop(context.currentTime+(kind==="end"?.19:.06));oscillator.addEventListener("ended",()=>context.close());
+    const context=ensureAudio();if(!context||context.state!=="running")return;
+    const oscillator=context.createOscillator(),gain=context.createGain(),now=context.currentTime;
+    oscillator.type=kind==="end"?"square":"sine";oscillator.frequency.setValueAtTime(kind==="end"?760:560,now);
+    gain.gain.setValueAtTime(kind==="end"?.09:.05,now);gain.gain.exponentialRampToValueAtTime(.001,now+(kind==="end"?.22:.07));
+    oscillator.connect(gain);gain.connect(context.destination);oscillator.start(now);oscillator.stop(now+(kind==="end"?.24:.08));
   }catch(error){}
 }
 
@@ -1615,9 +1636,25 @@ function resetSavedSetupData(){
   showSettingToast("Gespeicherte Auswahlen gelöscht");
 }
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&appSettings.wakeLock)updateWakeLock()});
-document.getElementById("resetContentHistory")?.addEventListener("click",resetContentHistoryData);
-document.getElementById("resetStatistics")?.addEventListener("click",resetStatisticsData);
-document.getElementById("resetSavedSetup")?.addEventListener("click",resetSavedSetupData);
+function askConfirm({title,text,label,action}){
+  const backdrop=document.getElementById("confirmSheetBackdrop");
+  document.getElementById("confirmSheetTitle").textContent=title;
+  document.getElementById("confirmSheetText").textContent=text;
+  const ok=document.getElementById("confirmSheetOk");
+  ok.textContent=label;
+  ok.onclick=()=>{closeConfirmSheet();action()};
+  backdrop.classList.add("show");backdrop.setAttribute("aria-hidden","false");
+  triggerHaptic("light");
+}
+function closeConfirmSheet(){
+  const backdrop=document.getElementById("confirmSheetBackdrop");
+  backdrop.classList.remove("show");backdrop.setAttribute("aria-hidden","true");
+}
+document.getElementById("confirmSheetCancel").addEventListener("click",closeConfirmSheet);
+document.getElementById("confirmSheetBackdrop").addEventListener("click",event=>{if(event.target===event.currentTarget)closeConfirmSheet()});
+document.getElementById("resetContentHistory")?.addEventListener("click",()=>askConfirm({title:"Kartenverlauf zurücksetzen?",text:"Alle bereits gespielten Fragen, Begriffe und Aufgaben werden wieder freigegeben.",label:"Zurücksetzen",action:resetContentHistoryData}));
+document.getElementById("resetStatistics")?.addEventListener("click",()=>askConfirm({title:"Statistiken zurücksetzen?",text:"Spielzeit, Runden und Quiz-Bestwerte werden gelöscht. Das lässt sich nicht rückgängig machen.",label:"Löschen",action:resetStatisticsData}));
+document.getElementById("resetSavedSetup")?.addEventListener("click",()=>askConfirm({title:"Gespeicherte Auswahlen löschen?",text:"Spielernamen, Kategorien und Rundeneinstellungen aller Spiele werden auf den Start zurückgesetzt.",label:"Löschen",action:resetSavedSetupData}));
 
 
 const SHARED_PLAYERS_KEY="vybe_shared_players_v1";
@@ -3384,16 +3421,17 @@ document.addEventListener("click",event=>{
 });
 
 
+let hapticSwitch=null;
 function iosHapticTick(){
-  const label=document.createElement("label"),input=document.createElement("input");
-  label.ariaHidden="true";
-  label.style.display="none";
-  input.type="checkbox";
-  input.setAttribute("switch","");
-  label.append(input);
-  document.head.append(label);
-  label.click();
-  label.remove();
+  /* iOS 18+: ein echter Switch im Dokument löst beim Umschalten die Taptic Engine aus */
+  if(!hapticSwitch){
+    const label=document.createElement("label"),input=document.createElement("input");
+    label.setAttribute("aria-hidden","true");
+    label.style.cssText="position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none";
+    input.type="checkbox";input.setAttribute("switch","");input.tabIndex=-1;
+    label.append(input);document.body.append(label);hapticSwitch=input;
+  }
+  hapticSwitch.click();
 }
 let lastHapticAt=0;
 function triggerHaptic(style="light"){
@@ -4726,10 +4764,34 @@ go("home");
 
 let denizTapCount=0;
 let denizTapResetTimer=null;
+const EGG_LINES=[
+  "Gebaut von Deniz – für lange Abende mit guten Leuten.",
+  "Geheime Regel Nr. 0: Wer diese Karte findet, mischt nächste Runde.",
+  "Du hast fünfmal auf einen Namen getippt. Respekt.",
+  "Kein Impostor hier. Nur ein Danke fürs Spielen.",
+  "Die beste Karte des Abends ist die, die alle zum Lachen bringt.",
+  "Tipp: Der Erzähler bei Werwolf gewinnt immer."
+];
+let eggLineIndex=-1;
+function showSecretCard(){
+  if(document.querySelector(".egg-stage"))return;
+  eggLineIndex=(eggLineIndex+1)%EGG_LINES.length;
+  const stage=document.createElement("div");
+  stage.className="egg-stage";
+  stage.setAttribute("role","dialog");
+  const colors=["#d63a3e","#f2a33a","#22874c","#6d4fe0","#e0457b","#2bb3c9","#2f62d6","#f0c53e"];
+  const chips=Array.from({length:26},(_,i)=>`<i class="egg-chip" style="left:${randomInt(100)}%;--d:${1.6+randomInt(14)/10}s;--delay:${randomInt(9)/10}s;--r:${randomInt(2)?"":"-"}${360+randomInt(540)}deg;background:${colors[i%colors.length]}"></i>`).join("");
+  stage.innerHTML=`${chips}<div class="egg-card"><div class="egg-face egg-back"><span>VYBE</span></div><div class="egg-face egg-front"><small>Geheime Karte</small><strong>${EGG_LINES[eggLineIndex]}</strong><em>Tippen zum Schließen</em></div></div>`;
+  document.body.appendChild(stage);
+  triggerHaptic("success");
+  setTimeout(()=>triggerHaptic("medium"),900);
+  const close=()=>{stage.classList.add("leaving");setTimeout(()=>stage.remove(),260)};
+  stage.addEventListener("click",close);
+}
 document.getElementById("denizEasterEggTrigger")?.addEventListener("click",()=>{
  denizTapCount++;
  clearTimeout(denizTapResetTimer);
- if(denizTapCount>=5){denizTapCount=0;window.vybeGravity?.toggle();return}
+ if(denizTapCount>=5){denizTapCount=0;showSecretCard();return}
  denizTapResetTimer=setTimeout(()=>denizTapCount=0,1400);
 });
 </script>
@@ -5013,6 +5075,7 @@ if ("serviceWorker" in navigator) {
   bindSheetDrag(document.getElementById("exitSheet"),closeExitSheet);
   bindSheetDrag(document.getElementById("favoriteSheet"),()=>closeFavoriteSheet());
   bindSheetDrag(document.getElementById("helpSheet"),()=>closeHelpSheet());
+  bindSheetDrag(document.getElementById("confirmSheet"),()=>closeConfirmSheet());
 })();
 </script>
 
@@ -5028,6 +5091,5 @@ if ("serviceWorker" in navigator) {
   run(document.body);
 })();
 </script>
-<script src="./gravity.js?v=3.2"></script>
 </body>
 </html>

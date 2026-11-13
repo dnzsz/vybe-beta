@@ -78,7 +78,7 @@
   --i-more:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='5' cy='12' r='2.2'/%3E%3Ccircle cx='12' cy='12' r='2.2'/%3E%3Ccircle cx='19' cy='12' r='2.2'/%3E%3C/svg%3E");
   --i-heart:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M12 20.5S3.5 15.4 3.5 9.2A4.7 4.7 0 0 1 12 6.6a4.7 4.7 0 0 1 8.5 2.6c0 6.2-8.5 11.3-8.5 11.3z'/%3E%3C/svg%3E");
   --i-heart-on:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.5S3.5 15.4 3.5 9.2A4.7 4.7 0 0 1 12 6.6a4.7 4.7 0 0 1 8.5 2.6c0 6.2-8.5 11.3-8.5 11.3z'/%3E%3C/svg%3E");
-  --i-tune:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M4 7h9M19 7h1M4 17h1M11 17h9'/%3E%3Ccircle cx='16' cy='7' r='2.6'/%3E%3Ccircle cx='8' cy='17' r='2.6'/%3E%3C/svg%3E");
+  --i-tune:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
   --i-chart:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='4' y='12' width='4' height='8' rx='1.4'/%3E%3Crect x='10' y='7' width='4' height='13' rx='1.4'/%3E%3Crect x='16' y='3.5' width='4' height='16.5' rx='1.4'/%3E%3C/svg%3E");
   --i-check:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
 }
@@ -516,11 +516,12 @@ input::placeholder{color:var(--faint)}
   min-height:44vh;padding:40px 28px;border-radius:var(--r-l);text-align:center;
 }
 .imp-result-kicker{font-size:14px;font-weight:500;color:var(--muted)}
-.imp-result-word{font-family:var(--display);font-size:clamp(40px,12.5vw,58px);font-weight:600;letter-spacing:-.025em;line-height:1;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:anywhere;text-wrap:balance}
+.imp-result-word{font-family:var(--display);font-size:clamp(44px,13.5vw,64px);font-weight:600;letter-spacing:-.025em;line-height:1;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:anywhere;text-wrap:balance}
 .imp-result-category{position:static;transform:none;margin-top:4px}
 .imp-result-who{display:flex;flex-direction:column;gap:4px;padding:0 4px;text-align:center}
 .imp-result-who span{font-size:15px;color:var(--muted)}
-.imp-result-who strong{font-family:var(--display);font-size:clamp(36px,11vw,50px);font-weight:600;letter-spacing:-.025em;line-height:1.05;color:var(--accent);overflow-wrap:anywhere}
+.imp-result-who strong{font-family:var(--display);font-size:clamp(36px,11vw,50px);font-weight:600;letter-spacing:-.025em;line-height:1.05;color:var(--text);overflow-wrap:anywhere}
+.imp-result-who small{font-size:13px;color:var(--faint)}
 
 /* Weitergeben */
 .pass,.pass-screen{flex:1;min-height:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;text-align:left}
@@ -1192,3 +1193,25 @@ html.gravity .section-label,html.gravity .made-by{color:var(--text)}
 .team73-result-card h3>span{white-space:nowrap}
 .team73-result-card h3>span:last-child{font-size:13px;font-weight:400;color:var(--muted)}
 .team73-result-number{display:inline-block;min-width:22px;margin:0 6px 0 0;font-family:var(--mono);font-size:13px;font-weight:400;color:var(--faint)}
+
+/* ---------- Geheime Karte (Easter Egg) ---------- */
+.egg-stage{position:fixed;inset:0;z-index:9000;display:grid;place-items:center;overflow:hidden;background:var(--scrim);animation:fade .25s var(--ease) both}
+.egg-stage.leaving{animation:egg-out .26s var(--ease) forwards}
+@keyframes egg-out{to{opacity:0}}
+.egg-chip{position:absolute;top:-40px;width:18px;height:26px;border-radius:4px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25);animation:egg-fall var(--d,2s) linear var(--delay,0s) forwards}
+@keyframes egg-fall{to{transform:translate3d(0,120vh,0) rotate(var(--r,540deg))}}
+.egg-card{position:relative;width:min(66vw,250px);aspect-ratio:5/7;transform-style:preserve-3d;animation:egg-flip 1s var(--ease) .35s both}
+@keyframes egg-flip{from{transform:rotateY(0) scale(.84)}to{transform:rotateY(180deg) scale(1)}}
+.egg-face{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:30px 24px;
+  border-radius:20px;text-align:center;color:var(--on-card);backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:linear-gradient(165deg,color-mix(in srgb,var(--card) 90%,#fff),var(--card) 46%);
+  box-shadow:inset 0 0 0 9px var(--card),inset 0 0 0 10px color-mix(in srgb,var(--on-card) 26%,transparent),0 24px 60px rgba(0,0,0,.5);
+}
+.egg-back{--card:#2e2a6e;--on-card:#efe9de}
+.egg-back span{font-family:var(--display);font-size:34px;font-weight:600;letter-spacing:-.02em}
+.egg-front{--card:#f0c53e;--on-card:#1a1714;transform:rotateY(180deg)}
+.egg-front small{font-size:13px;font-weight:500;opacity:.7}
+.egg-front strong{font-family:var(--display);font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.18;text-wrap:balance}
+.egg-front em{margin-top:6px;font-style:normal;font-size:12px;opacity:.6}
+@media (prefers-reduced-motion:reduce){.egg-chip{display:none}.egg-card{animation-duration:.01s}}
