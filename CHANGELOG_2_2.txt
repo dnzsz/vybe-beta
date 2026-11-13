@@ -75,3 +75,15 @@ VYBE 3.0 – Neuer Look „Spieltisch“
 - Behoben: Aktionsknöpfe bei Wahrheit oder Pflicht wurden unten ausgeblendet.
 - Startbilder und App-Farbe passend zum neuen Look.
 - Service-Worker-Cache: vybe-pwa-v53
+
+VYBE 3.1 – Jedes Spiel geprüft
+- Alle neun Spiele vollständig durchgespielt und getestet.
+- Hilfe-Button mit Spielregeln auf jeder Spielseite (vorher ohne Funktion).
+- Tabu: „Anzahl Karten“ wirkt jetzt (Runde endet nach der gewählten Kartenzahl oder bei Zeitablauf).
+- Werwolf: Verliebte erkennen sich, Abstimmungsergebnis mit Rolle, Jäger-Schuss berücksichtigt Verliebte.
+- Inhaltsfilter gilt jetzt auch für Impostor und blendet Spicy-Kategorien aus den Listen aus.
+- „Letzte Auswahl merken“ gilt für alle Spiele (Tabu, Wahrheit oder Pflicht, Wer bin ich, Wissen, Werwolf, Teams).
+- Zusammenfassungen auf den Spielseiten zeigen immer die echte Auswahl.
+- Alte Farbvariablen entfernt (unsichtbare Balken und Tasten), tote Schalter entfernt.
+- Inhalte: 3 Dubletten, Grammatik in 150 Fußballkarten, 19 Tabu-Wörter, Impostor-Spicy-Kategorien repariert.
+- Fehlende Groß-/Kleinschreibung korrigiert, Emojis aus Rollen- und Teamlisten entfernt.

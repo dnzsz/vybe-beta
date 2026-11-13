@@ -139,8 +139,8 @@ html[data-nav="back"] .screen.active{animation-name:enter-back}
   flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;
   margin:0 calc(var(--gutter) * -1);padding:4px var(--gutter) calc(var(--pad-b) + 12px);
   -webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:none;
-  -webkit-mask-image:linear-gradient(transparent,#000 12px,#000 calc(100% - 36px),transparent);
-  mask-image:linear-gradient(transparent,#000 12px,#000 calc(100% - 36px),transparent);
+  -webkit-mask-image:linear-gradient(transparent,#000 12px,#000 calc(100% - 18px),transparent);
+  mask-image:linear-gradient(transparent,#000 12px,#000 calc(100% - 18px),transparent);
 }
 .content::-webkit-scrollbar,.settings-scroll::-webkit-scrollbar,.stats-scroll::-webkit-scrollbar,
 .team73-setup-scroll::-webkit-scrollbar,.team73-result-scroll::-webkit-scrollbar{display:none}
@@ -177,8 +177,8 @@ html[data-nav="back"] .screen.active{animation-name:enter-back}
 #openFavorites.has-favorites{--i:var(--i-heart-on)}
 .home-settings{--i:var(--i-tune)}
 .home-stats{--i:var(--i-chart)}
-/* Das frühere Hilfe-Fragezeichen hatte keine Funktion */
-.top>.icon-btn:not([data-menu]):not(.home-settings):not(.home-stats):not(#openFavorites){visibility:hidden}
+/* Hilfe: kurze Spielregeln */
+.help-btn{font-family:var(--display);font-size:19px;font-weight:600;color:var(--muted)}
 
 .progress{flex:none;height:3px;margin:2px 0 4px;border-radius:99px;background:var(--fill);overflow:hidden}
 .progress i{display:block;height:100%;width:0;border-radius:99px;background:var(--accent)!important;transition:width .4s var(--ease)}
@@ -298,15 +298,17 @@ button.row:active{background:var(--fill)}
 .switch:checked::before{transform:translate3d(20px,0,0)}
 .switch:disabled{opacity:.5}
 
-/* Zahlenwahl */
-.number-choice-group,.knowledge-count-options{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;flex:none;max-width:60%}
+/* Zahlenwahl: passt die Gruppe nicht neben den Text, rückt sie in eine eigene Zeile */
+.row:has(>.number-choice-group){flex-wrap:wrap}
+.row:has(>.number-choice-group)>.row-copy{flex:1 1 150px}
+.number-choice-group,.knowledge-count-options{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;flex:none;margin-left:auto}
 .choice-num{
   min-width:44px;height:44px;padding:0 8px;border-radius:12px;
   font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;
   background:var(--fill)!important;color:var(--text);transition:transform .14s var(--ease),background .14s;
 }
 .choice-num:active{transform:scale(.9)}
-.choice-num[class*="selected-"],.choice-num[style*="gradient"]{background:var(--accent)!important;color:var(--on-accent)}
+.choice-num.on,.choice-num[class*="selected-"]{background:var(--accent)!important;color:var(--on-accent)}
 .choice-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
 .choice{
   display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:64px;border-radius:var(--r-s);
@@ -649,6 +651,9 @@ input::placeholder{color:var(--faint)}
 .ww-narrator-ready{flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px}
 .ww-narrator-roles,.ww-result-roles,.ww-alive-summary{display:flex;flex-wrap:wrap;gap:6px}
 .ww-narrator-role,.ww-alive-chip,.ww-result-role{padding:8px 12px;border-radius:99px;background:var(--fill);font-size:14px;font-weight:500}
+.ww-narrator-role,.ww-result-role{display:inline-flex;align-items:center;gap:6px}
+.ww-narrator-role>span:last-child,.ww-result-role>span:last-child{color:var(--muted);font-weight:400}
+.ww-narrator-role>span:last-child::before,.ww-result-role>span:last-child::before{content:"·";margin-right:6px;color:var(--faint)}
 .ww-dead-chip,.ww-result-role.dead{opacity:.42;text-decoration:line-through}
 .ww-name-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .ww-name-option{min-height:60px;padding:6px 10px;border-radius:var(--r-s);background:var(--surface);font-size:17px;font-weight:600;transition:transform .14s var(--ease)}
@@ -747,7 +752,6 @@ input::placeholder{color:var(--faint)}
   :root{--gutter:16px}
   .game-card{height:146px;padding:16px}
   .game-name{font-size:22px}
-  .number-choice-group,.knowledge-count-options{max-width:54%}
   .choice-num{min-width:40px;height:40px}
 }
 @media (orientation:landscape) and (max-height:500px){
@@ -806,6 +810,14 @@ input::placeholder{color:var(--faint)}
 .quiz-result-wrap,.result-center{justify-content:safe center;margin-left:0;margin-right:0;padding-left:0;padding-right:0}
 .result-center>.two{width:100%;margin-top:auto;padding-top:14px;flex:none}
 .would75-summary-head>*{display:block}
+.would75-summary-head span{display:block;font-size:13px;color:var(--faint)}
+.would75-total{margin-top:2px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+/* Statistik: Lieblingsspiel als ruhige Zeile */
+.favorite-card{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:8px;padding:14px 16px;border-radius:var(--r-m);background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair)}
+.favorite-card span{display:block;font-size:13px;color:var(--muted)}
+.favorite-card strong{display:block;font-size:17px;font-weight:600}
+.favorite-emoji{display:none}
 .pass{justify-content:safe center;overflow-y:auto;scrollbar-width:none}
 .pass>*{flex:none}
 
@@ -948,7 +960,7 @@ button.row:active,.ball-option:active,.category-card:active{background:var(--rai
 .switch:not(:checked){background:var(--fill-2)}
 .switch:checked{background:var(--accent)}
 .switch::before{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
-.choice-num[class*="selected-"],.choice-num[style*="gradient"],.choice.on,.chip.on,.chip.selected,.category-chip.active,
+.choice-num.on,.choice-num[class*="selected-"],.choice.on,.chip.on,.chip.selected,.category-chip.active,
 .team73-count.selected-team,.team73-count.active,.team73-count.on,.ww-narrator-button.active,.ww-narrator-button.selected,
 .ww-narrator-button.on,.ww-name-option.selected,.ww-name-option.active,.ww-name-option.on{background:var(--accent)!important;color:var(--on-accent)!important}
 .quiz-rate-wrong,.quiz-swipe-left,.quiz-answer-flash.wrong span,.ww-witch-poison{background:var(--negative)}
@@ -1140,6 +1152,11 @@ html.gravity .section-label,html.gravity .made-by{color:var(--text)}
 .truth-v72-play,.content.game-stage{-webkit-mask-image:none;mask-image:none}
 .truth-v72-actions{grid-template-columns:1fr 1.2fr}
 
+/* Hilfe-Sheet: nummerierte Schritte */
+.help-steps{margin:0 0 16px;padding:0 4px 0 24px;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.4;color:var(--text)}
+.help-steps li::marker{color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
+.help-steps li{padding-left:4px}
+
 /* Teams: Farbpunkt statt Emoji-Kreis, gleiche Reihenfolge wie zuvor */
 .team73-live-card:nth-child(6n+1),.team73-result-card:nth-child(6n+1){--team:#79a0ff}
 .team73-live-card:nth-child(6n+2),.team73-result-card:nth-child(6n+2){--team:#a191ff}
@@ -1147,7 +1164,10 @@ html.gravity .section-label,html.gravity .made-by{color:var(--text)}
 .team73-live-card:nth-child(6n+4),.team73-result-card:nth-child(6n+4){--team:#f5b14c}
 .team73-live-card:nth-child(6n+5),.team73-result-card:nth-child(6n+5){--team:#ff6b6b}
 .team73-live-card:nth-child(6n+6),.team73-result-card:nth-child(6n+6){--team:#f0c53e}
-.team73-live-title>strong::before,.team73-result-number::before{
+.team73-live-title>strong::before,.team73-result-card h3>span:first-child::before{
   content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:var(--team,var(--accent));vertical-align:1px;
 }
-.team73-result-number{color:var(--text)}
+.team73-result-card h3{display:flex;flex-direction:column;gap:2px;margin-bottom:10px;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.team73-result-card h3>span{white-space:nowrap}
+.team73-result-card h3>span:last-child{font-size:13px;font-weight:400;color:var(--muted)}
+.team73-result-number{display:inline-block;min-width:22px;margin:0 6px 0 0;font-family:var(--mono);font-size:13px;font-weight:400;color:var(--faint)}
