@@ -1,8 +1,8 @@
-const CACHE_VERSION = "vybe-pwa-v60";
+const CACHE_VERSION = "vybe-pwa-v61";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./design.css?v=3.3",
+  "./design.css?v=3.3.1",
   "./gravity.js?v=3.2",
   "./manifest.webmanifest",
   "./icons/icon-180.png",

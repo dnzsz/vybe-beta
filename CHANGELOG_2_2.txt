@@ -109,3 +109,8 @@ VYBE 3.3 – Glücksrad und mehr Inhalte
 - Team-Ausloser von Grund auf neu: erst Teamanzahl (2 bis 8), dann Namen, dann ein Glücksrad in Teamfarben. Jeder Dreh lost einen Namen in ein Team, der Name fliegt in die Teamspalte, volle Teams werden ausgegraut, alle Teams bleiben gleich groß (höchstens eine Person Unterschied). „Rest sofort verteilen“ für Eilige. Ergebnis in Teamfarben.
 - Mehr Inhalte (Werwolf unverändert): Impostor +160 Begriffe, Wer würde eher +116 Fragen, Allgemeinwissen +64 Fragen, Ball Knowledge +41 Fragen, Tabu +96 Karten, Wahrheit oder Pflicht +63 Aufgaben, Wer bin ich +84 Personen. Doppelte Einträge werden beim Laden automatisch übersprungen.
 - Ball Knowledge trägt einen Fußball als Symbol, der Team-Ausloser ein Glücksrad.
+
+VYBE 3.3.1 – Glücksrad mit Namen
+- Alle Namen stehen im Rad, die Teams drehen abwechselnd (Team 1, Team 2, …). Der gezogene Name kommt ins Team, das gedreht hat, sein Feld leuchtet in der Teamfarbe und schrumpft dann aus dem Rad. Der letzte Name wird automatisch verteilt.
+- Drehung kürzer (rund 3 Sekunden) mit kurzem Ausholen, schnellem Anlauf und langem Auslaufen, oft knapp an einem Stift vorbei. Klick und Haptik an jedem Stift, gegen Ende kräftiger.
+- Flüssiger: Die Drehung läuft als Compositor-Animation, der Schatten liegt nicht mehr auf dem drehenden Rad.

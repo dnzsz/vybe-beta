@@ -17,7 +17,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <meta name="darkreader-lock">
 <title>VYBE 3.3</title>
 <style>html{background:#161513}</style>
-<link rel="stylesheet" href="./design.css?v=3.3">
+<link rel="stylesheet" href="./design.css?v=3.3.1">
 
   <meta name="apple-mobile-web-app-title" content="VYBE">
   <meta name="application-name" content="VYBE">
@@ -743,7 +743,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="top"><button class="back" data-open="settings" aria-label="Zurück"></button><div class="page-title">Was ist neu?</div><span style="width:43px"></span></div>
   <div class="settings-scroll settings74-detail-page">
     <div class="settings74-release-hero"><span>🚀</span><div><div class="settings74-kicker">Version 3.3</div><h2>Was sich in VYBE verbessert hat</h2></div></div>
-    <div class="settings74-note-card"><strong>Team-Ausloser mit Glücksrad</strong><p>Komplett neu: zuerst die Teamanzahl wählen (bis zu acht), dann die Namen eintragen und das Rad drehen. Jeder Name fliegt in sein Team, volle Teams werden ausgegraut.</p></div>
+    <div class="settings74-note-card"><strong>Team-Ausloser mit Glücksrad</strong><p>Komplett neu: zuerst die Teamanzahl wählen (bis zu acht), dann die Namen eintragen. Alle Namen stehen im Rad, die Teams drehen abwechselnd und ziehen sich ihre Leute.</p></div>
     <div class="settings74-note-card"><strong>Viel mehr Inhalte</strong><p>Neue Begriffe für Impostor, neue Fragen für Wer würde eher, Allgemeinwissen und Ball Knowledge, neue Tabu-Karten, Wahrheiten, Pflichten und Personen für Wer bin ich.</p></div>
     <div class="settings74-note-card"><strong>Ball Knowledge mit Fußball</strong><p>Das Deck trägt jetzt einen Fußball als Symbol.</p></div>
     <div class="settings74-note-card"><strong>Neues App-Icon</strong><p>Ein Kartenfächer in den Deckfarben, passend zum Spieltisch. Damit es auf dem Home-Bildschirm erscheint, VYBE einmal entfernen und neu hinzufügen.</p></div>
@@ -4079,24 +4079,25 @@ wwUpdateSetup();
 
 
 /* TEAM-AUSLOSER · GLÜCKSRAD */
-const TEAM_COLORS=[["Rot","#ff6b6b"],["Blau","#79a0ff"],["Grün","#4cc38a"],["Gelb","#f0c53e"],["Lila","#a191ff"],["Orange","#f5934c"],["Türkis","#4fc7c7"],["Pink","#f27ab8"]];
+const TEAM_COLORS=["#ff6b6b","#79a0ff","#4cc38a","#f0c53e","#a191ff","#f5934c","#4fc7c7","#f27ab8"];
+const TEAM_SLICE_COLORS=["#f0c53e","#efe8dc","#e39b3a"];
 const TEAM_MIN=2,TEAM_MAX=8;
 let teamPlayers=getSharedPlayers();
 let teamCount=2;
 let latestTeams=[];
-let teamOrder=[];
-let teamOrderIndex=0;
-let teamSlices=[];
-let teamSliceAngle=36;
+let teamTotal=0;
+let teamWheel=[];
+let teamTurn=0;
 let teamWheelAngle=0;
 let teamSpinning=false;
 let teamDrawToken=0;
 let teamSpinCount=0;
 
 const teamEl=id=>document.getElementById(id);
-const teamName=index=>`Team ${TEAM_COLORS[index][0]}`;
-const teamColor=index=>TEAM_COLORS[index][1];
+const teamName=index=>`Team ${index+1}`;
+const teamColor=index=>TEAM_COLORS[index%TEAM_COLORS.length];
 const teamReducedMotion=()=>window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const teamAssigned=()=>latestTeams.reduce((sum,team)=>sum+team.length,0);
 
 function teamMaxCount(){return Math.max(TEAM_MIN,Math.min(TEAM_MAX,teamPlayers.length))}
 
@@ -4177,84 +4178,80 @@ function normalizeTeamPlayers(){
   teamPlayers=teamPlayers.map((name,index)=>(name||"").trim()||`Person ${index+1}`);
 }
 
-/* Offene Teams: niemand bekommt mehr als ein Mitglied Vorsprung */
-function teamOpenIndexes(){
-  const total=teamOrder.length;
-  const base=Math.floor(total/teamCount);
-  const extra=total%teamCount;
-  const cap=extra?base+1:base;
-  const atCap=latestTeams.filter(team=>team.length>=cap).length;
-  return latestTeams.map((team,index)=>({team,index})).filter(({team})=>{
-    if(team.length>=cap)return false;
-    if(extra&&team.length===base&&atCap>=extra)return false;
-    return true;
-  }).map(entry=>entry.index);
+function teamEscape(text){
+  return String(text).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 }
 
+/* ---------- Rad zeichnen ---------- */
 function teamPolar(radius,angle){
   const rad=angle*Math.PI/180;
   return [+(radius*Math.sin(rad)).toFixed(3),+(-radius*Math.cos(rad)).toFixed(3)];
 }
 
-function buildTeamWheel(){
+function teamSliceLayout(){
+  const total=teamWheel.reduce((sum,slice)=>sum+slice.weight,0)||1;
+  let start=0;
+  return teamWheel.map(slice=>{
+    const size=slice.weight/total*360;
+    const entry={slice,start,size,center:start+size/2};
+    start+=size;
+    return entry;
+  });
+}
+
+function teamShortName(name,size){
+  const max=size>=40?14:size>=24?11:9;
+  return name.length>max?`${name.slice(0,max-1)}…`:name;
+}
+
+function drawTeamWheel(){
   const svg=teamEl("teamWheel");
-  const perTeam=Math.max(2,Math.ceil(10/teamCount));
-  const count=perTeam*teamCount;
-  teamSliceAngle=360/count;
-  teamSlices=Array.from({length:count},(_,i)=>({index:i,team:i%teamCount,start:i*teamSliceAngle,center:(i+.5)*teamSliceAngle}));
-  const ns="http://www.w3.org/2000/svg";
-  svg.innerHTML="";
-  const rim=document.createElementNS(ns,"circle");
-  rim.setAttribute("r","99");
-  rim.setAttribute("class","tw-rim");
-  svg.appendChild(rim);
-  teamSlices.forEach(slice=>{
-    const [x1,y1]=teamPolar(92,slice.start);
-    const [x2,y2]=teamPolar(92,slice.start+teamSliceAngle);
-    const path=document.createElementNS(ns,"path");
-    path.setAttribute("d",`M0 0L${x1} ${y1}A92 92 0 0 1 ${x2} ${y2}Z`);
-    path.setAttribute("fill",teamColor(slice.team));
-    path.setAttribute("class","tw-slice");
-    path.dataset.team=slice.team;
-    svg.appendChild(path);
-    const label=document.createElementNS(ns,"text");
-    const [lx,ly]=teamPolar(66,slice.center);
-    label.setAttribute("x",lx);
-    label.setAttribute("y",ly);
-    label.setAttribute("class","tw-slice-label");
-    label.setAttribute("transform",`rotate(${slice.center-90} ${lx} ${ly})`);
-    label.dataset.team=slice.team;
-    label.textContent=TEAM_COLORS[slice.team][0];
-    svg.appendChild(label);
-  });
-  teamSlices.forEach(slice=>{
-    const [px,py]=teamPolar(95.5,slice.start);
-    const peg=document.createElementNS(ns,"circle");
-    peg.setAttribute("cx",px);
-    peg.setAttribute("cy",py);
-    peg.setAttribute("r","2.4");
-    peg.setAttribute("class","tw-peg");
-    svg.appendChild(peg);
-  });
-  setTeamWheelAngle(teamWheelAngle);
+  const layout=teamSliceLayout();
+  const visible=layout.filter(entry=>entry.size>.05);
+  const fontSize=visible.length>14?8:visible.length>9?9:10.5;
+  let html="";
+  if(visible.length===1){
+    const only=visible[0];
+    html+=`<circle r="92" fill="${only.slice.color}" class="tw-slice${only.slice.won?" is-won":""}"/>`;
+    html+=`<text x="0" y="-62" class="tw-slice-label" style="font-size:${fontSize}px">${teamEscape(teamShortName(only.slice.name,90))}</text>`;
+  }else{
+    visible.forEach(entry=>{
+      const [x1,y1]=teamPolar(92,entry.start);
+      const [x2,y2]=teamPolar(92,entry.start+entry.size);
+      const large=entry.size>180?1:0;
+      html+=`<path d="M0 0L${x1} ${y1}A92 92 0 ${large} 1 ${x2} ${y2}Z" fill="${entry.slice.color}" class="tw-slice${entry.slice.won?" is-won":""}"/>`;
+      if(entry.size>6){
+        const [lx,ly]=teamPolar(58,entry.center);
+        html+=`<text x="${lx}" y="${ly}" transform="rotate(${(entry.center-90).toFixed(2)} ${lx} ${ly})" class="tw-slice-label${entry.slice.won?" is-won":""}" style="font-size:${fontSize}px">${teamEscape(teamShortName(entry.slice.name,entry.size))}</text>`;
+      }
+    });
+    visible.forEach(entry=>{
+      const [px,py]=teamPolar(95.5,entry.start);
+      html+=`<circle cx="${px}" cy="${py}" r="2.3" class="tw-peg"/>`;
+    });
+  }
+  svg.innerHTML=html;
+}
+
+/* Zeiger federt an den Stiften, solange sich das Rad dreht */
+function teamPointerAt(angle){
+  const layout=teamSliceLayout();
+  const position=((-angle%360)+360)%360;
+  let index=layout.findIndex(entry=>position>=entry.start&&position<entry.start+entry.size);
+  if(index<0)index=layout.length-1;
+  const entry=layout[index];
+  const fraction=entry?(position-entry.start)/Math.max(entry.size,.001):.5;
+  const push=layout.length>1?Math.max(0,1-fraction/.3)*24:0;
+  teamEl("teamPointer").style.transform=`translateX(-50%) rotate(${-push}deg)`;
+  return index;
 }
 
 function setTeamWheelAngle(angle){
   teamEl("teamWheel").style.transform=`rotate(${angle}deg)`;
-  const position=((-angle%360)+360)%360;
-  const fraction=(position%teamSliceAngle)/teamSliceAngle;
-  const push=Math.max(0,1-fraction/.32)*22;
-  teamEl("teamPointer").style.transform=`translateX(-50%) rotate(${-push}deg)`;
-  return Math.floor(position/teamSliceAngle);
+  return teamPointerAt(angle);
 }
 
-function refreshTeamWheelState(){
-  const open=new Set(teamOpenIndexes());
-  document.querySelectorAll("#teamWheel [data-team]").forEach(node=>{
-    node.classList.toggle("is-full",!open.has(Number(node.dataset.team)));
-  });
-}
-
+/* ---------- Brett ---------- */
 function renderTeamBoard(){
   const board=teamEl("teamBoard");
   board.innerHTML="";
@@ -4266,126 +4263,175 @@ function renderTeamBoard(){
     column.className="tw-team";
     column.id=`teamColumn${index}`;
     column.style.setProperty("--team",teamColor(index));
-    column.innerHTML=`<div class="tw-team-head"><i></i><span>${TEAM_COLORS[index][0]}</span><em id="teamColumnCount${index}">${members.length}</em></div><div class="tw-team-members" id="teamMembers${index}"></div>`;
+    column.innerHTML=`<div class="tw-team-head"><i></i><span>${teamName(index)}</span><em id="teamColumnCount${index}">${members.length}</em></div><div class="tw-team-members" id="teamMembers${index}"></div>`;
     board.appendChild(column);
   });
 }
 
-function teamEscape(text){
-  return String(text).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
-}
-
-function renderTeamQueue(){
-  const queue=teamEl("teamQueue");
-  const rest=teamOrder.slice(teamOrderIndex+1);
-  if(!rest.length){queue.textContent=teamOrderIndex<teamOrder.length?"Letzter Name":"";return}
-  const shown=rest.slice(0,3).map(teamEscape).join(" · ");
-  queue.innerHTML=`Danach: ${shown}${rest.length>3?` <span>+${rest.length-3}</span>`:""}`;
-}
-
 function updateTeamDrawUi(){
-  const done=teamOrderIndex>=teamOrder.length;
-  teamEl("teamDrawProgressText").textContent=`${teamOrderIndex} / ${teamOrder.length}`;
+  const done=teamWheel.length===0;
+  teamEl("teamDrawProgressText").textContent=`${teamAssigned()} / ${teamTotal}`;
   const hub=teamEl("teamHub");
   hub.classList.remove("is-landed");
-  hub.style.removeProperty("--team");
-  teamEl("teamHubLabel").textContent=done?"Alle verteilt":"Dreht für";
-  teamEl("teamHubName").textContent=done?"Fertig":teamOrder[teamOrderIndex];
+  hub.style.setProperty("--team",teamColor(teamTurn));
+  teamEl("teamHubLabel").textContent=done?"Alle verteilt":"Am Zug";
+  teamEl("teamHubName").textContent=done?"Fertig":teamName(teamTurn);
+  document.querySelectorAll(".tw-team").forEach((column,index)=>column.classList.toggle("is-turn",!done&&index===teamTurn));
   const spin=teamEl("teamSpin");
   spin.disabled=done||teamSpinning;
-  spin.textContent=teamOrderIndex===0?"Drehen":"Weiterdrehen";
+  spin.textContent=done?"Fertig":`${teamName(teamTurn)} dreht`;
+  spin.style.setProperty("--team",teamColor(teamTurn));
   teamEl("teamWheelButton").disabled=done||teamSpinning;
-  teamEl("teamSkip").hidden=done||teamOrder.length-teamOrderIndex<2;
+  teamEl("teamSkip").hidden=done||teamWheel.length<3;
   teamEl("teamSkip").disabled=teamSpinning;
-  renderTeamQueue();
-  refreshTeamWheelState();
+  const queue=teamEl("teamQueue");
+  queue.textContent=done?"":teamWheel.length===1?"Letzter Name":`${teamWheel.length} Namen im Rad`;
 }
 
+/* ---------- Klick-Geräusch ---------- */
 let teamTickAt=0;
-function teamTick(){
+function teamTick(strong){
   const now=performance.now();
-  if(now-teamTickAt<55)return;
+  if(now-teamTickAt<45)return;
   teamTickAt=now;
-  triggerHaptic("light");
+  triggerHaptic(strong?"medium":"light");
   if(!appSettings.timerSounds)return;
   try{
     const context=ensureAudio();
     if(!context||context.state!=="running")return;
     const osc=context.createOscillator(),gain=context.createGain(),t=context.currentTime;
     osc.type="triangle";
-    osc.frequency.setValueAtTime(1500,t);
-    gain.gain.setValueAtTime(.035,t);
-    gain.gain.exponentialRampToValueAtTime(.001,t+.03);
+    osc.frequency.setValueAtTime(strong?1100:1500,t);
+    gain.gain.setValueAtTime(strong?.05:.03,t);
+    gain.gain.exponentialRampToValueAtTime(.001,t+.035);
     osc.connect(gain);gain.connect(context.destination);
-    osc.start(t);osc.stop(t+.035);
+    osc.start(t);osc.stop(t+.04);
   }catch(error){}
 }
 
+/* Kurz zurückholen, schnell anlaufen, lange auslaufen – die letzten Stifte entscheiden */
+function teamSpinCurve(t,windup){
+  const w=.07;
+  if(t<w){return -windup*Math.sin(Math.PI*t/w)}
+  const p=(t-w)/(1-w);
+  return 1-Math.pow(1-p,4.6);
+}
+
 function spinTeamWheel(){
-  if(teamSpinning||teamOrderIndex>=teamOrder.length)return;
-  const open=teamOpenIndexes();
-  if(!open.length)return;
+  if(teamSpinning||!teamWheel.length)return;
+  if(teamWheel.length===1){finishLastTeamName();return}
   const token=teamDrawToken;
-  const name=teamOrder[teamOrderIndex];
-  const target=open[randomInt(open.length)];
-  const options=teamSlices.filter(slice=>slice.team===target);
-  const slice=options[randomInt(options.length)];
-  const landing=slice.center+(Math.random()-.5)*teamSliceAngle*.6;
+  const layout=teamSliceLayout();
+  const winner=layout[randomInt(layout.length)];
+  /* Manchmal knapp hinter einem Stift, manchmal knapp davor – das macht es spannend */
+  const roll=Math.random();
+  const edge=roll<.3?.1+Math.random()*.08:roll<.6?.82+Math.random()*.08:.3+Math.random()*.4;
+  const landing=winner.start+winner.size*edge;
   const startAngle=teamWheelAngle;
   const delta=(((-landing-startAngle)%360)+360)%360;
   const reduce=teamReducedMotion();
-  const turns=reduce?0:(teamSpinCount===0?4:3);
-  const endAngle=startAngle+delta+360*turns+(reduce&&delta<30?360:0);
-  const duration=reduce?650:(teamSpinCount===0?4200:3300);
+  const turns=reduce?0:3;
+  const travel=delta+360*turns+(reduce&&delta<40?360:0);
+  const duration=reduce?700:2600+Math.random()*500;
+  const windupDeg=reduce?0:7;
   teamSpinCount++;
   teamSpinning=true;
   updateTeamDrawUi();
-  teamEl("teamHubName").textContent=name;
   teamEl("teamHub").classList.add("is-spinning");
   triggerHaptic("medium");
 
+  const wheel=teamEl("teamWheel");
+  const angleAt=t=>{
+    const curve=teamSpinCurve(t,windupDeg/Math.max(travel,1));
+    return startAngle+travel*curve;
+  };
+  let animation=null;
+  if(wheel.animate&&!reduce){
+    const frames=[];
+    for(let i=0;i<=60;i++){const t=i/60;frames.push({transform:`rotate(${angleAt(t)}deg)`,offset:t})}
+    animation=wheel.animate(frames,{duration,easing:"linear",fill:"forwards"});
+  }
   const begin=performance.now();
-  let lastSlice=setTeamWheelAngle(startAngle);
+  let lastSlice=teamPointerAt(startAngle);
   let finished=false;
   const complete=()=>{
     if(finished||token!==teamDrawToken)return;
     finished=true;
-    teamWheelAngle=endAngle%360;
-    setTeamWheelAngle(teamWheelAngle);
-    landTeamName(name,target,token);
+    teamWheelAngle=(startAngle+travel)%360;
+    wheel.style.transform=`rotate(${teamWheelAngle}deg)`;
+    if(animation)animation.cancel();
+    teamPointerAt(teamWheelAngle);
+    landTeamSpin(winner.slice,token);
   };
   const frame=now=>{
     if(finished||token!==teamDrawToken)return;
     const t=Math.min(1,(now-begin)/duration);
-    const eased=1-Math.pow(1-t,4);
-    const angle=startAngle+(endAngle-startAngle)*eased;
-    const current=setTeamWheelAngle(angle);
-    if(current!==lastSlice){lastSlice=current;teamTick()}
+    const angle=angleAt(t);
+    if(!animation)wheel.style.transform=`rotate(${angle}deg)`;
+    const current=teamPointerAt(angle);
+    if(current!==lastSlice){lastSlice=current;teamTick(t>.75)}
     if(t<1){requestAnimationFrame(frame);return}
     complete();
   };
   requestAnimationFrame(frame);
-  /* Falls die App im Hintergrund war und keine Frames kamen */
   setTimeout(complete,duration+400);
 }
 
-function landTeamName(name,teamIndex,token){
+function landTeamSpin(slice,token){
+  const teamIndex=teamTurn;
+  slice.won=true;
+  teamEl("teamWheel").style.setProperty("--win",teamColor(teamIndex));
+  drawTeamWheel();
   const hub=teamEl("teamHub");
   hub.classList.remove("is-spinning");
   hub.style.setProperty("--team",teamColor(teamIndex));
   hub.classList.add("is-landed");
-  teamEl("teamHubLabel").textContent=name;
-  teamEl("teamHubName").textContent=TEAM_COLORS[teamIndex][0];
+  teamEl("teamHubLabel").textContent=teamName(teamIndex);
+  teamEl("teamHubName").textContent=slice.name;
   triggerHaptic("success");
+  const reduce=teamReducedMotion();
   setTimeout(()=>{
     if(token!==teamDrawToken)return;
-    placeTeamMember(name,teamIndex,true);
-    teamOrderIndex++;
-    teamSpinning=false;
-    updateTeamDrawUi();
-    if(teamOrderIndex>=teamOrder.length)setTimeout(()=>{if(token===teamDrawToken)finishTeamDraw()},1100);
-  },reduce()?250:900);
-  function reduce(){return teamReducedMotion()}
+    placeTeamMember(slice.name,teamIndex,true);
+    removeTeamSlice(slice,token,()=>{
+      teamTurn=(teamTurn+1)%teamCount;
+      teamSpinning=false;
+      updateTeamDrawUi();
+      if(!teamWheel.length){setTimeout(()=>{if(token===teamDrawToken)finishTeamDraw()},900);return}
+      if(teamWheel.length===1)setTimeout(()=>{if(token===teamDrawToken&&!teamSpinning)finishLastTeamName()},700);
+    });
+  },reduce?300:950);
+}
+
+/* Das gezogene Feld schrumpft weg, die anderen rücken zusammen */
+function removeTeamSlice(slice,token,done){
+  const duration=teamReducedMotion()?1:420;
+  const begin=performance.now();
+  let ended=false;
+  const step=now=>{
+    if(ended||token!==teamDrawToken)return;
+    const t=Math.min(1,(now-begin)/duration);
+    slice.weight=1-(1-Math.pow(1-t,3));
+    drawTeamWheel();
+    teamPointerAt(teamWheelAngle);
+    if(t<1){requestAnimationFrame(step);return}
+    ended=true;
+    teamWheel=teamWheel.filter(entry=>entry!==slice);
+    drawTeamWheel();
+    teamPointerAt(teamWheelAngle);
+    done();
+  };
+  requestAnimationFrame(step);
+  setTimeout(()=>{if(!ended)step(begin+duration)},duration+300);
+}
+
+function finishLastTeamName(){
+  if(!teamWheel.length)return;
+  const token=teamDrawToken;
+  const slice=teamWheel[0];
+  teamSpinning=true;
+  updateTeamDrawUi();
+  landTeamSpin(slice,token);
 }
 
 function placeTeamMember(name,teamIndex,fly){
@@ -4396,6 +4442,7 @@ function placeTeamMember(name,teamIndex,fly){
   chip.textContent=name;
   list.appendChild(chip);
   teamEl(`teamColumnCount${teamIndex}`).textContent=latestTeams[teamIndex].length;
+  teamEl("teamDrawProgressText").textContent=`${teamAssigned()} / ${teamTotal}`;
   chip.scrollIntoView({block:"nearest"});
   if(!fly||teamReducedMotion()||!chip.animate){chip.classList.add("is-new");return}
   const from=teamEl("teamHub").getBoundingClientRect();
@@ -4412,31 +4459,31 @@ function placeTeamMember(name,teamIndex,fly){
   const dx=from.left+from.width/2-(to.left+to.width/2);
   const dy=from.top+from.height/2-(to.top+to.height/2);
   const animation=ghost.animate([
-    {transform:`translate(${dx}px,${dy}px) scale(1.25)`,opacity:.4},
-    {transform:`translate(${dx*.45}px,${dy*.45-36}px) scale(1.1)`,opacity:1,offset:.45},
+    {transform:`translate(${dx}px,${dy}px) scale(1.3)`,opacity:.6},
+    {transform:`translate(${dx*.4}px,${dy*.4-30}px) scale(1.12)`,opacity:1,offset:.45},
     {transform:"translate(0,0) scale(1)",opacity:1}
-  ],{duration:620,easing:"cubic-bezier(.3,.7,.2,1)"});
+  ],{duration:560,easing:"cubic-bezier(.3,.7,.2,1)"});
   animation.onfinish=()=>{ghost.remove();chip.style.opacity="";chip.classList.add("is-new")};
 }
 
 function skipTeamDraw(){
-  if(teamSpinning||teamOrderIndex>=teamOrder.length)return;
+  if(teamSpinning||!teamWheel.length)return;
   const token=teamDrawToken;
   teamSpinning=true;
   updateTeamDrawUi();
+  const rest=shuffle([...teamWheel]);
+  teamWheel=[];
+  drawTeamWheel();
   const step=()=>{
     if(token!==teamDrawToken)return;
-    if(teamOrderIndex>=teamOrder.length){
+    if(!rest.length){
       teamSpinning=false;
       updateTeamDrawUi();
       setTimeout(()=>{if(token===teamDrawToken)finishTeamDraw()},700);
       return;
     }
-    const open=teamOpenIndexes();
-    placeTeamMember(teamOrder[teamOrderIndex],open[randomInt(open.length)],false);
-    teamOrderIndex++;
-    teamEl("teamDrawProgressText").textContent=`${teamOrderIndex} / ${teamOrder.length}`;
-    refreshTeamWheelState();
+    placeTeamMember(rest.shift().name,teamTurn,false);
+    teamTurn=(teamTurn+1)%teamCount;
     triggerHaptic("light");
     setTimeout(step,110);
   };
@@ -4474,10 +4521,18 @@ function runTeamDraw(){
   teamDrawToken++;
   teamSpinning=false;
   teamSpinCount=0;
-  teamOrder=shuffle([...teamPlayers]);
-  teamOrderIndex=0;
+  teamTurn=0;
+  const names=shuffle([...teamPlayers]);
+  teamTotal=names.length;
+  teamWheel=names.map((name,index)=>{
+    let color=TEAM_SLICE_COLORS[index%3];
+    if(index===names.length-1&&index%3===0)color=TEAM_SLICE_COLORS[1];
+    return {name,color,weight:1,won:false};
+  });
   latestTeams=Array.from({length:teamCount},()=>[]);
-  buildTeamWheel();
+  teamWheelAngle=0;
+  drawTeamWheel();
+  setTeamWheelAngle(0);
   renderTeamBoard();
   updateTeamDrawUi();
   go("teamDraw");
@@ -4666,7 +4721,7 @@ const HELP_TEXTS={
   truth:{title:"Wahrheit oder Pflicht",steps:["Reihum entscheidet sich jede Person für Wahrheit oder Pflicht.","Wahrheit: die Frage ehrlich beantworten.","Pflicht: die Aufgabe ausführen.","Zu krass? Tauscht die Karte einmal aus."]},
   who:{title:"Wer bin ich?",steps:["Halte das Handy an die Stirn, ohne auf das Display zu schauen.","Die anderen sehen die Person oder Figur und geben Hinweise.","Erraten? Tippe auf Erraten. Keine Idee? Überspringen.","Jede Person bekommt gleich viele Karten."]},
   knowledge:{title:"Allgemeinwissen",steps:["Wähle Fächer und Schwierigkeit.","Lies die Frage und tippe zum Aufdecken der Antwort.","Bewerte ehrlich: nach rechts wischen für richtig, nach links für falsch.","Am Ende siehst du deine Quote und deine Bestleistung."]},
-  teamer:{title:"Team-Ausloser",steps:["Wähle zuerst, wie viele Teams es geben soll – bis zu acht.","Trag alle Namen ein.","Dreh das Glücksrad: Es entscheidet für jeden Namen, in welches Team er kommt.","Volle Teams werden ausgegraut, so bleiben alle Teams gleich groß.","Keine Geduld? „Rest sofort verteilen“ lost alle übrigen Namen auf einmal aus."]},
+  teamer:{title:"Team-Ausloser",steps:["Wähle zuerst, wie viele Teams es geben soll – bis zu acht.","Trag alle Namen ein. Sie landen alle im Glücksrad.","Die Teams drehen abwechselnd: Team 1, Team 2 und so weiter. Der gezogene Name kommt ins Team, das gedreht hat, und verschwindet aus dem Rad.","So werden alle Teams gleich groß. Der letzte Name wird automatisch verteilt.","Keine Geduld? „Rest sofort verteilen“ lost alle übrigen Namen auf einmal aus."]},
   werewolf:{title:"Werwolf",steps:["Jede Person sieht geheim ihre Rolle, der Erzähler bekommt keine.","Der Erzähler führt mit dem Handy durch Nacht und Tag.","Nachts wählen die Werwölfe ein Opfer, Spezialrollen setzen ihre Fähigkeiten ein.","Am Tag diskutiert das Dorf und stimmt ab. Das Dorf gewinnt, wenn alle Werwölfe enttarnt sind."]}
 };
 function openHelpSheet(key){
