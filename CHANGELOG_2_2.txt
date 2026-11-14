@@ -104,3 +104,8 @@ VYBE 3.2.1 – Feinschliff Auflösung, Einstellungen, Easter Egg
 VYBE 3.2.2 – Wischen zum Zurückgehen
 - Vom linken Bildschirmrand nach rechts wischen führt zurück wie in nativen Apps; die Seite folgt dem Finger.
 - In laufenden Spielen öffnet die Geste die Abfrage „Spiel verlassen?“.
+
+VYBE 3.3 – Glücksrad und mehr Inhalte
+- Team-Ausloser von Grund auf neu: erst Teamanzahl (2 bis 8), dann Namen, dann ein Glücksrad in Teamfarben. Jeder Dreh lost einen Namen in ein Team, der Name fliegt in die Teamspalte, volle Teams werden ausgegraut, alle Teams bleiben gleich groß (höchstens eine Person Unterschied). „Rest sofort verteilen“ für Eilige. Ergebnis in Teamfarben.
+- Mehr Inhalte (Werwolf unverändert): Impostor +160 Begriffe, Wer würde eher +116 Fragen, Allgemeinwissen +64 Fragen, Ball Knowledge +41 Fragen, Tabu +96 Karten, Wahrheit oder Pflicht +63 Aufgaben, Wer bin ich +84 Personen. Doppelte Einträge werden beim Laden automatisch übersprungen.
+- Ball Knowledge trägt einen Fußball als Symbol, der Team-Ausloser ein Glücksrad.
