@@ -15,9 +15,9 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <meta id="themeColorMeta" name="theme-color" content="#161513">
 <meta name="color-scheme" content="only dark">
 <meta name="darkreader-lock">
-<title>VYBE 3.3</title>
+<title>VYBE 3.4</title>
 <style>html{background:#161513}</style>
-<link rel="stylesheet" href="./design.css?v=3.3.1">
+<link rel="stylesheet" href="./design.css?v=3.4">
 
   <meta name="apple-mobile-web-app-title" content="VYBE">
   <meta name="application-name" content="VYBE">
@@ -59,6 +59,8 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div class="home-bar">
     <div class="wordmark">VYBE</div>
     <div class="home-actions">
+      <button id="openRandom" class="icon-btn pressable" type="button" aria-label="Zufallsspiel"></button>
+      <button id="openNight" class="icon-btn pressable" type="button" data-open="night" aria-label="Spieleabend"><span id="nightDot" class="night-dot" hidden></span></button>
       <button class="icon-btn home-stats pressable" type="button" data-open="stats" aria-label="Statistiken"><span hidden id="homeGamesPlayed">0</span><span hidden id="homeRoundsPlayed">0</span></button>
       <button id="openFavorites" class="icon-btn pressable" type="button" data-open="favorites" aria-label="Favoriten"></button>
       <button class="icon-btn home-settings pressable" type="button" data-open="settings" aria-label="Einstellungen"></button>
@@ -129,6 +131,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
         <span class="game-play">Spielen</span>
       </button>
   </div>
+  <button id="nightPill" class="night-pill" type="button" data-open="night" hidden></button>
   <nav id="gameDock" class="dock" aria-label="Spiele">
     <div class="dock-clip"><div class="dock-track">
       <button class="dock-item" type="button" data-slide="0" aria-label="Impostor"><span class="dock-emoji">🕵️</span><span class="dock-label">Impostor</span></button>
@@ -206,6 +209,51 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     <button id="confirmSheetCancel" class="favorite-sheet-cancel pressable" type="button">Abbrechen</button>
   </div>
 </div>
+
+<div id="groupSheetBackdrop" class="favorite-sheet-backdrop" aria-hidden="true">
+  <div class="favorite-sheet" role="dialog" aria-modal="true" aria-labelledby="groupSheetTitle">
+    <div class="favorite-sheet-handle"></div>
+    <div id="groupSheetTitle" class="exit-sheet-title">Als Gruppe speichern</div>
+    <p id="groupSheetText" class="exit-sheet-text"></p>
+    <input id="groupSheetName" class="group-sheet-input" maxlength="20" placeholder="z. B. Freitagsrunde" autocomplete="off" enterkeyhint="done">
+    <button id="groupSheetSave" class="favorite-sheet-action pressable" type="button">Speichern</button>
+    <button id="groupSheetCancel" class="favorite-sheet-cancel pressable" type="button">Abbrechen</button>
+  </div>
+</div>
+
+<!-- ======================= SPIELEABEND ======================= -->
+<section id="night" class="screen night-screen">
+  <div class="top"><button class="back" data-open="home" aria-label="Zurück"></button><div class="page-title">Spieleabend</div><span style="width:43px"></span></div>
+  <div id="nightSetupView" class="settings-scroll night-scroll">
+    <h2 class="night-title">Punkte über<br>alle Spiele</h2>
+    <p class="night-lead">Nach jedem Spiel vergebt ihr Punkte. Am Ende des Abends gibt es einen Gesamtsieger.</p>
+    <div class="tw-step"><span>1</span>Wer spielt mit?</div>
+    <div id="nightPlayerList" class="night-player-chips"></div>
+    <p class="night-hint">Namen änderst du in jedem Spiel unter „Spieler“. Gespeicherte Gruppen lädst du oben mit einem Tipp.</p>
+  </div>
+  <div id="nightBoardView" class="night-board-view" hidden>
+    <div class="night-meta"><span id="nightMeta">0 Spiele gespielt</span></div>
+    <div id="nightBoard" class="night-board"></div>
+    <div class="night-quick">
+      <button class="secondary" type="button" data-open="home">Spiel wählen</button>
+      <button id="nightRandom" class="secondary" type="button">Zufallsspiel</button>
+    </div>
+  </div>
+  <div class="startbar night-actions">
+    <button id="nightStart" class="primary">Spieleabend starten</button>
+    <button id="nightEnd" class="night-end" type="button" hidden>Abend beenden</button>
+  </div>
+</section>
+
+<section id="nightFinal" class="screen night-screen">
+  <div class="top"><button class="back" data-open="home" aria-label="Zurück"></button><div class="page-title">Spieleabend</div><span style="width:43px"></span></div>
+  <div class="night-final-scroll">
+    <div class="night-winner"><small id="nightWinnerLabel">Gesamtsieg</small><strong id="nightWinnerName">Name</strong><span id="nightWinnerPoints">0 Punkte</span></div>
+    <div id="nightPodium" class="night-podium"></div>
+    <div id="nightRest" class="night-rest"></div>
+  </div>
+  <div class="two"><button id="nightAgain" class="primary">Neuer Abend</button><button class="secondary" data-open="home">Fertig</button></div>
+</section>
 
 
 <!-- ======================= TABU ======================= -->
@@ -502,6 +550,8 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
       <button id="teamCountPlus" class="tw-step-btn" type="button" aria-label="Ein Team mehr">+</button>
     </div>
     <div id="teamCountPreview" class="tw-preview"></div>
+    <div class="tw-step tw-step-sub">Teamnamen<em>optional</em></div>
+    <div id="teamNameList" class="tw-name-list"></div>
     <div class="tw-step"><span>2</span>Wer spielt mit?<em id="teamPlayerCounter">0 / 20</em></div>
     <div class="panel tw-player-panel">
       <div id="teamPlayerList" class="tw-player-list"></div>
@@ -734,7 +784,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     </div>
 
     <div class="section-label">Über VYBE</div>
-    <div class="panel settings74-panel"><div class="row"><div class="row-icon">ℹ️</div><div class="row-copy"><div class="row-title">Version</div></div><div class="row-value">3.3</div></div></div>
+    <div class="panel settings74-panel"><div class="row"><div class="row-icon">ℹ️</div><div class="row-copy"><div class="row-title">Version</div></div><div class="row-value">3.4</div></div></div>
     <div class="made-by">Made by <span id="denizEasterEggTrigger">Deniz</span></div>
   </div>
 </section>
@@ -742,7 +792,13 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <section id="releaseNotes" class="screen">
   <div class="top"><button class="back" data-open="settings" aria-label="Zurück"></button><div class="page-title">Was ist neu?</div><span style="width:43px"></span></div>
   <div class="settings-scroll settings74-detail-page">
-    <div class="settings74-release-hero"><span>🚀</span><div><div class="settings74-kicker">Version 3.3</div><h2>Was sich in VYBE verbessert hat</h2></div></div>
+    <div class="settings74-release-hero"><span>🚀</span><div><div class="settings74-kicker">Version 3.4</div><h2>Was sich in VYBE verbessert hat</h2></div></div>
+    <div class="settings74-note-card"><strong>Spieleabend</strong><p>Über den Pokal oben auf der Startseite startet ihr einen Abend mit Punktestand über alle Spiele. Nach jedem Spiel vergebt ihr Punkte, am Ende wird der Gesamtsieger gekürt.</p></div>
+    <div class="settings74-note-card"><strong>Zufallsspiel</strong><p>Der Würfel oben auf der Startseite dreht durch alle Decks und sucht euch ein Spiel aus.</p></div>
+    <div class="settings74-note-card"><strong>Gespeicherte Gruppen</strong><p>Spielerlisten wie „Freitagsrunde“ oder „Familie“ speichern und mit einem Tipp laden. Gedrückt halten löscht eine Gruppe.</p></div>
+    <div class="settings74-note-card"><strong>Eigene Teamnamen</strong><p>Im Team-Ausloser kann jedes Team einen eigenen Namen bekommen. Die Namen im Glücksrad stehen jetzt nie mehr auf dem Kopf.</p></div>
+    <div class="settings74-note-card"><strong>Ein Moment zum Schluss</strong><p>Am Ende eines Spiels fliegen kurz Karten über den Tisch.</p></div>
+    <div class="settings74-note-card"><strong>iPad und Querformat</strong><p>Auf dem iPad liegt VYBE als Spieltisch in der Mitte, quer auf dem Handy stehen Karte und Text nebeneinander.</p></div>
     <div class="settings74-note-card"><strong>Team-Ausloser mit Glücksrad</strong><p>Komplett neu: zuerst die Teamanzahl wählen (bis zu acht), dann die Namen eintragen. Alle Namen stehen im Rad, die Teams drehen abwechselnd und ziehen sich ihre Leute.</p></div>
     <div class="settings74-note-card"><strong>Viel mehr Inhalte</strong><p>Neue Begriffe für Impostor, neue Fragen für Wer würde eher, Allgemeinwissen und Ball Knowledge, neue Tabu-Karten, Wahrheiten, Pflichten und Personen für Wer bin ich.</p></div>
     <div class="settings74-note-card"><strong>Ball Knowledge mit Fußball</strong><p>Das Deck trägt jetzt einen Fußball als Symbol.</p></div>
@@ -4094,7 +4150,31 @@ let teamDrawToken=0;
 let teamSpinCount=0;
 
 const teamEl=id=>document.getElementById(id);
-const teamName=index=>`Team ${index+1}`;
+let teamCustomNames=(()=>{try{const saved=JSON.parse(localStorage.getItem("vybe-team-names")||"[]");return Array.isArray(saved)?saved.slice(0,8).map(v=>String(v||"").slice(0,16)):[]}catch(error){return []}})();
+const teamName=index=>(teamCustomNames[index]||"").trim()||`Team ${index+1}`;
+function saveTeamNames(){try{localStorage.setItem("vybe-team-names",JSON.stringify(teamCustomNames))}catch(error){}}
+function renderTeamNameInputs(){
+  const list=teamEl("teamNameList");
+  if(!list)return;
+  const focused=document.activeElement&&list.contains(document.activeElement)?document.activeElement.dataset.teamIndex:null;
+  list.innerHTML="";
+  for(let i=0;i<teamCount;i++){
+    const row=document.createElement("label");
+    row.className="tw-name-row";
+    row.style.setProperty("--team",teamColor(i));
+    const dot=document.createElement("i");
+    const input=document.createElement("input");
+    input.maxLength=16;
+    input.placeholder=`Team ${i+1}`;
+    input.value=teamCustomNames[i]||"";
+    input.dataset.teamIndex=String(i);
+    input.setAttribute("aria-label",`Name für Team ${i+1}`);
+    input.addEventListener("input",()=>{teamCustomNames[i]=input.value;saveTeamNames()});
+    row.append(dot,input);
+    list.appendChild(row);
+    if(focused===String(i))input.focus();
+  }
+}
 const teamColor=index=>TEAM_COLORS[index%TEAM_COLORS.length];
 const teamReducedMotion=()=>window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const teamAssigned=()=>latestTeams.reduce((sum,team)=>sum+team.length,0);
@@ -4152,6 +4232,7 @@ function renderTeamCountOptions(){
     dot.style.setProperty("--team",teamColor(i));
     swatches.appendChild(dot);
   }
+  renderTeamNameInputs();
   const total=teamPlayers.length;
   const base=Math.floor(total/teamCount);
   const rest=total%teamCount;
@@ -4221,8 +4302,9 @@ function drawTeamWheel(){
       const large=entry.size>180?1:0;
       html+=`<path d="M0 0L${x1} ${y1}A92 92 0 ${large} 1 ${x2} ${y2}Z" fill="${entry.slice.color}" class="tw-slice${entry.slice.won?" is-won":""}"/>`;
       if(entry.size>6){
-        const [lx,ly]=teamPolar(58,entry.center);
-        html+=`<text x="${lx}" y="${ly}" transform="rotate(${(entry.center-90).toFixed(2)} ${lx} ${ly})" class="tw-slice-label${entry.slice.won?" is-won":""}" style="font-size:${fontSize}px">${teamEscape(teamShortName(entry.slice.name,entry.size))}</text>`;
+        const [lx,ly]=teamPolar(64,entry.center);
+        const tilt=entry.center>180?entry.center+90:entry.center-90;
+        html+=`<text x="${lx}" y="${ly}" transform="rotate(${tilt.toFixed(2)} ${lx} ${ly})" class="tw-slice-label${entry.slice.won?" is-won":""}" style="font-size:${fontSize}px">${teamEscape(teamShortName(entry.slice.name,entry.size))}</text>`;
       }
     });
     visible.forEach(entry=>{
@@ -4566,6 +4648,116 @@ renderTeamPlayers();
 renderTeamCountOptions();
 syncAllGamePlayers(getSharedPlayers(),{save:false,render:false});
 installSharedPlayerWatchers();
+
+/* GESPEICHERTE GRUPPEN */
+const PLAYER_GROUPS_KEY="vybe_player_groups_v1";
+const GROUP_LIST_IDS=["impPlayerList","wouldPlayerList","tabooPlayerList","truthPlayerList","whoPlayerList","wwPlayerList","teamPlayerList","nightPlayerList"];
+function loadPlayerGroups(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(PLAYER_GROUPS_KEY)||"[]");
+    return Array.isArray(saved)?saved.filter(g=>g&&typeof g.name==="string"&&Array.isArray(g.players)).slice(0,12):[];
+  }catch(error){return []}
+}
+let playerGroups=loadPlayerGroups();
+function savePlayerGroups(){try{localStorage.setItem(PLAYER_GROUPS_KEY,JSON.stringify(playerGroups))}catch(error){}}
+const groupKey=players=>sanitizeSharedPlayers(players).map(n=>n.toLowerCase()).join("|");
+let groupBarSignature="";
+function renderGroupBars(force){
+  const current=groupKey(getSharedPlayers());
+  const signature=current+"#"+JSON.stringify(playerGroups);
+  if(!force&&signature===groupBarSignature)return;
+  groupBarSignature=signature;
+  GROUP_LIST_IDS.forEach(id=>{
+    const list=document.getElementById(id);
+    if(!list)return;
+    let bar=list.previousElementSibling;
+    if(!bar||!bar.classList.contains("group-bar")){
+      bar=document.createElement("div");
+      bar.className="group-bar";
+      list.parentNode.insertBefore(bar,list);
+    }
+    bar.innerHTML="";
+    playerGroups.forEach((group,index)=>{
+      const chip=document.createElement("button");
+      chip.type="button";
+      chip.className="group-chip"+(groupKey(group.players)===current?" is-active":"");
+      chip.innerHTML=`<span></span><em>${group.players.length}</em>`;
+      chip.firstChild.textContent=group.name;
+      let pressTimer=null,longPressed=false;
+      const clear=()=>{clearTimeout(pressTimer);pressTimer=null};
+      chip.addEventListener("pointerdown",()=>{longPressed=false;pressTimer=setTimeout(()=>{longPressed=true;deletePlayerGroup(index)},550)});
+      chip.addEventListener("pointerup",clear);
+      chip.addEventListener("pointerleave",clear);
+      chip.addEventListener("pointercancel",clear);
+      chip.addEventListener("contextmenu",event=>event.preventDefault());
+      chip.addEventListener("click",()=>{if(!longPressed)loadPlayerGroup(index)});
+      bar.appendChild(chip);
+    });
+    const add=document.createElement("button");
+    add.type="button";
+    add.className="group-chip group-add";
+    add.textContent=playerGroups.length?"+ Speichern":"+ Als Gruppe speichern";
+    add.addEventListener("click",openGroupSheet);
+    bar.appendChild(add);
+  });
+}
+function loadPlayerGroup(index){
+  const group=playerGroups[index];
+  if(!group)return;
+  if(syncAllGamePlayers(group.players,{save:true,render:true})){
+    renderGroupBars(true);
+    showSettingToast(`${group.name} geladen`);
+    triggerHaptic("medium");
+  }
+}
+function deletePlayerGroup(index){
+  const group=playerGroups[index];
+  if(!group)return;
+  askConfirm({title:`„${group.name}“ löschen?`,text:"Die gespeicherte Gruppe wird entfernt. Die aktuelle Spielerliste bleibt, wie sie ist.",label:"Löschen",action:()=>{
+    playerGroups.splice(index,1);
+    savePlayerGroups();
+    renderGroupBars(true);
+  }});
+}
+function openGroupSheet(){
+  const players=sanitizeSharedPlayers(getSharedPlayers());
+  const preview=players.slice(0,5).join(", ")+(players.length>5?` und ${players.length-5} weitere`:"");
+  document.getElementById("groupSheetText").textContent=`${players.length} Namen: ${preview}. Gedrückt halten löscht eine Gruppe wieder.`;
+  const input=document.getElementById("groupSheetName");
+  input.value="";
+  const backdrop=document.getElementById("groupSheetBackdrop");
+  backdrop.classList.add("show");
+  backdrop.setAttribute("aria-hidden","false");
+  setTimeout(()=>input.focus(),250);
+}
+function closeGroupSheet(){
+  const backdrop=document.getElementById("groupSheetBackdrop");
+  backdrop.classList.remove("show");
+  backdrop.setAttribute("aria-hidden","true");
+  document.getElementById("groupSheetName").blur();
+}
+function saveGroupFromSheet(){
+  const name=document.getElementById("groupSheetName").value.trim();
+  if(!name){document.getElementById("groupSheetName").focus();return}
+  const players=sanitizeSharedPlayers(getSharedPlayers());
+  const existing=playerGroups.findIndex(g=>g.name.toLowerCase()===name.toLowerCase());
+  if(existing>=0)playerGroups[existing]={name,players};
+  else{
+    if(playerGroups.length>=12){showSettingToast("Maximal 12 Gruppen");return}
+    playerGroups.push({name,players});
+  }
+  savePlayerGroups();
+  closeGroupSheet();
+  renderGroupBars(true);
+  showSettingToast(`${name} gespeichert`);
+  triggerHaptic("success");
+}
+document.getElementById("groupSheetSave").addEventListener("click",saveGroupFromSheet);
+document.getElementById("groupSheetCancel").addEventListener("click",closeGroupSheet);
+document.getElementById("groupSheetName").addEventListener("keydown",event=>{if(event.key==="Enter")saveGroupFromSheet()});
+document.getElementById("groupSheetBackdrop").addEventListener("click",event=>{if(event.target===event.currentTarget)closeGroupSheet()});
+renderGroupBars(true);
+setInterval(()=>renderGroupBars(false),700);
 
 /* FAVORITEN */
 const FAVORITES_KEY="vybe_favorites_v1";
@@ -5149,6 +5341,225 @@ if ("serviceWorker" in navigator) {
   new MutationObserver(list=>{for(const m of list){const t=m.target.nodeType===1?m.target:m.target.parentElement;if(t)run(t.closest(sel)||t);m.addedNodes.forEach(n=>n.nodeType===1&&run(n));}})
     .observe(document.body,{subtree:true,childList:true,characterData:true});
   run(document.body);
+})();
+</script>
+<script>
+/* VYBE 3.4 – Spieleabend, Zufallsspiel, Ergebnis-Momente */
+(function(){
+  const $=id=>document.getElementById(id);
+  const reduced=()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const PALETTE=["#ff6b6b","#f0c53e","#4cc38a","#79a0ff","#a191ff","#efe8dc","#f5934c"];
+
+  /* ---------- Ergebnis-Moment: Karten fliegen einmal über den Tisch ---------- */
+  function celebrate(){
+    if(reduced())return;
+    const layer=document.createElement("div");
+    layer.className="celebrate-layer";
+    document.body.appendChild(layer);
+    const width=window.innerWidth,height=window.innerHeight;
+    for(let i=0;i<26;i++){
+      const piece=document.createElement("i");
+      piece.style.background=PALETTE[i%PALETTE.length];
+      layer.appendChild(piece);
+      const spread=(Math.random()-.5)*width*1.1;
+      const peak=height*(.12+Math.random()*.22);
+      const spin=(Math.random()<.5?-1:1)*(240+Math.random()*420);
+      const duration=1500+Math.random()*700;
+      piece.animate([
+        {transform:"translate3d(0,0,0) rotate(0deg) scale(.6)",opacity:1},
+        {transform:`translate3d(${spread*.6}px,${peak}px,0) rotate(${spin*.4}deg) scale(1)`,opacity:1,offset:.3},
+        {transform:`translate3d(${spread}px,${height*1.08}px,0) rotate(${spin}deg) scale(1)`,opacity:.9}
+      ],{duration,delay:Math.random()*220,easing:"cubic-bezier(.25,.6,.45,1)",fill:"both"});
+    }
+    setTimeout(()=>layer.remove(),2700);
+  }
+  window.vybeCelebrate=celebrate;
+  const CELEBRATE_SCREENS=new Set(["tabooEnd","teamResult","truthEnd","whoEnd","wouldEnd","knowledgeEnd","ballEnd","wwResult","nightFinal"]);
+  const baseGo=window.go;
+  window.go=function(id){
+    const result=baseGo.apply(this,arguments);
+    if(CELEBRATE_SCREENS.has(id)){
+      const screen=$(id);
+      const head=screen&&screen.querySelector("h1,h2,.night-winner strong");
+      if(head&&!reduced()){head.classList.remove("celebrate-head");void head.offsetWidth;head.classList.add("celebrate-head")}
+      setTimeout(celebrate,180);
+      setTimeout(()=>triggerHaptic("success"),220);
+    }
+    if(id==="night")renderNight();
+    if(id==="home")renderNightPill();
+    return result;
+  };
+
+  /* ---------- Spieleabend ---------- */
+  const NIGHT_KEY="vybe_game_night_v1";
+  let night=(()=>{try{const n=JSON.parse(localStorage.getItem(NIGHT_KEY)||"null");return n&&Array.isArray(n.players)?n:null}catch(e){return null}})();
+  const saveNight=()=>{try{night?localStorage.setItem(NIGHT_KEY,JSON.stringify(night)):localStorage.removeItem(NIGHT_KEY)}catch(e){}};
+  const esc=text=>String(text).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const pointsLabel=n=>`${n} ${Math.abs(n)===1?"Punkt":"Punkte"}`;
+  function ranked(){
+    const list=night.players.map((p,index)=>({...p,index})).sort((a,b)=>b.points-a.points||a.name.localeCompare(b.name,"de"));
+    let rank=0,last=null;
+    list.forEach((p,i)=>{if(p.points!==last){rank=i+1;last=p.points}p.rank=rank});
+    return list;
+  }
+  function renderNightSetup(){
+    const list=$("nightPlayerList");
+    const players=sanitizeSharedPlayers(getSharedPlayers());
+    list.innerHTML=players.map(name=>`<span>${esc(name)}</span>`).join("");
+    $("nightStart").textContent=`Mit ${players.length} Personen starten`;
+  }
+  function renderNightBoard(animate){
+    const board=$("nightBoard");
+    const before=new Map();
+    if(animate)board.querySelectorAll(".night-row").forEach(row=>before.set(row.dataset.index,row.getBoundingClientRect().top));
+    const games=night.games||0;
+    $("nightMeta").textContent=`${games} ${games===1?"Spiel":"Spiele"} gespielt`+(night.last?` · zuletzt ${night.last}`:"");
+    const list=ranked();
+    const top=list[0]?list[0].points:0;
+    board.innerHTML=list.map(p=>`<div class="night-row${p.points===top&&top>0?" is-lead":""}" data-index="${p.index}">
+      <span class="night-rank">${p.rank}</span><span class="night-name">${esc(p.name)}</span>
+      <button type="button" class="night-btn" data-delta="-1" aria-label="${esc(p.name)} einen Punkt abziehen">−</button>
+      <strong class="night-points">${p.points}</strong>
+      <button type="button" class="night-btn plus" data-delta="1" aria-label="${esc(p.name)} einen Punkt geben">+</button></div>`).join("");
+    if(animate&&!reduced()){
+      board.querySelectorAll(".night-row").forEach(row=>{
+        const old=before.get(row.dataset.index);
+        if(old===undefined)return;
+        const dy=old-row.getBoundingClientRect().top;
+        if(Math.abs(dy)>1)row.animate([{transform:`translateY(${dy}px)`},{transform:"none"}],{duration:320,easing:"cubic-bezier(.2,.8,.2,1)"});
+      });
+    }
+  }
+  function renderNight(){
+    const active=!!night;
+    $("nightSetupView").hidden=active;
+    $("nightBoardView").hidden=!active;
+    $("nightStart").hidden=active;
+    $("nightEnd").hidden=!active;
+    if(active)renderNightBoard(false);else renderNightSetup();
+    renderNightPill();
+  }
+  function renderNightPill(){
+    const pill=$("nightPill"),dot=$("nightDot");
+    dot.hidden=!night;
+    if(!night){pill.hidden=true;return}
+    const list=ranked();
+    const lead=list[0];
+    pill.hidden=false;
+    if(night.pending)pill.innerHTML=`<i></i>Punkte für ${esc(night.pending)} vergeben`;
+    else if(lead&&lead.points>0){
+      const tied=list.filter(p=>p.points===lead.points).length;
+      pill.innerHTML=tied>1?`<i></i>Spieleabend · Gleichstand mit ${pointsLabel(lead.points)}`:`<i></i>Spieleabend · ${esc(lead.name)} führt mit ${pointsLabel(lead.points)}`;
+    }else pill.innerHTML=`<i></i>Spieleabend läuft`;
+  }
+  $("nightBoard").addEventListener("click",event=>{
+    const button=event.target.closest(".night-btn");
+    if(!button||!night)return;
+    const row=button.closest(".night-row");
+    const player=night.players[Number(row.dataset.index)];
+    player.points=Math.max(-99,Math.min(999,player.points+Number(button.dataset.delta)));
+    night.pending="";
+    saveNight();
+    renderNightBoard(true);
+    const points=$("nightBoard").querySelector(`.night-row[data-index="${row.dataset.index}"] .night-points`);
+    if(points&&!reduced())points.animate([{transform:"scale(1.35)"},{transform:"none"}],{duration:260,easing:"cubic-bezier(.3,1.6,.5,1)"});
+    triggerHaptic(Number(button.dataset.delta)>0?"medium":"light");
+  });
+  $("nightStart").addEventListener("click",()=>{
+    const players=sanitizeSharedPlayers(getSharedPlayers());
+    if(players.length<2){showSettingToast("Mindestens 2 Namen nötig");return}
+    night={players:players.map(name=>({name,points:0})),games:0,last:"",pending:"",started:Date.now()};
+    saveNight();
+    renderNight();
+    triggerHaptic("success");
+  });
+  $("nightEnd").addEventListener("click",()=>askConfirm({title:"Abend beenden?",text:"Der Punktestand wird abgeschlossen und der Gesamtsieger gekürt.",label:"Beenden",action:finishNight}));
+  function finishNight(){
+    if(!night)return;
+    const list=ranked();
+    const lead=list[0];
+    const winners=list.filter(p=>p.rank===1);
+    $("nightWinnerLabel").textContent=winners.length>1?"Geteilter Gesamtsieg":"Gesamtsieg";
+    $("nightWinnerName").textContent=winners.map(p=>p.name).join(" & ");
+    $("nightWinnerPoints").textContent=`${pointsLabel(lead.points)} · ${night.games||0} ${(night.games||0)===1?"Spiel":"Spiele"}`;
+    const rest=list.filter(p=>p.rank!==1);
+    $("nightPodium").innerHTML=rest.slice(0,2).map(p=>`<div class="night-place"><span>${p.rank}.</span><strong>${esc(p.name)}</strong><em>${pointsLabel(p.points)}</em></div>`).join("");
+    $("nightRest").innerHTML=rest.slice(2).map(p=>`<div class="night-rest-row"><span>${p.rank}.</span><span>${esc(p.name)}</span><em>${p.points}</em></div>`).join("");
+    night=null;
+    saveNight();
+    renderNightPill();
+    go("nightFinal");
+  }
+  $("nightAgain").addEventListener("click",()=>{go("night")});
+  $("nightRandom").addEventListener("click",()=>{go("home");setTimeout(randomGame,380)});
+  const baseAddGameStat=window.addGameStat;
+  window.addGameStat=function(game){
+    const result=baseAddGameStat.apply(this,arguments);
+    if(night){
+      night.games=(night.games||0)+1;
+      night.last=(typeof favoriteGames!=="undefined"&&favoriteGames[game]?.name)||"";
+      night.pending=night.last;
+      saveNight();
+      renderNightPill();
+    }
+    return result;
+  };
+
+  /* ---------- Zufallsspiel ---------- */
+  let randomBusy=false;
+  function randomGame(){
+    const pager=$("gamePager");
+    if(randomBusy||!pager||!$("home").classList.contains("active"))return;
+    const count=pager.children.length;
+    const width=pager.clientWidth;
+    const current=Math.round(pager.scrollLeft/Math.max(1,width));
+    let target=randomInt(count-1);
+    if(target>=current)target++;
+    if(reduced()){pager.scrollTo({left:width*target,behavior:"auto"});pickedGame(target);return}
+    randomBusy=true;
+    const far=current<count/2?count-1:0;
+    const start=pager.scrollLeft;
+    const mid=far*width,end=target*width;
+    const total=1900;
+    const split=.38;
+    const begin=performance.now();
+    pager.classList.add("free");
+    triggerHaptic("medium");
+    let done=false;
+    const finish=()=>{
+      if(done)return;
+      done=true;
+      pager.scrollLeft=end;
+      pager.classList.remove("free");
+      randomBusy=false;
+      pickedGame(target);
+    };
+    const frame=now=>{
+      if(done)return;
+      const t=Math.min(1,(now-begin)/total);
+      let position;
+      if(t<split){const p=t/split;position=start+(mid-start)*(p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2)}
+      else{const p=(t-split)/(1-split);position=mid+(end-mid)*(1-Math.pow(1-p,3.4))}
+      pager.scrollLeft=position;
+      if(t<1){requestAnimationFrame(frame);return}
+      finish();
+    };
+    requestAnimationFrame(frame);
+    setTimeout(finish,total+500);
+  }
+  function pickedGame(index){
+    const card=$("gamePager").children[index];
+    if(!card)return;
+    card.classList.remove("random-pick");
+    void card.offsetWidth;
+    card.classList.add("random-pick");
+    setTimeout(()=>card.classList.remove("random-pick"),1400);
+    triggerHaptic("success");
+  }
+  $("openRandom").addEventListener("click",randomGame);
+  window.vybeRandomGame=randomGame;
+
+  renderNight();
 })();
 </script>
 </body>

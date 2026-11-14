@@ -1222,3 +1222,104 @@ html.gravity .section-label,html.gravity .made-by{color:var(--text)}
 .tw-result-member{padding:5px 0;font-size:16px;font-weight:500;border-top:1px solid var(--hair)}
 .tw-result-member:first-of-type{border-top:0}
 .tw-result-actions{padding-top:10px}
+.tw-step-sub{margin-top:16px}
+.tw-name-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.tw-name-row{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 12px;border-radius:var(--r-s);background:var(--surface)}
+.tw-name-row i{flex:none;width:10px;height:10px;border-radius:50%;background:var(--team)}
+.tw-name-row input{flex:1;min-width:0;height:44px;border:0;background:none;color:var(--text);font:inherit;font-size:15px;font-weight:500;outline:none}
+.tw-name-row input::placeholder{color:var(--faint)}
+.tw-name-row:focus-within{box-shadow:inset 0 0 0 1.5px var(--team)}
+
+/* Gespeicherte Gruppen */
+.group-bar{display:flex;gap:6px;margin:0 -2px 10px;padding:2px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.group-bar::-webkit-scrollbar{display:none}
+.group-chip{flex:none;display:flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:99px;background:var(--fill);color:var(--text);font-size:14px;font-weight:500;white-space:nowrap;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.group-chip em{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.group-chip.is-active{background:var(--accent);color:var(--ink)}
+.group-chip.is-active em{color:rgba(26,23,20,.6)}
+.group-chip:active{transform:scale(.95)}
+.group-add{background:none;box-shadow:inset 0 0 0 1px var(--hair);color:var(--muted)}
+.group-sheet-input{width:100%;height:52px;margin:4px 0 12px;padding:0 16px;border:0;border-radius:var(--r-s);background:var(--fill);color:var(--text);font:inherit;font-size:17px;outline:none}
+.group-sheet-input:focus{box-shadow:inset 0 0 0 1.5px var(--accent)}
+
+/* VYBE 3.4 – Zufallsspiel und Spieleabend in der Kopfzeile */
+:root{--i-dice:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm1.2 3.4a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zm7.6 0a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM12 10.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zm-3.8 3.8a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zm7.6 0a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z'/%3E%3C/svg%3E");--i-trophy:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 4h10v5a5 5 0 0 1-10 0V4z'/%3E%3Cpath d='M7 6H4.5a2.5 2.5 0 0 0 2.6 4.2M17 6h2.5a2.5 2.5 0 0 1-2.6 4.2'/%3E%3Cpath d='M12 14v3.5M8.5 20.5h7M9.5 17.5h5v3h-5z'/%3E%3C/svg%3E")}
+#openRandom,#openNight{position:relative;font-size:0}
+#openRandom::before,#openNight::before{content:"";position:absolute;left:calc(50% - 10px);top:calc(50% - 10px);width:20px;height:20px;background:currentColor;-webkit-mask:var(--i) center/contain no-repeat;mask:var(--i) center/contain no-repeat}
+#openRandom{--i:var(--i-dice)}
+#openNight{--i:var(--i-trophy)}
+.night-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--accent,#f0c53e);box-shadow:0 0 0 2px var(--bg)}
+@media (max-width:370px){.home-actions{gap:4px}}
+.game-pager .game-card.random-pick .game-art{animation:random-pick .9s cubic-bezier(.3,1.5,.5,1)}
+@keyframes random-pick{0%{transform:scale(.92) rotate(-4deg)}45%{transform:scale(1.06) rotate(2deg)}100%{transform:none}}
+
+.night-pill{flex:none;align-self:center;display:flex;align-items:center;gap:8px;max-width:calc(100% - 32px);min-height:36px;margin:0 0 8px;padding:0 14px;border-radius:99px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair);color:var(--text);font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.night-pill i{flex:none;width:8px;height:8px;border-radius:50%;background:#f0c53e}
+.night-pill:active{transform:scale(.96)}
+
+/* Spieleabend */
+.night-scroll{padding-bottom:16px}
+.night-title{margin:8px 0 8px;font-size:38px;line-height:1.02}
+.night-lead{margin:0 0 20px;font-size:16px;color:var(--muted)}
+.night-player-chips{display:flex;flex-wrap:wrap;gap:6px}
+.night-player-chips span{padding:8px 12px;border-radius:99px;background:var(--surface);font-size:15px;font-weight:500}
+.night-hint{margin:14px 2px 0;font-size:13px;color:var(--faint)}
+.night-board-view{flex:1;min-height:0;display:flex;flex-direction:column}
+.night-meta{flex:none;margin:4px 2px 10px;font-family:var(--mono);font-size:12px;color:var(--faint)}
+.night-board{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:6px;scrollbar-width:none}
+.night-board::-webkit-scrollbar{display:none}
+.night-row{position:relative;display:flex;align-items:center;gap:10px;min-height:60px;padding:0 8px 0 14px;border-radius:var(--r-m);background:var(--surface)}
+.night-row.is-lead{box-shadow:inset 0 0 0 1.5px #f0c53e}
+.night-row.is-lead .night-rank{background:#f0c53e;color:#1a1714}
+.night-rank{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--fill);font-family:var(--mono);font-size:12px;font-weight:600;color:var(--muted)}
+.night-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:17px;font-weight:500}
+.night-points{flex:none;min-width:40px;text-align:center;font-family:var(--display);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.night-btn{flex:none;width:44px;height:44px;border-radius:50%;background:var(--fill);color:var(--muted);font-size:22px;line-height:1}
+.night-btn.plus{background:var(--text);color:var(--ink)}
+.night-btn:active{transform:scale(.9)}
+.night-quick{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:10px}
+.night-quick .secondary{min-height:46px;font-size:15px}
+.night-actions{display:flex;flex-direction:column;align-items:center;gap:4px}
+.night-actions .primary{width:100%}
+.night-end{min-height:40px;padding:0 14px;font-size:14px;color:var(--muted)}
+.night-final-scroll{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:16px 0;scrollbar-width:none}
+.night-winner{display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 20px;border-radius:24px;background:#f0c53e;color:#1a1714;text-align:center}
+.night-winner small{font-size:13px;font-weight:600;opacity:.7}
+.night-winner strong{font-family:var(--display);font-size:clamp(36px,11vw,52px);font-weight:600;line-height:1.02;text-wrap:balance}
+.night-winner span{font-family:var(--mono);font-size:13px;opacity:.75}
+.night-podium{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.night-podium:empty,.night-rest:empty{display:none}
+.night-place{display:flex;flex-direction:column;gap:2px;padding:14px;border-radius:var(--r-m);background:var(--surface)}
+.night-place span{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.night-place strong{font-size:19px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.night-place em{font-style:normal;font-size:13px;color:var(--muted)}
+.night-rest{display:flex;flex-direction:column;border-radius:var(--r-m);background:var(--surface);padding:4px 14px}
+.night-rest-row{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--hair);font-size:16px}
+.night-rest-row:first-child{border-top:0}
+.night-rest-row span:first-child{width:24px;font-family:var(--mono);font-size:12px;color:var(--faint);line-height:22px}
+.night-rest-row em{margin-left:auto;font-style:normal;font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+/* Ergebnis-Moment */
+.celebrate-layer{position:fixed;inset:0;z-index:90;pointer-events:none;overflow:hidden}
+.celebrate-layer i{position:absolute;left:50%;top:-24px;width:12px;height:17px;margin-left:-6px;border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.celebrate-head{animation:celebrate-head .7s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes celebrate-head{from{transform:scale(.82);opacity:0}to{transform:none;opacity:1}}
+
+/* iPad und große Bildschirme: die App liegt als Spieltisch in der Mitte */
+@media (min-width:700px) and (min-height:700px){
+  html{background:#0d0c0b}
+  .app{max-width:600px;top:max(24px,calc((100vh - 1000px)/2));bottom:max(24px,calc((100vh - 1000px)/2));border-radius:36px;background:var(--bg);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 40px 120px rgba(0,0,0,.6)}
+  .screen{padding-top:20px;padding-left:28px;padding-right:28px}
+  .game-pager .game-art{width:min(44vh,280px)}
+  .tw-wheel-wrap{width:min(420px,46vh)}
+}
+/* Handy quer: Startkarte nebeneinander statt untereinander */
+@media (orientation:landscape) and (max-height:500px){
+  .game-pager .game-card{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto auto;column-gap:24px;align-content:center;justify-items:start;text-align:left;padding:0 24px}
+  .game-pager .game-art{grid-row:1 / span 4;width:auto;height:min(58vh,220px);margin:0}
+  .game-pager .game-name{font-size:32px}
+  .game-play{margin-top:14px;height:46px}
+  .tw-stage{padding:0 0 6px}
+  .tw-wheel-wrap{width:min(52vh,240px)}
+  .night-title{font-size:28px}
+}

@@ -114,3 +114,13 @@ VYBE 3.3.1 – Glücksrad mit Namen
 - Alle Namen stehen im Rad, die Teams drehen abwechselnd (Team 1, Team 2, …). Der gezogene Name kommt ins Team, das gedreht hat, sein Feld leuchtet in der Teamfarbe und schrumpft dann aus dem Rad. Der letzte Name wird automatisch verteilt.
 - Drehung kürzer (rund 3 Sekunden) mit kurzem Ausholen, schnellem Anlauf und langem Auslaufen, oft knapp an einem Stift vorbei. Klick und Haptik an jedem Stift, gegen Ende kräftiger.
 - Flüssiger: Die Drehung läuft als Compositor-Animation, der Schatten liegt nicht mehr auf dem drehenden Rad.
+
+VYBE 3.4 – Spieleabend, Zufallsspiel, Gruppen
+- Ball Knowledge: alle Fakten ab 2025 geprüft (WM 2026, Champions League 2025/2026, Ballon d’Or 2025/2026, Meister 2024/25 und 2025/26, Spielerstationen). Alles korrekt, keine Änderung nötig.
+- Glücksrad: Namen auf der linken Hälfte werden gedreht und stehen nie mehr auf dem Kopf.
+- Team-Ausloser: eigene Teamnamen (optional, werden gespeichert), überall in Rad, Spalten und Ergebnis.
+- Gespeicherte Gruppen: Leiste über jeder Spielerliste, Gruppen speichern, mit einem Tipp laden, gedrückt halten zum Löschen (bis zu 12).
+- Spieleabend (Pokal in der Kopfzeile): Punktestand über alle Spiele mit Plus und Minus, Rangliste mit Animation, Hinweis auf der Startseite nach jedem Spiel, Abschluss mit Gesamtsieger und Platzierungen.
+- Zufallsspiel (Würfel in der Kopfzeile): die Startseite rollt durch die Decks und bleibt bei einem zufälligen Spiel stehen.
+- Ergebnis-Momente: Am Ende von Tabu, Team-Ausloser, Wahrheit oder Pflicht, Wer bin ich, Wer würde eher, Allgemeinwissen, Ball Knowledge, Werwolf und Spieleabend fliegen einmal Karten über den Bildschirm, die Überschrift springt herein.
+- iPad: App als abgerundeter Spieltisch in der Mitte, größere Karte und größeres Rad. Handy quer: Startkarte nebeneinander.
