@@ -124,3 +124,8 @@ VYBE 3.4 – Spieleabend, Zufallsspiel, Gruppen
 - Zufallsspiel (Würfel in der Kopfzeile): die Startseite rollt durch die Decks und bleibt bei einem zufälligen Spiel stehen.
 - Ergebnis-Momente: Am Ende von Tabu, Team-Ausloser, Wahrheit oder Pflicht, Wer bin ich, Wer würde eher, Allgemeinwissen, Ball Knowledge, Werwolf und Spieleabend fliegen einmal Karten über den Bildschirm, die Überschrift springt herein.
 - iPad: App als abgerundeter Spieltisch in der Mitte, größere Karte und größeres Rad. Handy quer: Startkarte nebeneinander.
+
+VYBE 3.4.1 – Gruppen im Spieleabend
+- Spieleabend (Pokal): neuer Bereich „Eure Gruppen“ mit allen gespeicherten Gruppen. Ein Tipp lädt die Gruppe für heute und für alle Spiele, die aktive Gruppe ist gelb umrandet.
+- „+ Gruppe erstellen“ öffnet eine eigene Seite: Gruppenname, Mitspieler hinzufügen, umbenennen und entfernen (2 bis 20 Namen). „Bearbeiten“ öffnet dieselbe Seite für eine bestehende Gruppe, dort lässt sie sich auch löschen.
+- Die Gruppenleiste über den Spielerlisten in den Spielen bleibt unverändert.

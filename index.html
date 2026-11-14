@@ -15,9 +15,9 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <meta id="themeColorMeta" name="theme-color" content="#161513">
 <meta name="color-scheme" content="only dark">
 <meta name="darkreader-lock">
-<title>VYBE 3.4</title>
+<title>VYBE 3.4.1</title>
 <style>html{background:#161513}</style>
-<link rel="stylesheet" href="./design.css?v=3.4">
+<link rel="stylesheet" href="./design.css?v=3.4.1">
 
   <meta name="apple-mobile-web-app-title" content="VYBE">
   <meta name="application-name" content="VYBE">
@@ -227,9 +227,12 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
   <div id="nightSetupView" class="settings-scroll night-scroll">
     <h2 class="night-title">Punkte über<br>alle Spiele</h2>
     <p class="night-lead">Nach jedem Spiel vergebt ihr Punkte. Am Ende des Abends gibt es einen Gesamtsieger.</p>
-    <div class="tw-step"><span>1</span>Wer spielt mit?</div>
+    <div class="tw-step"><span>1</span>Eure Gruppen</div>
+    <div id="nightGroups" class="night-groups"></div>
+    <button id="nightNewGroup" class="night-new-group" type="button">+ Gruppe erstellen</button>
+    <div class="tw-step"><span>2</span>Heute spielen mit</div>
     <div id="nightPlayerList" class="night-player-chips"></div>
-    <p class="night-hint">Namen änderst du in jedem Spiel unter „Spieler“. Gespeicherte Gruppen lädst du oben mit einem Tipp.</p>
+    <p class="night-hint">Tippe auf eine Gruppe, um sie für heute zu laden. Sie gilt dann auch in allen Spielen.</p>
   </div>
   <div id="nightBoardView" class="night-board-view" hidden>
     <div class="night-meta"><span id="nightMeta">0 Spiele gespielt</span></div>
@@ -243,6 +246,21 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     <button id="nightStart" class="primary">Spieleabend starten</button>
     <button id="nightEnd" class="night-end" type="button" hidden>Abend beenden</button>
   </div>
+</section>
+
+<section id="groupEdit" class="screen">
+  <div class="top"><button class="back" data-open="night" aria-label="Zurück"></button><div id="groupEditTitle" class="page-title">Neue Gruppe</div><span style="width:43px"></span></div>
+  <div class="settings-scroll group-edit-scroll">
+    <div class="tw-step">Name der Gruppe</div>
+    <input id="groupEditName" class="group-edit-name" maxlength="20" placeholder="z. B. Freitagsrunde" autocomplete="off" enterkeyhint="next">
+    <div class="tw-step">Mitspieler<em id="groupEditCount">0 / 20</em></div>
+    <div class="panel tw-player-panel">
+      <div id="groupEditList" class="tw-player-list"></div>
+      <div class="add-player"><input id="groupEditNew" placeholder="Name hinzufügen" maxlength="20" enterkeyhint="done" autocomplete="off"><button id="groupEditAdd" type="button">Hinzufügen</button></div>
+    </div>
+    <button id="groupEditDelete" class="night-end group-edit-delete" type="button" hidden>Gruppe löschen</button>
+  </div>
+  <div class="startbar"><button id="groupEditSave" class="primary">Gruppe speichern</button></div>
 </section>
 
 <section id="nightFinal" class="screen night-screen">
@@ -784,7 +802,7 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
     </div>
 
     <div class="section-label">Über VYBE</div>
-    <div class="panel settings74-panel"><div class="row"><div class="row-icon">ℹ️</div><div class="row-copy"><div class="row-title">Version</div></div><div class="row-value">3.4</div></div></div>
+    <div class="panel settings74-panel"><div class="row"><div class="row-icon">ℹ️</div><div class="row-copy"><div class="row-title">Version</div></div><div class="row-value">3.4.1</div></div></div>
     <div class="made-by">Made by <span id="denizEasterEggTrigger">Deniz</span></div>
   </div>
 </section>
@@ -792,10 +810,10 @@ if(window.navigator.standalone===true||window.matchMedia("(display-mode: standal
 <section id="releaseNotes" class="screen">
   <div class="top"><button class="back" data-open="settings" aria-label="Zurück"></button><div class="page-title">Was ist neu?</div><span style="width:43px"></span></div>
   <div class="settings-scroll settings74-detail-page">
-    <div class="settings74-release-hero"><span>🚀</span><div><div class="settings74-kicker">Version 3.4</div><h2>Was sich in VYBE verbessert hat</h2></div></div>
+    <div class="settings74-release-hero"><span>🚀</span><div><div class="settings74-kicker">Version 3.4.1</div><h2>Was sich in VYBE verbessert hat</h2></div></div>
     <div class="settings74-note-card"><strong>Spieleabend</strong><p>Über den Pokal oben auf der Startseite startet ihr einen Abend mit Punktestand über alle Spiele. Nach jedem Spiel vergebt ihr Punkte, am Ende wird der Gesamtsieger gekürt.</p></div>
     <div class="settings74-note-card"><strong>Zufallsspiel</strong><p>Der Würfel oben auf der Startseite dreht durch alle Decks und sucht euch ein Spiel aus.</p></div>
-    <div class="settings74-note-card"><strong>Gespeicherte Gruppen</strong><p>Spielerlisten wie „Freitagsrunde“ oder „Familie“ speichern und mit einem Tipp laden. Gedrückt halten löscht eine Gruppe.</p></div>
+    <div class="settings74-note-card"><strong>Eure Gruppen</strong><p>Im Spieleabend (Pokal oben) erstellt ihr Gruppen wie „Freitagsrunde“ oder „Familie“: Namen geben, Mitspieler eintragen, später bearbeiten oder löschen. Ein Tipp lädt die Gruppe für alle Spiele, in jedem Spiel stehen eure Gruppen auch über der Spielerliste.</p></div>
     <div class="settings74-note-card"><strong>Eigene Teamnamen</strong><p>Im Team-Ausloser kann jedes Team einen eigenen Namen bekommen. Die Namen im Glücksrad stehen jetzt nie mehr auf dem Kopf.</p></div>
     <div class="settings74-note-card"><strong>Ein Moment zum Schluss</strong><p>Am Ende eines Spiels fliegen kurz Karten über den Tisch.</p></div>
     <div class="settings74-note-card"><strong>iPad und Querformat</strong><p>Auf dem iPad liegt VYBE als Spieltisch in der Mitte, quer auf dem Handy stehen Karte und Text nebeneinander.</p></div>
@@ -4651,7 +4669,7 @@ installSharedPlayerWatchers();
 
 /* GESPEICHERTE GRUPPEN */
 const PLAYER_GROUPS_KEY="vybe_player_groups_v1";
-const GROUP_LIST_IDS=["impPlayerList","wouldPlayerList","tabooPlayerList","truthPlayerList","whoPlayerList","wwPlayerList","teamPlayerList","nightPlayerList"];
+const GROUP_LIST_IDS=["impPlayerList","wouldPlayerList","tabooPlayerList","truthPlayerList","whoPlayerList","wwPlayerList","teamPlayerList"];
 function loadPlayerGroups(){
   try{
     const saved=JSON.parse(localStorage.getItem(PLAYER_GROUPS_KEY)||"[]");
@@ -5402,7 +5420,114 @@ if ("serviceWorker" in navigator) {
     list.forEach((p,i)=>{if(p.points!==last){rank=i+1;last=p.points}p.rank=rank});
     return list;
   }
+  function renderNightGroups(){
+    const wrap=$("nightGroups");
+    const current=groupKey(getSharedPlayers());
+    if(!playerGroups.length){
+      wrap.innerHTML=`<p class="night-groups-empty">Noch keine Gruppe. Leg eure Runde einmal an und ladet sie danach mit einem Tipp.</p>`;
+      return;
+    }
+    wrap.innerHTML=playerGroups.map((group,index)=>{
+      const active=groupKey(group.players)===current;
+      const preview=group.players.slice(0,4).map(esc).join(", ")+(group.players.length>4?` +${group.players.length-4}`:"");
+      return `<div class="night-group${active?" is-active":""}"><button type="button" class="night-group-main" data-load="${index}"><strong>${esc(group.name)}</strong><span>${preview}</span></button><em>${group.players.length}</em><button type="button" class="night-group-edit" data-edit="${index}" aria-label="${esc(group.name)} bearbeiten">Bearbeiten</button></div>`;
+    }).join("");
+  }
+  $("nightGroups").addEventListener("click",event=>{
+    const load=event.target.closest("[data-load]");
+    const edit=event.target.closest("[data-edit]");
+    if(edit){openGroupEditor(Number(edit.dataset.edit));return}
+    if(load){loadPlayerGroup(Number(load.dataset.load));renderNightSetup()}
+  });
+  $("nightNewGroup").addEventListener("click",()=>openGroupEditor(-1));
+
+  /* ---------- Gruppe erstellen und bearbeiten ---------- */
+  let editIndex=-1,editPlayers=[];
+  function openGroupEditor(index){
+    editIndex=index;
+    const group=playerGroups[index];
+    editPlayers=group?[...group.players]:[];
+    $("groupEditTitle").textContent=group?"Gruppe bearbeiten":"Neue Gruppe";
+    $("groupEditName").value=group?group.name:"";
+    $("groupEditNew").value="";
+    $("groupEditDelete").hidden=!group;
+    renderGroupEditor();
+    go("groupEdit");
+    if(!group)setTimeout(()=>$("groupEditName").focus(),380);
+  }
+  function renderGroupEditor(){
+    const list=$("groupEditList");
+    list.innerHTML="";
+    editPlayers.forEach((name,index)=>{
+      const row=document.createElement("div");
+      row.className="player-row";
+      const number=document.createElement("span");
+      number.className="player-number";
+      number.textContent=index+1;
+      const input=document.createElement("input");
+      input.value=name;
+      input.maxLength=20;
+      input.setAttribute("aria-label",`Name ${index+1}`);
+      input.addEventListener("input",()=>{editPlayers[index]=input.value});
+      const remove=document.createElement("button");
+      remove.type="button";
+      remove.className="remove-player";
+      remove.textContent="×";
+      remove.setAttribute("aria-label",`${name} entfernen`);
+      remove.addEventListener("click",()=>{editPlayers.splice(index,1);renderGroupEditor();triggerHaptic("light")});
+      row.append(number,input,remove);
+      list.appendChild(row);
+    });
+    $("groupEditCount").textContent=`${editPlayers.length} / 20`;
+    $("groupEditSave").disabled=false;
+  }
+  function addEditPlayer(){
+    const input=$("groupEditNew");
+    const name=input.value.trim();
+    if(!name)return;
+    if(editPlayers.length>=20){showSettingToast("Maximal 20 Namen");return}
+    if(editPlayers.some(n=>n.trim().toLowerCase()===name.toLowerCase())){showSettingToast(`${name} ist schon dabei`);return}
+    editPlayers.push(name);
+    input.value="";
+    renderGroupEditor();
+    input.focus();
+    triggerHaptic("medium");
+  }
+  $("groupEditAdd").addEventListener("click",addEditPlayer);
+  $("groupEditNew").addEventListener("keydown",event=>{if(event.key==="Enter")addEditPlayer()});
+  $("groupEditName").addEventListener("keydown",event=>{if(event.key==="Enter")$("groupEditNew").focus()});
+  $("groupEditSave").addEventListener("click",()=>{
+    const name=$("groupEditName").value.trim();
+    const players=sanitizeSharedPlayers(editPlayers);
+    if(!name){showSettingToast("Gib der Gruppe einen Namen");$("groupEditName").focus();return}
+    if(players.length<2){showSettingToast("Mindestens 2 Namen eintragen");$("groupEditNew").focus();return}
+    const clash=playerGroups.findIndex(g=>g.name.toLowerCase()===name.toLowerCase());
+    if(clash>=0&&clash!==editIndex){showSettingToast(`„${name}“ gibt es schon`);return}
+    if(editIndex>=0&&playerGroups[editIndex])playerGroups[editIndex]={name,players};
+    else{
+      if(playerGroups.length>=12){showSettingToast("Maximal 12 Gruppen");return}
+      playerGroups.push({name,players});
+    }
+    savePlayerGroups();
+    syncAllGamePlayers(players,{save:true,render:true});
+    renderGroupBars(true);
+    go("night");
+    showSettingToast(`${name} gespeichert`);
+    triggerHaptic("success");
+  });
+  $("groupEditDelete").addEventListener("click",()=>{
+    const group=playerGroups[editIndex];
+    if(!group)return;
+    askConfirm({title:`„${group.name}“ löschen?`,text:"Die Gruppe wird entfernt. Die aktuelle Spielerliste bleibt, wie sie ist.",label:"Löschen",action:()=>{
+      playerGroups.splice(editIndex,1);
+      savePlayerGroups();
+      renderGroupBars(true);
+      go("night");
+    }});
+  });
+
   function renderNightSetup(){
+    renderNightGroups();
     const list=$("nightPlayerList");
     const players=sanitizeSharedPlayers(getSharedPlayers());
     list.innerHTML=players.map(name=>`<span>${esc(name)}</span>`).join("");
